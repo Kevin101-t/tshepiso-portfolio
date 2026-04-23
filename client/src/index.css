@@ -215,6 +215,16 @@
     @apply shadow-md hover:shadow-lg transition-shadow duration-300;
   }
 
+  /* Progress bar colors */
+  .progress-bar-green {
+    @apply bg-green-400;
+  }
+
+  /* Dark mode specific styles */
+  .dark .progress-bar-green {
+    @apply bg-green-500;
+  }
+
   @media (min-width: 640px) {
     .container {
       padding-left: 1.5rem; /* 24px - tablet padding */

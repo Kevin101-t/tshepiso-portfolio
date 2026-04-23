@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Code2, Zap, Users, BookOpen, ArrowUpRight } from "lucide-react";
+import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Code2, Zap, Users, BookOpen, ArrowUpRight, Moon, Sun } from "lucide-react";
 import { useState } from "react";
 import Timeline from "@/components/Timeline";
+import Certificates from "@/components/Certificates";
+import { useTheme } from "@/contexts/ThemeContext";
 
 /**
  * Design System: Modern Engineering Minimalism
@@ -85,18 +87,29 @@ const timelineEvents: TimelineEvent[] = [
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("skills");
+  const { theme, toggleTheme } = useTheme();
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
+    <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-white">
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200">
+      <nav className="sticky top-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700">
         <div className="container flex items-center justify-between py-4">
-          <div className="text-2xl font-bold text-slate-dark">Tshepiso Phoku</div>
-          <div className="hidden md:flex gap-8">
-            <a href="#about" className="text-gray-600 hover:text-accent-teal transition-smooth">About</a>
-            <a href="#timeline" className="text-gray-600 hover:text-accent-teal transition-smooth">Journey</a>
-            <a href="#skills" className="text-gray-600 hover:text-accent-teal transition-smooth">Skills</a>
-            <a href="#contact" className="text-gray-600 hover:text-accent-teal transition-smooth">Contact</a>
+          <div className="text-2xl font-bold text-slate-dark dark:text-white">Tshepiso Phoku</div>
+          <div className="flex items-center gap-8">
+            <div className="hidden md:flex gap-8">
+              <a href="#about" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-smooth">About</a>
+              <a href="#timeline" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-smooth">Journey</a>
+              <a href="#skills" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-smooth">Skills</a>
+              <a href="#certificates" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-smooth">Certificates</a>
+              <a href="#contact" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-smooth">Contact</a>
+            </div>
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-yellow-400 hover:bg-gray-200 dark:hover:bg-slate-700 transition-smooth"
+              title="Toggle dark mode"
+            >
+              {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
           </div>
         </div>
       </nav>
@@ -199,28 +212,37 @@ export default function Home() {
                   <div>
                     <div className="flex justify-between mb-2">
                       <span className="font-medium">C++</span>
-                      <span className="text-sm text-gray-600">81%</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">81%</span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-accent-teal h-2 rounded-full" style={{ width: '81%' }}></div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div className="progress-bar-green h-2 rounded-full" style={{ width: '81%' }}></div>
                     </div>
                   </div>
                   <div>
                     <div className="flex justify-between mb-2">
                       <span className="font-medium">Python</span>
-                      <span className="text-sm text-gray-600">76%</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">76%</span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-accent-teal h-2 rounded-full" style={{ width: '76%' }}></div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div className="progress-bar-green h-2 rounded-full" style={{ width: '76%' }}></div>
                     </div>
                   </div>
                   <div>
                     <div className="flex justify-between mb-2">
                       <span className="font-medium">MATLAB</span>
-                      <span className="text-sm text-gray-600">78%</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">78%</span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-accent-teal h-2 rounded-full" style={{ width: '78%' }}></div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div className="progress-bar-green h-2 rounded-full" style={{ width: '78%' }}></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex justify-between mb-2">
+                      <span className="font-medium">Machine Learning</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">55%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div className="progress-bar-green h-2 rounded-full" style={{ width: '55%' }}></div>
                     </div>
                   </div>
                 </div>
@@ -228,7 +250,7 @@ export default function Home() {
 
               {/* Engineering Tools */}
               <div>
-                <h3 className="text-xl font-semibold text-slate-dark mb-6 flex items-center gap-2">
+                <h3 className="text-xl font-semibold text-slate-dark dark:text-white mb-6 flex items-center gap-2">
                   <Zap className="w-5 h-5 text-accent-teal" />
                   Engineering Tools
                 </h3>
@@ -250,9 +272,9 @@ export default function Home() {
 
               {/* Office Tools */}
               <div>
-                <h3 className="text-xl font-semibold text-slate-dark mb-6">Office & Productivity</h3>
+                <h3 className="text-xl font-semibold text-slate-dark dark:text-white mb-6">Office & Productivity</h3>
                 <div className="space-y-3">
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded">
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
                     <span className="text-accent-teal">✓</span>
                     <span>Microsoft Word</span>
                   </div>
@@ -269,12 +291,12 @@ export default function Home() {
 
               {/* Soft Skills */}
               <div>
-                <h3 className="text-xl font-semibold text-slate-dark mb-6 flex items-center gap-2">
+                <h3 className="text-xl font-semibold text-slate-dark dark:text-white mb-6 flex items-center gap-2">
                   <Users className="w-5 h-5 text-accent-teal" />
                   Soft Skills
                 </h3>
                 <div className="space-y-3">
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded">
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
                     <span className="text-accent-teal">✓</span>
                     <span>Time Management</span>
                   </div>
@@ -297,106 +319,113 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Interests Section */}
-      <section className="py-20 bg-white">
+      {/* Certificates Section */}
+      <section id="certificates" className="py-20 bg-gray-50 dark:bg-slate-800">
         <div className="container">
-          <h2 className="text-slate-dark mb-8">Interests & Hobbies</h2>
+          <Certificates />
+        </div>
+      </section>
+
+      {/* Interests Section */}
+      <section className="py-20 bg-white dark:bg-slate-900">
+        <div className="container">
+          <h2 className="text-slate-dark dark:text-white mb-8">Interests & Hobbies</h2>
           <div className="divider-accent mb-12"></div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-3xl">
-            <Card className="p-6 shadow-subtle">
-              <h3 className="font-semibold text-slate-dark mb-2">Engineering Design</h3>
-              <p className="text-gray-600">Projects and simulations in electrical systems</p>
+            <Card className="p-6 shadow-subtle dark:bg-slate-800">
+              <h3 className="font-semibold text-slate-dark dark:text-white mb-2">Engineering Design</h3>
+              <p className="text-gray-600 dark:text-gray-400">Projects and simulations in electrical systems</p>
             </Card>
-            <Card className="p-6 shadow-subtle">
-              <h3 className="font-semibold text-slate-dark mb-2">Fitness & Wellness</h3>
-              <p className="text-gray-600">Regular gym training and maintaining healthy lifestyle</p>
+            <Card className="p-6 shadow-subtle dark:bg-slate-800">
+              <h3 className="font-semibold text-slate-dark dark:text-white mb-2">Fitness & Wellness</h3>
+              <p className="text-gray-600 dark:text-gray-400">Regular gym training and maintaining healthy lifestyle</p>
             </Card>
-            <Card className="p-6 shadow-subtle">
-              <h3 className="font-semibold text-slate-dark mb-2">Gaming</h3>
-              <p className="text-gray-600">Strategy games and competitive gaming (FIFA)</p>
+            <Card className="p-6 shadow-subtle dark:bg-slate-800">
+              <h3 className="font-semibold text-slate-dark dark:text-white mb-2">Gaming</h3>
+              <p className="text-gray-600 dark:text-gray-400">Strategy games and competitive gaming (FIFA)</p>
             </Card>
-            <Card className="p-6 shadow-subtle">
-              <h3 className="font-semibold text-slate-dark mb-2">Reading</h3>
-              <p className="text-gray-600">Motivational books and personal development</p>
+            <Card className="p-6 shadow-subtle dark:bg-slate-800">
+              <h3 className="font-semibold text-slate-dark dark:text-white mb-2">Reading</h3>
+              <p className="text-gray-600 dark:text-gray-400">Motivational books and personal development</p>
             </Card>
-            <Card className="p-6 shadow-subtle">
-              <h3 className="font-semibold text-slate-dark mb-2">Public Speaking</h3>
-              <p className="text-gray-600">Communication and presentation skills</p>
+            <Card className="p-6 shadow-subtle dark:bg-slate-800">
+              <h3 className="font-semibold text-slate-dark dark:text-white mb-2">Public Speaking</h3>
+              <p className="text-gray-600 dark:text-gray-400">Communication and presentation skills</p>
             </Card>
-            <Card className="p-6 shadow-subtle">
-              <h3 className="font-semibold text-slate-dark mb-2">Mentoring</h3>
-              <p className="text-gray-600">Helping others learn and grow professionally</p>
+            <Card className="p-6 shadow-subtle dark:bg-slate-800">
+              <h3 className="font-semibold text-slate-dark dark:text-white mb-2">Mentoring</h3>
+              <p className="text-gray-600 dark:text-gray-400">Helping others learn and grow professionally</p>
             </Card>
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 bg-gray-50">
+      <section id="contact" className="py-20 bg-gray-50 dark:bg-slate-800">
         <div className="container">
-          <h2 className="text-slate-dark mb-8">Get in Touch</h2>
+          <h2 className="text-slate-dark dark:text-white mb-8">Get in Touch</h2>
           <div className="divider-accent mb-12"></div>
           
           <div className="max-w-2xl">
-            <p className="text-lg text-gray-700 mb-12">
+            <p className="text-lg text-gray-700 dark:text-gray-300 mb-12">
               I'm always interested in hearing about new opportunities, collaborations, and interesting projects. Feel free to reach out through any of the channels below.
             </p>
 
             <div className="grid md:grid-cols-3 gap-6 mb-12">
-              <a href="tel:+27656460357" className="flex items-start gap-4 p-6 bg-white rounded-lg hover:bg-gray-100 transition-smooth group shadow-subtle">
+              <a href="tel:+27656460357" className="flex items-start gap-4 p-6 bg-white dark:bg-slate-700 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-600 transition-smooth group shadow-subtle">
                 <Phone className="w-6 h-6 text-accent-teal flex-shrink-0 mt-1 group-hover:scale-110 transition-smooth" />
                 <div>
-                  <h3 className="font-semibold text-slate-dark mb-1">Phone</h3>
-                  <p className="text-gray-600">(065) 646 0357</p>
+                  <h3 className="font-semibold text-slate-dark dark:text-white mb-1">Phone</h3>
+                  <p className="text-gray-600 dark:text-gray-400">(065) 646 0357</p>
                 </div>
               </a>
 
-              <a href="mailto:2837716@student.wits.ac.za" className="flex items-start gap-4 p-6 bg-white rounded-lg hover:bg-gray-100 transition-smooth group shadow-subtle">
+              <a href="mailto:2837716@student.wits.ac.za" className="flex items-start gap-4 p-6 bg-white dark:bg-slate-700 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-600 transition-smooth group shadow-subtle">
                 <Mail className="w-6 h-6 text-accent-teal flex-shrink-0 mt-1 group-hover:scale-110 transition-smooth" />
                 <div>
-                  <h3 className="font-semibold text-slate-dark mb-1">Email</h3>
-                  <p className="text-gray-600">2837716@student.wits.ac.za</p>
+                  <h3 className="font-semibold text-slate-dark dark:text-white mb-1">Email</h3>
+                  <p className="text-gray-600 dark:text-gray-400">2837716@student.wits.ac.za</p>
                 </div>
               </a>
 
-              <a href="https://www.linkedin.com/in/tshepiso-kevin-phoku-6517533a4/" target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 p-6 bg-white rounded-lg hover:bg-gray-100 transition-smooth group shadow-subtle">
+              <a href="https://www.linkedin.com/in/tshepiso-kevin-phoku-6517533a4/" target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 p-6 bg-white dark:bg-slate-700 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-600 transition-smooth group shadow-subtle">
                 <Linkedin className="w-6 h-6 text-accent-teal flex-shrink-0 mt-1 group-hover:scale-110 transition-smooth" />
                 <div>
-                  <h3 className="font-semibold text-slate-dark mb-1">LinkedIn</h3>
-                  <p className="text-gray-600">Tshepiso Kevin Phoku</p>
+                  <h3 className="font-semibold text-slate-dark dark:text-white mb-1">LinkedIn</h3>
+                  <p className="text-gray-600 dark:text-gray-400">Tshepiso Kevin Phoku</p>
                 </div>
               </a>
 
-              <a href="https://github.com/Kevin101-t" target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 p-6 bg-white rounded-lg hover:bg-gray-100 transition-smooth group shadow-subtle">
+              <a href="https://github.com/Kevin101-t" target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 p-6 bg-white dark:bg-slate-700 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-600 transition-smooth group shadow-subtle">
                 <Github className="w-6 h-6 text-accent-teal flex-shrink-0 mt-1 group-hover:scale-110 transition-smooth" />
                 <div>
-                  <h3 className="font-semibold text-slate-dark mb-1">GitHub</h3>
-                  <p className="text-gray-600">Kevin101-t</p>
+                  <h3 className="font-semibold text-slate-dark dark:text-white mb-1">GitHub</h3>
+                  <p className="text-gray-600 dark:text-gray-400">Kevin101-t</p>
                 </div>
               </a>
 
-              <div className="flex items-start gap-4 p-6 bg-white rounded-lg shadow-subtle">
+              <div className="flex items-start gap-4 p-6 bg-white dark:bg-slate-700 rounded-lg shadow-subtle">
                 <MapPin className="w-6 h-6 text-accent-teal flex-shrink-0 mt-1" />
                 <div>
-                  <h3 className="font-semibold text-slate-dark mb-1">Location</h3>
-                  <p className="text-gray-600">Etwatwa, Benoni, South Africa</p>
+                  <h3 className="font-semibold text-slate-dark dark:text-white mb-1">Location</h3>
+                  <p className="text-gray-600 dark:text-gray-400">Etwatwa, Benoni, South Africa</p>
                 </div>
               </div>
             </div>
 
             {/* References */}
-            <div className="bg-blue-50 p-8 rounded-lg border border-blue-200">
-              <h3 className="text-xl font-semibold text-slate-dark mb-6">References</h3>
+            <div className="bg-blue-50 dark:bg-slate-700 p-8 rounded-lg border border-blue-200 dark:border-slate-600">
+              <h3 className="text-xl font-semibold text-slate-dark dark:text-white mb-6">References</h3>
               <div className="space-y-6">
                 <div>
-                  <h4 className="font-semibold text-slate-dark">Liyema Ndwandwa</h4>
-                  <p className="text-gray-600">Electrical Engineering Mentor</p>
+                  <h4 className="font-semibold text-slate-dark dark:text-white">Liyema Ndwandwa</h4>
+                  <p className="text-gray-600 dark:text-gray-400">Electrical Engineering Mentor</p>
                   <p className="text-accent-teal">L.ndwandwa13@gmail.com | (068) 505-9284</p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-slate-dark">Glenn Mashimbye</h4>
-                  <p className="text-gray-600">Mentor and Experience Provider</p>
+                  <h4 className="font-semibold text-slate-dark dark:text-white">Glenn Mashimbye</h4>
+                  <p className="text-gray-600 dark:text-gray-400">Mentor and Experience Provider</p>
                   <p className="text-accent-teal">glennlulama@gmail.com | (083) 811-769</p>
                 </div>
               </div>
