@@ -1,6 +1,11 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Design System: Modern Engineering Minimalism */
+/* Color Palette: Deep slate blue (#1e3a5f) + Vibrant teal (#0ea5e9) */
+/* Typography: Poppins (display) + Inter (body) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap');
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -43,8 +48,8 @@
 }
 
 :root {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
+  --primary: #1e3a5f;
+  --primary-foreground: #f8fafc;
   --sidebar-primary: var(--color-blue-600);
   --sidebar-primary-foreground: var(--color-blue-50);
   --chart-1: var(--color-blue-300);
@@ -59,12 +64,12 @@
   --card-foreground: oklch(0.235 0.015 65);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.235 0.015 65);
-  --secondary: oklch(0.98 0.001 286.375);
-  --secondary-foreground: oklch(0.4 0.015 65);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.141 0.005 285.823);
+  --secondary: #0ea5e9;
+  --secondary-foreground: #ffffff;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #0ea5e9;
+  --accent-foreground: #ffffff;
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
   --border: oklch(0.92 0.004 286.32);
@@ -119,6 +124,21 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  h1 {
+    @apply text-4xl;
+  }
+  h2 {
+    @apply text-3xl;
+  }
+  h3 {
+    @apply text-xl;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
@@ -158,6 +178,41 @@
   .flex {
     min-height: 0;
     min-width: 0;
+  }
+
+  /* Design System Utilities */
+  .text-accent-teal {
+    @apply text-[#0ea5e9];
+  }
+
+  .border-accent-teal {
+    @apply border-[#0ea5e9];
+  }
+
+  .bg-slate-dark {
+    @apply bg-[#1e3a5f];
+  }
+
+  .text-slate-dark {
+    @apply text-[#1e3a5f];
+  }
+
+  .divider-accent {
+    @apply border-t-2 border-[#0ea5e9];
+  }
+
+  /* Smooth transitions for interactive elements */
+  .transition-smooth {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  /* Subtle shadows for depth */
+  .shadow-subtle {
+    @apply shadow-sm;
+  }
+
+  .shadow-elevated {
+    @apply shadow-md hover:shadow-lg transition-shadow duration-300;
   }
 
   @media (min-width: 640px) {
