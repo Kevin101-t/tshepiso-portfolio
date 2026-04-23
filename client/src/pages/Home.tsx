@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Code2, Zap, Users, BookOpen } from "lucide-react";
+import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Code2, Zap, Users, BookOpen, ArrowUpRight } from "lucide-react";
 import { useState } from "react";
 
 /**
@@ -223,28 +223,28 @@ export default function Home() {
                   <div>
                     <div className="flex justify-between mb-2">
                       <span className="font-medium">C++</span>
-                      <span className="text-sm text-gray-600">In Progress</span>
+                      <span className="text-sm text-gray-600">81%</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-accent-teal h-2 rounded-full" style={{ width: '60%' }}></div>
+                      <div className="bg-accent-teal h-2 rounded-full" style={{ width: '81%' }}></div>
                     </div>
                   </div>
                   <div>
                     <div className="flex justify-between mb-2">
                       <span className="font-medium">Python</span>
-                      <span className="text-sm text-gray-600">Basic</span>
+                      <span className="text-sm text-gray-600">76%</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-accent-teal h-2 rounded-full" style={{ width: '40%' }}></div>
+                      <div className="bg-accent-teal h-2 rounded-full" style={{ width: '76%' }}></div>
                     </div>
                   </div>
                   <div>
                     <div className="flex justify-between mb-2">
                       <span className="font-medium">MATLAB</span>
-                      <span className="text-sm text-gray-600">Familiar</span>
+                      <span className="text-sm text-gray-600">78%</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-accent-teal h-2 rounded-full" style={{ width: '50%' }}></div>
+                      <div className="bg-accent-teal h-2 rounded-full" style={{ width: '78%' }}></div>
                     </div>
                   </div>
                 </div>
@@ -367,7 +367,7 @@ export default function Home() {
               I'm always interested in hearing about new opportunities, collaborations, and interesting projects. Feel free to reach out through any of the channels below.
             </p>
 
-            <div className="grid md:grid-cols-2 gap-8 mb-12">
+            <div className="grid md:grid-cols-3 gap-6 mb-12">
               <a href="tel:+27656460357" className="flex items-start gap-4 p-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition-smooth group">
                 <Phone className="w-6 h-6 text-accent-teal flex-shrink-0 mt-1 group-hover:scale-110 transition-smooth" />
                 <div>
@@ -381,6 +381,22 @@ export default function Home() {
                 <div>
                   <h3 className="font-semibold text-slate-dark mb-1">Email</h3>
                   <p className="text-gray-600">2837716@student.wits.ac.za</p>
+                </div>
+              </a>
+
+              <a href="https://www.linkedin.com/in/tshepiso-kevin-phoku-6517533a4/" target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 p-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition-smooth group">
+                <Linkedin className="w-6 h-6 text-accent-teal flex-shrink-0 mt-1 group-hover:scale-110 transition-smooth" />
+                <div>
+                  <h3 className="font-semibold text-slate-dark mb-1">LinkedIn</h3>
+                  <p className="text-gray-600">Tshepiso Kevin Phoku</p>
+                </div>
+              </a>
+
+              <a href="https://github.com/Kevin101-t" target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 p-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition-smooth group">
+                <Github className="w-6 h-6 text-accent-teal flex-shrink-0 mt-1 group-hover:scale-110 transition-smooth" />
+                <div>
+                  <h3 className="font-semibold text-slate-dark mb-1">GitHub</h3>
+                  <p className="text-gray-600">Kevin101-t</p>
                 </div>
               </a>
 
@@ -422,11 +438,17 @@ export default function Home() {
               <p className="text-blue-200">Electrical Engineering Student | Problem Solver | Mentor</p>
             </div>
             <div className="flex gap-6 mt-6 md:mt-0">
-              <a href="mailto:2837716@student.wits.ac.za" className="text-blue-200 hover:text-accent-teal transition-smooth">
+              <a href="mailto:2837716@student.wits.ac.za" className="text-blue-200 hover:text-accent-teal transition-smooth" title="Email">
                 <Mail className="w-6 h-6" />
               </a>
-              <a href="tel:+27656460357" className="text-blue-200 hover:text-accent-teal transition-smooth">
+              <a href="tel:+27656460357" className="text-blue-200 hover:text-accent-teal transition-smooth" title="Phone">
                 <Phone className="w-6 h-6" />
+              </a>
+              <a href="https://www.linkedin.com/in/tshepiso-kevin-phoku-6517533a4/" target="_blank" rel="noopener noreferrer" className="text-blue-200 hover:text-accent-teal transition-smooth" title="LinkedIn">
+                <Linkedin className="w-6 h-6" />
+              </a>
+              <a href="https://github.com/Kevin101-t" target="_blank" rel="noopener noreferrer" className="text-blue-200 hover:text-accent-teal transition-smooth" title="GitHub">
+                <Github className="w-6 h-6" />
               </a>
             </div>
           </div>
