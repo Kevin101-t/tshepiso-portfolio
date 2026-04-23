@@ -90,7 +90,7 @@ export default function Home() {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-white">
+    <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-gray-100">
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700">
         <div className="container flex items-center justify-between py-4">
@@ -105,10 +105,10 @@ export default function Home() {
             </div>
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-lg bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-yellow-400 hover:bg-gray-200 dark:hover:bg-slate-700 transition-smooth"
+              className="p-3 rounded-lg bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-yellow-300 hover:bg-gray-200 dark:hover:bg-slate-600 transition-smooth"
               title="Toggle dark mode"
             >
-              {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              {theme === 'dark' ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
             </button>
           </div>
         </div>
