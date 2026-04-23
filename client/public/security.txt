@@ -1,0 +1,20 @@
+Contact: 2837716@student.wits.ac.za
+Expires: 2027-04-23T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://[your-domain]/.well-known/security.txt
+
+# Security Policy for Tshepiso Phoku Portfolio
+# This website is owned exclusively by Tshepiso Kevin Phoku
+# Copyright © 2026 Tshepiso Kevin Phoku. All rights reserved.
+
+# Ownership Statement
+# This website and all its content are the exclusive intellectual property of Tshepiso Kevin Phoku.
+# No third party, including Meta, Google, or any technology platform, has any claim to this website.
+
+# Unauthorized Access
+# Unauthorized access, modification, or distribution of this website's content is prohibited.
+# Any security vulnerabilities should be reported to the contact email above.
+
+# Data Privacy
+# This website respects user privacy and does not collect unnecessary personal data.
+# All user interactions are logged for security purposes only.

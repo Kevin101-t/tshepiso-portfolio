@@ -457,8 +457,19 @@ export default function Home() {
               </a>
             </div>
           </div>
-          <div className="border-t border-blue-900 mt-8 pt-8 text-center text-blue-200">
-            <p>&copy; 2026 Tshepiso Phoku. All rights reserved.</p>
+          <div className="border-t border-blue-900 mt-8 pt-8 space-y-4">
+            <div className="text-center text-blue-200 text-sm">
+              <p className="font-semibold mb-2">© 2026 Tshepiso Kevin Phoku. All rights reserved.</p>
+              <p className="text-xs text-blue-300 mb-3">
+                This website and all its content are the exclusive intellectual property of Tshepiso Kevin Phoku.
+              </p>
+              <p className="text-xs text-blue-300 mb-3">
+                No third party, including Meta, Google, or any technology platform, has any claim to this website.
+              </p>
+              <p className="text-xs text-blue-300">
+                <a href="/OWNERSHIP_AND_SECURITY.md" className="text-accent-teal hover:underline">View Ownership & Security Documentation</a>
+              </p>
+            </div>
           </div>
         </div>
       </footer>

@@ -1,0 +1,32 @@
+# Robots.txt for Tshepiso Phoku Portfolio
+# This website is owned exclusively by Tshepiso Kevin Phoku
+# Copyright © 2026 Tshepiso Kevin Phoku. All rights reserved.
+
+# Allow all search engines to index this website
+User-agent: *
+Allow: /
+
+# Allow Google to index and crawl
+User-agent: Googlebot
+Allow: /
+
+# Allow Bing to index and crawl
+User-agent: Bingbot
+Allow: /
+
+# Disallow crawling of private sections
+Disallow: /.env
+Disallow: /.git
+Disallow: /node_modules
+Disallow: /dist
+Disallow: /src
+Disallow: /__manus__
+
+# Sitemap location (if applicable)
+# Sitemap: https://[your-domain]/sitemap.xml
+
+# Crawl delay (optional - prevents server overload)
+Crawl-delay: 1
+
+# Comment: This website is the exclusive intellectual property of Tshepiso Kevin Phoku.
+# No third party, including Meta, Google, or any technology platform, has any claim to this website.
