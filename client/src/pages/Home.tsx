@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Code2, Zap, Users, BookOpen, ArrowUpRight } from "lucide-react";
 import { useState } from "react";
+import Timeline from "@/components/Timeline";
 
 /**
  * Design System: Modern Engineering Minimalism
@@ -11,6 +12,76 @@ import { useState } from "react";
 
 const heroBackgroundUrl = "https://d2xsxph8kpxj0f.cloudfront.net/310519663588749976/VqtRsrvp8AWWYW82Ld27rf/hero-engineering-background-gPuKqdoFABjZWmGzkQ2Z5t.webp";
 const accentPatternUrl = "https://d2xsxph8kpxj0f.cloudfront.net/310519663588749976/VqtRsrvp8AWWYW82Ld27rf/accent-tech-pattern-AFvPnPkBFdGZXfE9CmLEpP.webp";
+
+interface TimelineEvent {
+  id: string;
+  date: string;
+  dateRange?: string;
+  title: string;
+  subtitle: string;
+  description: string[];
+  type: 'education' | 'experience' | 'achievement';
+  status?: 'completed' | 'current' | 'upcoming';
+}
+
+const timelineEvents: TimelineEvent[] = [
+  {
+    id: 'hs',
+    date: '2019',
+    dateRange: 'Jan 2019 - Nov 2023',
+    title: 'National Senior Certificate',
+    subtitle: 'Hulwazi Secondary School, Daveyton',
+    type: 'education',
+    status: 'completed',
+    description: [
+      'Completed high school education with strong academic foundation',
+      'Developed discipline and work ethic in preparation for university',
+      'Participated in various academic and extracurricular activities'
+    ]
+  },
+  {
+    id: 'tutoring',
+    date: '2023',
+    dateRange: 'June 2023 - Present',
+    title: 'Freelance Tutor',
+    subtitle: 'Self-Employed',
+    type: 'experience',
+    status: 'current',
+    description: [
+      'Offer tutoring in Mathematics, Physics, and Chemistry at university and high school levels',
+      'Specialize in simplifying abstract concepts using real-world analogies and interactive problem-solving',
+      'Develop personalized learning strategies tailored to individual student needs'
+    ]
+  },
+  {
+    id: 'mentor',
+    date: '2023',
+    dateRange: 'Sep 2023 - Present',
+    title: 'Peer Mentor',
+    subtitle: 'University of the Witwatersrand',
+    type: 'experience',
+    status: 'current',
+    description: [
+      'Provide academic support to help fellow students understand course material and clarify complex concepts',
+      'Offer guidance on navigating campus resources, academic requirements, and balancing workload',
+      'Develop study techniques and improve learning strategies for diverse student backgrounds'
+    ]
+  },
+  {
+    id: 'bsc',
+    date: '2024',
+    dateRange: 'Jan 2024 - Present',
+    title: 'BSc Electrical Engineering',
+    subtitle: 'University of the Witwatersrand',
+    type: 'education',
+    status: 'current',
+    description: [
+      'Focus Areas: Circuit theory, electromagnetism, C++ programming, algebra, calculus, physics, and systems design',
+      'Design Project: Optimized a DC motor hoist system to lift payloads efficiently, focusing on torque optimization',
+      'Current Work: Learning C++ programming from foundational concepts with applications in embedded systems and simulation'
+    ]
+  }
+];
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("skills");
@@ -23,8 +94,7 @@ export default function Home() {
           <div className="text-2xl font-bold text-slate-dark">Tshepiso Phoku</div>
           <div className="hidden md:flex gap-8">
             <a href="#about" className="text-gray-600 hover:text-accent-teal transition-smooth">About</a>
-            <a href="#education" className="text-gray-600 hover:text-accent-teal transition-smooth">Education</a>
-            <a href="#experience" className="text-gray-600 hover:text-accent-teal transition-smooth">Experience</a>
+            <a href="#timeline" className="text-gray-600 hover:text-accent-teal transition-smooth">Journey</a>
             <a href="#skills" className="text-gray-600 hover:text-accent-teal transition-smooth">Skills</a>
             <a href="#contact" className="text-gray-600 hover:text-accent-teal transition-smooth">Contact</a>
           </div>
@@ -48,9 +118,9 @@ export default function Home() {
                   Get in Touch
                 </Button>
               </a>
-              <a href="#projects">
+              <a href="#timeline">
                 <Button variant="outline" className="border-white text-white hover:bg-white/10 px-8 py-6 text-lg transition-smooth">
-                  View Work
+                  View Journey
                 </Button>
               </a>
             </div>
@@ -96,122 +166,28 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Education Section */}
-      <section id="education" className="py-20">
+      {/* Dynamic Timeline Section */}
+      <section id="timeline" className="py-20">
         <div className="container">
-          <h2 className="text-slate-dark mb-8">Education</h2>
+          <h2 className="text-slate-dark mb-8">My Journey</h2>
           <div className="divider-accent mb-12"></div>
           
-          <div className="space-y-8 max-w-3xl">
-            {/* Current Studies */}
-            <Card className="p-8 shadow-elevated border-l-4 border-l-accent-teal">
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <h3 className="text-2xl font-semibold text-slate-dark">BSc Electrical Engineering</h3>
-                  <p className="text-accent-teal font-medium">University of the Witwatersrand</p>
-                </div>
-                <span className="bg-accent-teal text-white px-4 py-2 rounded text-sm font-semibold">In Progress</span>
-              </div>
-              <p className="text-gray-600 mb-4">January 2024 – Present</p>
-              <ul className="space-y-2 text-gray-700">
-                <li className="flex items-start gap-3">
-                  <span className="text-accent-teal mt-1">•</span>
-                  <span><strong>Focus Areas:</strong> Circuit theory, electromagnetism, C++ programming, algebra, calculus, physics, and systems design</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-accent-teal mt-1">•</span>
-                  <span><strong>Design Project:</strong> Optimized a DC motor hoist system to lift payloads efficiently, focusing on torque optimization</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-accent-teal mt-1">•</span>
-                  <span><strong>Current Work:</strong> Learning C++ programming from foundational concepts with applications in embedded systems and simulation</span>
-                </li>
-              </ul>
-            </Card>
-
-            {/* High School */}
-            <Card className="p-8 shadow-elevated">
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <h3 className="text-2xl font-semibold text-slate-dark">National Senior Certificate</h3>
-                  <p className="text-gray-600 font-medium">Hulwazi Secondary School, Daveyton</p>
-                </div>
-                <span className="bg-gray-200 text-gray-700 px-4 py-2 rounded text-sm font-semibold">Completed</span>
-              </div>
-              <p className="text-gray-600">January 2019 – November 2023</p>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Experience Section */}
-      <section id="experience" className="py-20 bg-gray-50">
-        <div className="container">
-          <h2 className="text-slate-dark mb-8">Experience & Volunteering</h2>
-          <div className="divider-accent mb-12"></div>
-          
-          <div className="space-y-8 max-w-3xl">
-            {/* Peer Mentor */}
-            <Card className="p-8 shadow-elevated border-l-4 border-l-accent-teal">
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <h3 className="text-2xl font-semibold text-slate-dark">Peer Mentor</h3>
-                  <p className="text-accent-teal font-medium">University of the Witwatersrand</p>
-                </div>
-                <span className="text-gray-600 text-sm">Sep 2023 – Present</span>
-              </div>
-              <ul className="space-y-3 text-gray-700">
-                <li className="flex items-start gap-3">
-                  <span className="text-accent-teal mt-1">•</span>
-                  <span>Provide academic support to help fellow students understand course material and clarify complex concepts</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-accent-teal mt-1">•</span>
-                  <span>Offer guidance on navigating campus resources, academic requirements, and balancing workload</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-accent-teal mt-1">•</span>
-                  <span>Develop study techniques and improve learning strategies for diverse student backgrounds</span>
-                </li>
-              </ul>
-            </Card>
-
-            {/* Tutoring */}
-            <Card className="p-8 shadow-elevated">
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <h3 className="text-2xl font-semibold text-slate-dark">Freelance Tutor</h3>
-                  <p className="text-gray-600 font-medium">Self-Employed</p>
-                </div>
-                <span className="text-gray-600 text-sm">June 2023 – Present</span>
-              </div>
-              <ul className="space-y-3 text-gray-700">
-                <li className="flex items-start gap-3">
-                  <span className="text-accent-teal mt-1">•</span>
-                  <span>Offer tutoring in Mathematics, Physics, and Chemistry at both university and high school levels</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-accent-teal mt-1">•</span>
-                  <span>Specialize in simplifying abstract concepts using real-world analogies and interactive problem-solving</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-accent-teal mt-1">•</span>
-                  <span>Develop personalized learning strategies tailored to individual student needs</span>
-                </li>
-              </ul>
-            </Card>
+          <div className="max-w-4xl mx-auto">
+            <p className="text-lg text-gray-700 mb-12 text-center">
+              Click on any milestone to explore the details of my educational and professional progression.
+            </p>
+            <Timeline events={timelineEvents} />
           </div>
         </div>
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="py-20">
+      <section id="skills" className="py-20 bg-gray-50">
         <div className="container">
           <h2 className="text-slate-dark mb-8">Skills & Competencies</h2>
           <div className="divider-accent mb-12"></div>
           
           <div className="max-w-4xl">
-            {/* Skill Categories */}
             <div className="grid md:grid-cols-2 gap-8">
               {/* Technical Skills */}
               <div>
@@ -322,7 +298,7 @@ export default function Home() {
       </section>
 
       {/* Interests Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-white">
         <div className="container">
           <h2 className="text-slate-dark mb-8">Interests & Hobbies</h2>
           <div className="divider-accent mb-12"></div>
@@ -357,7 +333,7 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20">
+      <section id="contact" className="py-20 bg-gray-50">
         <div className="container">
           <h2 className="text-slate-dark mb-8">Get in Touch</h2>
           <div className="divider-accent mb-12"></div>
@@ -368,7 +344,7 @@ export default function Home() {
             </p>
 
             <div className="grid md:grid-cols-3 gap-6 mb-12">
-              <a href="tel:+27656460357" className="flex items-start gap-4 p-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition-smooth group">
+              <a href="tel:+27656460357" className="flex items-start gap-4 p-6 bg-white rounded-lg hover:bg-gray-100 transition-smooth group shadow-subtle">
                 <Phone className="w-6 h-6 text-accent-teal flex-shrink-0 mt-1 group-hover:scale-110 transition-smooth" />
                 <div>
                   <h3 className="font-semibold text-slate-dark mb-1">Phone</h3>
@@ -376,7 +352,7 @@ export default function Home() {
                 </div>
               </a>
 
-              <a href="mailto:2837716@student.wits.ac.za" className="flex items-start gap-4 p-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition-smooth group">
+              <a href="mailto:2837716@student.wits.ac.za" className="flex items-start gap-4 p-6 bg-white rounded-lg hover:bg-gray-100 transition-smooth group shadow-subtle">
                 <Mail className="w-6 h-6 text-accent-teal flex-shrink-0 mt-1 group-hover:scale-110 transition-smooth" />
                 <div>
                   <h3 className="font-semibold text-slate-dark mb-1">Email</h3>
@@ -384,7 +360,7 @@ export default function Home() {
                 </div>
               </a>
 
-              <a href="https://www.linkedin.com/in/tshepiso-kevin-phoku-6517533a4/" target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 p-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition-smooth group">
+              <a href="https://www.linkedin.com/in/tshepiso-kevin-phoku-6517533a4/" target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 p-6 bg-white rounded-lg hover:bg-gray-100 transition-smooth group shadow-subtle">
                 <Linkedin className="w-6 h-6 text-accent-teal flex-shrink-0 mt-1 group-hover:scale-110 transition-smooth" />
                 <div>
                   <h3 className="font-semibold text-slate-dark mb-1">LinkedIn</h3>
@@ -392,7 +368,7 @@ export default function Home() {
                 </div>
               </a>
 
-              <a href="https://github.com/Kevin101-t" target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 p-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition-smooth group">
+              <a href="https://github.com/Kevin101-t" target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 p-6 bg-white rounded-lg hover:bg-gray-100 transition-smooth group shadow-subtle">
                 <Github className="w-6 h-6 text-accent-teal flex-shrink-0 mt-1 group-hover:scale-110 transition-smooth" />
                 <div>
                   <h3 className="font-semibold text-slate-dark mb-1">GitHub</h3>
@@ -400,7 +376,7 @@ export default function Home() {
                 </div>
               </a>
 
-              <div className="flex items-start gap-4 p-6 bg-gray-50 rounded-lg">
+              <div className="flex items-start gap-4 p-6 bg-white rounded-lg shadow-subtle">
                 <MapPin className="w-6 h-6 text-accent-teal flex-shrink-0 mt-1" />
                 <div>
                   <h3 className="font-semibold text-slate-dark mb-1">Location</h3>
