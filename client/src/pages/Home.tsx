@@ -204,15 +204,15 @@ export default function Home() {
             <div className="grid md:grid-cols-2 gap-8">
               {/* Technical Skills */}
               <div>
-                <h3 className="text-xl font-semibold text-slate-dark mb-6 flex items-center gap-2">
+                <h3 className="text-xl font-semibold text-slate-dark dark:text-white mb-6 flex items-center gap-2">
                   <Code2 className="w-5 h-5 text-accent-teal" />
                   Programming Languages
                 </h3>
                 <div className="space-y-4">
                   <div>
                     <div className="flex justify-between mb-2">
-                      <span className="font-medium text-slate-900 dark:text-gray-100">C++</span>
-                      <span className="text-sm text-gray-600 dark:text-gray-300">81%</span>
+                      <span className="font-medium text-slate-900 dark:text-white">C++</span>
+                      <span className="text-sm text-gray-600 dark:text-white">81%</span>
                     </div>
                     <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                       <div className="progress-bar-green h-2 rounded-full" style={{ width: '81%' }}></div>
@@ -220,8 +220,8 @@ export default function Home() {
                   </div>
                   <div>
                     <div className="flex justify-between mb-2">
-                      <span className="font-medium text-slate-900 dark:text-gray-100">Python</span>
-                      <span className="text-sm text-gray-600 dark:text-gray-300">76%</span>
+                      <span className="font-medium text-slate-900 dark:text-white">Python</span>
+                      <span className="text-sm text-gray-600 dark:text-white">76%</span>
                     </div>
                     <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                       <div className="progress-bar-green h-2 rounded-full" style={{ width: '76%' }}></div>
@@ -229,8 +229,8 @@ export default function Home() {
                   </div>
                   <div>
                     <div className="flex justify-between mb-2">
-                      <span className="font-medium text-slate-900 dark:text-gray-100">MATLAB</span>
-                      <span className="text-sm text-gray-600 dark:text-gray-300">78%</span>
+                      <span className="font-medium text-slate-900 dark:text-white">MATLAB</span>
+                      <span className="text-sm text-gray-600 dark:text-white">78%</span>
                     </div>
                     <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                       <div className="progress-bar-green h-2 rounded-full" style={{ width: '78%' }}></div>
@@ -238,8 +238,8 @@ export default function Home() {
                   </div>
                   <div>
                     <div className="flex justify-between mb-2">
-                      <span className="font-medium text-slate-900 dark:text-gray-100">Machine Learning</span>
-                      <span className="text-sm text-gray-600 dark:text-gray-300">55%</span>
+                      <span className="font-medium text-slate-900 dark:text-white">Machine Learning</span>
+                      <span className="text-sm text-gray-600 dark:text-white">55%</span>
                     </div>
                     <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                       <div className="progress-bar-green h-2 rounded-full" style={{ width: '55%' }}></div>
