@@ -155,6 +155,19 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative py-24 overflow-hidden bg-gradient-to-br from-slate-dark via-blue-900 to-slate-dark dark:from-slate-950 dark:via-blue-950 dark:to-slate-950">
         <div className="absolute inset-0 opacity-20" style={{ backgroundImage: `url(${heroBackgroundUrl})`, backgroundSize: 'cover' }}></div>
+        
+        {/* Corner glow effects */}
+        <div className="absolute top-0 left-0 w-64 h-64 bg-blue-500 rounded-full blur-3xl opacity-0 corner-glow-top-left"></div>
+        <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-400 rounded-full blur-3xl opacity-0 corner-glow-top-right"></div>
+        
+        {/* Animated circuit lines */}
+        <svg className="absolute inset-0 w-full h-full opacity-30" style={{ pointerEvents: 'none' }}>
+          <line x1="10%" y1="20%" x2="40%" y2="50%" stroke="rgba(14, 165, 233, 0.4)" strokeWidth="2" className="hero-glow-animation" />
+          <line x1="60%" y1="30%" x2="90%" y2="60%" stroke="rgba(14, 165, 233, 0.4)" strokeWidth="2" className="hero-glow-animation" style={{ animationDelay: '0.5s' }} />
+          <line x1="20%" y1="70%" x2="50%" y2="90%" stroke="rgba(14, 165, 233, 0.4)" strokeWidth="2" className="hero-glow-animation" style={{ animationDelay: '1s' }} />
+          <line x1="70%" y1="40%" x2="95%" y2="80%" stroke="rgba(14, 165, 233, 0.4)" strokeWidth="2" className="hero-glow-animation" style={{ animationDelay: '1.5s' }} />
+        </svg>
+        
         <div className="relative container">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="text-white">
