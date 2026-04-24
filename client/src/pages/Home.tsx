@@ -216,29 +216,59 @@ export default function Home() {
                   Programming Languages
                 </h3>
                 <div className="space-y-4">
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
-                    <span className="text-accent-teal">✓</span>
-                    <span className="text-slate-900 dark:text-white">C++</span>
+                  <div>
+                    <div className="flex justify-between mb-2">
+                      <span className="font-medium text-slate-900 dark:text-white">C++</span>
+                      <span className="text-sm text-gray-600 dark:text-white">81%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div className="progress-bar-green h-2 rounded-full" style={{ width: '81%' }}></div>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
-                    <span className="text-accent-teal">✓</span>
-                    <span className="text-slate-900 dark:text-white">Python</span>
+                  <div>
+                    <div className="flex justify-between mb-2">
+                      <span className="font-medium text-slate-900 dark:text-white">Python</span>
+                      <span className="text-sm text-gray-600 dark:text-white">76%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div className="progress-bar-green h-2 rounded-full" style={{ width: '76%' }}></div>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
-                    <span className="text-accent-teal">✓</span>
-                    <span className="text-slate-900 dark:text-white">MATLAB</span>
+                  <div>
+                    <div className="flex justify-between mb-2">
+                      <span className="font-medium text-slate-900 dark:text-white">MATLAB</span>
+                      <span className="text-sm text-gray-600 dark:text-white">78%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div className="progress-bar-green h-2 rounded-full" style={{ width: '78%' }}></div>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
-                    <span className="text-accent-teal">✓</span>
-                    <span className="text-slate-900 dark:text-white">Machine Learning</span>
+                  <div>
+                    <div className="flex justify-between mb-2">
+                      <span className="font-medium text-slate-900 dark:text-white">Machine Learning</span>
+                      <span className="text-sm text-gray-600 dark:text-white">55%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div className="progress-bar-green h-2 rounded-full" style={{ width: '55%' }}></div>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
-                    <span className="text-accent-teal">✓</span>
-                    <span className="text-slate-900 dark:text-white">Assembly</span>
+                  <div>
+                    <div className="flex justify-between mb-2">
+                      <span className="font-medium text-slate-900 dark:text-white">Assembly</span>
+                      <span className="text-sm text-gray-600 dark:text-white">61%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div className="progress-bar-green h-2 rounded-full" style={{ width: '61%' }}></div>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
-                    <span className="text-accent-teal">✓</span>
-                    <span className="text-slate-900 dark:text-white">Claude Code (Coming Soon)</span>
+                  <div>
+                    <div className="flex justify-between mb-2">
+                      <span className="font-medium text-slate-900 dark:text-white">Claude Code</span>
+                      <span className="text-sm text-gray-600 dark:text-white">Coming Soon</span>
+                    </div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div className="progress-bar-green h-2 rounded-full" style={{ width: '0%' }}></div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -310,6 +340,93 @@ export default function Home() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section id="projects" className="py-20 bg-white dark:bg-slate-900">
+        <div className="container">
+          <h2 className="text-4xl font-bold text-slate-dark dark:text-white mb-8">Featured Projects</h2>
+          <div className="divider-accent mb-12"></div>
+          
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* DC Motor Hoist Project */}
+            <Card className="overflow-hidden bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700 hover:shadow-lg transition-shadow">
+              <div className="bg-gradient-to-r from-slate-dark to-accent-teal p-6 text-white">
+                <h3 className="text-2xl font-bold mb-2">DC Motor Hoist System Optimization</h3>
+                <p className="text-sm opacity-90">Electrical Engineering Design Project</p>
+              </div>
+              <div className="p-6">
+                <p className="text-gray-700 dark:text-gray-300 mb-4">
+                  Designed and optimized a DC motor hoist system to efficiently lift payloads with focus on torque optimization and system performance. This project demonstrates practical application of circuit theory, control systems, and mechanical engineering principles.
+                </p>
+                <div className="mb-4">
+                  <h4 className="font-semibold text-slate-900 dark:text-white mb-2">Key Achievements:</h4>
+                  <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                    <li className="flex items-start gap-2">
+                      <span className="text-accent-teal mt-1">•</span>
+                      <span>Optimized motor torque for maximum payload capacity</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-accent-teal mt-1">•</span>
+                      <span>Implemented circuit design using LTspice simulation</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-accent-teal mt-1">•</span>
+                      <span>Analyzed system performance and efficiency metrics</span>
+                    </li>
+                  </ul>
+                </div>
+                <div className="mb-4">
+                  <h4 className="font-semibold text-slate-900 dark:text-white mb-2">Technologies Used:</h4>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs font-medium">Circuit Design</span>
+                    <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs font-medium">LTspice</span>
+                    <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs font-medium">Control Systems</span>
+                    <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs font-medium">MATLAB</span>
+                  </div>
+                </div>
+              </div>
+            </Card>
+
+            {/* C++ Programming Project */}
+            <Card className="overflow-hidden bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700 hover:shadow-lg transition-shadow">
+              <div className="bg-gradient-to-r from-accent-teal to-slate-dark p-6 text-white">
+                <h3 className="text-2xl font-bold mb-2">C++ Embedded Systems Programming</h3>
+                <p className="text-sm opacity-90">Ongoing Learning & Development</p>
+              </div>
+              <div className="p-6">
+                <p className="text-gray-700 dark:text-gray-300 mb-4">
+                  Actively developing proficiency in C++ programming with focus on embedded systems applications and circuit simulation. Building foundational knowledge for real-time systems and microcontroller programming.
+                </p>
+                <div className="mb-4">
+                  <h4 className="font-semibold text-slate-900 dark:text-white mb-2">Learning Focus:</h4>
+                  <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                    <li className="flex items-start gap-2">
+                      <span className="text-accent-teal mt-1">•</span>
+                      <span>Object-oriented programming principles and design patterns</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-accent-teal mt-1">•</span>
+                      <span>Embedded systems development and microcontroller programming</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-accent-teal mt-1">•</span>
+                      <span>Circuit simulation and real-time system applications</span>
+                    </li>
+                  </ul>
+                </div>
+                <div className="mb-4">
+                  <h4 className="font-semibold text-slate-900 dark:text-white mb-2">Skills Developed:</h4>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="px-3 py-1 bg-teal-100 dark:bg-teal-900 text-teal-800 dark:text-teal-200 rounded-full text-xs font-medium">C++ (81%)</span>
+                    <span className="px-3 py-1 bg-teal-100 dark:bg-teal-900 text-teal-800 dark:text-teal-200 rounded-full text-xs font-medium">Embedded Systems</span>
+                    <span className="px-3 py-1 bg-teal-100 dark:bg-teal-900 text-teal-800 dark:text-teal-200 rounded-full text-xs font-medium">Problem Solving</span>
+                  </div>
+                </div>
+              </div>
+            </Card>
           </div>
         </div>
       </section>
