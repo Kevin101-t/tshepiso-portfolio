@@ -403,7 +403,7 @@ export default function Home() {
           
           <div className="grid md:grid-cols-2 gap-8">
             {/* DC Motor Hoist Project */}
-            <Card className="overflow-hidden bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700 hover:shadow-lg transition-shadow">
+            <Card className="overflow-hidden bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700 hover:shadow-lg transition-shadow block-animate" ref={useScrollAnimation().ref}>
               <div className="bg-gradient-to-r from-slate-dark to-accent-teal p-6 text-white">
                 <h3 className="text-2xl font-bold mb-2">DC Motor Hoist System Optimization</h3>
                 <p className="text-sm opacity-90">Electrical Engineering Design Project</p>
@@ -442,7 +442,7 @@ export default function Home() {
             </Card>
 
             {/* C++ Programming Project */}
-            <Card className="overflow-hidden bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700 hover:shadow-lg transition-shadow">
+            <Card className="overflow-hidden bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700 hover:shadow-lg transition-shadow block-animate" ref={useScrollAnimation().ref}>
               <div className="bg-gradient-to-r from-accent-teal to-slate-dark p-6 text-white">
                 <h3 className="text-2xl font-bold mb-2">C++ Embedded Systems Programming</h3>
                 <p className="text-sm opacity-90">Ongoing Learning & Development</p>
@@ -493,27 +493,27 @@ export default function Home() {
 
       {/* Interests Section - FIXED DARK MODE */}
       <section className="py-20 bg-white dark:bg-slate-900">
-        <div className="container" ref={useScrollAnimation().ref}>
+        <div className="container">
           <h2 className="text-4xl font-bold text-slate-dark dark:text-white mb-8">Interests & Passions</h2>
           <div className="divider-accent mb-12"></div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="p-6 bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700">
+            <Card className="p-6 bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700 block-animate" ref={useScrollAnimation().ref}>
               <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Circuit Design</h3>
               <p className="text-gray-600 dark:text-gray-400">Passionate about designing efficient and innovative electrical circuits</p>
             </Card>
-            <Card className="p-6 bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700">
+            <Card className="p-6 bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700 block-animate" ref={useScrollAnimation().ref}>
               <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Embedded Systems</h3>
               <p className="text-gray-600 dark:text-gray-400">Fascinated by programming microcontrollers and IoT applications with cutting-edge technologies</p>
             </Card>
-            <Card className="p-6 bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700">
+            <Card className="p-6 bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700 block-animate" ref={useScrollAnimation().ref}>
               <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Machine Learning & AI</h3>
               <p className="text-gray-600 dark:text-gray-400">Architecting intelligent systems that combine electrical engineering with AI-driven automation</p>
             </Card>
-            <Card className="p-6 bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700">
+            <Card className="p-6 bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700 block-animate" ref={useScrollAnimation().ref}>
               <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Problem Solving</h3>
               <p className="text-gray-600 dark:text-gray-400">Love tackling complex engineering challenges with creative, innovative solutions</p>
             </Card>
-            <Card className="p-6 bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700">
+            <Card className="p-6 bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700 block-animate" ref={useScrollAnimation().ref}>
               <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Mentoring</h3>
               <p className="text-gray-600 dark:text-gray-400">Dedicated to helping others understand engineering concepts and unlock their potential</p>
             </Card>
