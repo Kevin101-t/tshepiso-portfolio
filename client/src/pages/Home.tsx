@@ -261,6 +261,15 @@ export default function Home() {
                       <div className="progress-bar-green h-2 rounded-full" style={{ width: '61%' }}></div>
                     </div>
                   </div>
+                  <div>
+                    <div className="flex justify-between mb-2">
+                      <span className="font-medium text-slate-900 dark:text-white">Claude Code</span>
+                      <span className="text-sm text-gray-600 dark:text-white">Coming Soon</span>
+                    </div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div className="progress-bar-green h-2 rounded-full" style={{ width: '0%' }}></div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -392,7 +401,7 @@ export default function Home() {
               <Card className="p-6 bg-white dark:bg-slate-900 border-0 dark:border dark:border-gray-700 hover:shadow-lg transition-smooth cursor-pointer">
                 <Phone className="w-6 h-6 text-accent-teal mb-4" />
                 <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Phone</h3>
-                <p className="text-gray-600 dark:text-gray-400">+27 68 123 4567</p>
+                <p className="text-gray-600 dark:text-gray-400">+27 65 6460 357</p>
               </Card>
               <Card className="p-6 bg-white dark:bg-slate-900 border-0 dark:border dark:border-gray-700 hover:shadow-lg transition-smooth cursor-pointer">
                 <Mail className="w-6 h-6 text-accent-teal mb-4" />
