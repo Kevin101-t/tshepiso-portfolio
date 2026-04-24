@@ -86,27 +86,38 @@ const timelineEvents: TimelineEvent[] = [
   }
 ];
 
-// Scroll animation hook
+// Scroll animation hook with scroll direction detection
 const useScrollAnimation = () => {
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const lastScrollYRef = useRef(0);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          if (entry.target instanceof HTMLElement) {
-            entry.target.classList.add('scroll-fade-in');
-          }
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.1 }
-    );
+    const handleScroll = () => {
+      if (!ref.current) return;
+      
+      const currentScrollY = window.scrollY;
+      const isScrollingDown = currentScrollY > lastScrollYRef.current;
+      lastScrollYRef.current = currentScrollY;
 
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
+      const rect = ref.current.getBoundingClientRect();
+      const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+
+      if (isInViewport) {
+        ref.current.classList.remove('scroll-fade-in', 'scroll-fade-in-reverse');
+        
+        if (isScrollingDown) {
+          ref.current.classList.add('scroll-fade-in');
+        } else {
+          ref.current.classList.add('scroll-fade-in-reverse');
+        }
+        
+        setIsVisible(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return { ref, isVisible };
