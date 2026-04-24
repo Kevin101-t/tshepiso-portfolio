@@ -46,13 +46,13 @@ const timelineEvents: TimelineEvent[] = [
     date: '2023',
     dateRange: 'June 2023 - Present',
     title: 'Freelance Tutor',
-    subtitle: 'Self-Employed',
+    subtitle: 'Self-Employed | Transforming Complex Concepts into Clarity',
     type: 'experience',
     status: 'current',
     description: [
-      'Offer tutoring in Mathematics, Physics, and Chemistry at university and high school levels',
-      'Specialize in simplifying abstract concepts using real-world analogies and interactive problem-solving',
-      'Develop personalized learning strategies tailored to individual student needs'
+      'Deliver engaging tutoring in Mathematics, Physics, and Chemistry at university and high school levels with proven track record of improving student performance',
+      'Master the art of translating abstract concepts into intuitive understanding through real-world analogies, interactive problem-solving, and hands-on demonstrations',
+      'Craft personalized learning strategies that adapt to each student\'s unique learning style, pace, and goals—ensuring breakthrough moments and lasting comprehension'
     ]
   },
   {
@@ -94,7 +94,7 @@ export default function Home() {
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-white/95 dark:bg-slate-950/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
         <div className="container flex items-center justify-between py-4">
-          <div className="text-2xl font-bold text-slate-dark dark:text-white">Tshepiso Phoku</div>
+          <div className="text-2xl font-bold text-slate-dark dark:text-white">Tshepiso Kevin Phoku</div>
           <div className="flex items-center gap-8">
             <div className="hidden md:flex gap-8">
               <a href="#about" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-smooth">About</a>
@@ -124,7 +124,7 @@ export default function Home() {
                 Electrical Engineering Excellence
               </h1>
               <p className="text-xl text-blue-100 mb-8 leading-relaxed">
-                Passionate about designing innovative circuit solutions and optimizing embedded systems. Ready to transform complex engineering challenges into elegant, efficient solutions.
+                Passionate about designing innovative circuit solutions, optimizing embedded systems, and architecting intelligent AI-driven applications. Ready to transform complex engineering challenges into elegant, efficient solutions that push the boundaries of what's possible.
               </p>
               <div className="flex gap-4">
                 <a href="#contact" className="bg-accent-teal hover:bg-blue-400 text-white px-8 py-3 rounded-lg font-semibold transition-smooth flex items-center gap-2">
@@ -169,7 +169,7 @@ export default function Home() {
               <Card className="p-6 shadow-elevated bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700">
                 <Lightbulb className="w-8 h-8 text-accent-teal mb-4" />
                 <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Innovation-Driven</h3>
-                <p className="text-gray-600 dark:text-gray-400">Designing efficient circuits and optimizing systems for real-world impact</p>
+                <p className="text-gray-600 dark:text-gray-400">Designing efficient circuits, architecting AI-driven solutions, and optimizing systems for real-world impact and intelligent automation</p>
               </Card>
               <Card className="p-6 shadow-elevated bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700">
                 <Users className="w-8 h-8 text-accent-teal mb-4" />
@@ -252,6 +252,15 @@ export default function Home() {
                       <div className="progress-bar-green h-2 rounded-full" style={{ width: '55%' }}></div>
                     </div>
                   </div>
+                  <div>
+                    <div className="flex justify-between mb-2">
+                      <span className="font-medium text-slate-900 dark:text-white">Assembly</span>
+                      <span className="text-sm text-gray-600 dark:text-white">61%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                      <div className="progress-bar-green h-2 rounded-full" style={{ width: '61%' }}></div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -273,6 +282,10 @@ export default function Home() {
                   <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
                     <span className="text-accent-teal">✓</span>
                     <span className="text-slate-900 dark:text-white">MATLAB/Simulink</span>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
+                    <span className="text-accent-teal">✓</span>
+                    <span className="text-slate-900 dark:text-white">Proteus Design Suite</span>
                   </div>
                 </div>
               </div>
@@ -343,15 +356,19 @@ export default function Home() {
             </Card>
             <Card className="p-6 bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700">
               <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Embedded Systems</h3>
-              <p className="text-gray-600 dark:text-gray-400">Fascinated by programming microcontrollers and IoT applications</p>
+              <p className="text-gray-600 dark:text-gray-400">Fascinated by programming microcontrollers and IoT applications with cutting-edge technologies</p>
+            </Card>
+            <Card className="p-6 bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700">
+              <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Machine Learning & AI</h3>
+              <p className="text-gray-600 dark:text-gray-400">Architecting intelligent systems that combine electrical engineering with AI-driven automation</p>
             </Card>
             <Card className="p-6 bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700">
               <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Problem Solving</h3>
-              <p className="text-gray-600 dark:text-gray-400">Love tackling complex engineering challenges with creative solutions</p>
+              <p className="text-gray-600 dark:text-gray-400">Love tackling complex engineering challenges with creative, innovative solutions</p>
             </Card>
             <Card className="p-6 bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700">
               <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Mentoring</h3>
-              <p className="text-gray-600 dark:text-gray-400">Dedicated to helping others understand engineering concepts</p>
+              <p className="text-gray-600 dark:text-gray-400">Dedicated to helping others understand engineering concepts and unlock their potential</p>
             </Card>
           </div>
         </div>
@@ -364,20 +381,23 @@ export default function Home() {
           <div className="divider-accent mb-12"></div>
           
           <div className="max-w-2xl">
+            <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">
+              Ready to collaborate on groundbreaking projects? Whether you're looking for a driven electrical engineer, an innovative problem-solver, or someone passionate about AI-driven systems, I'm excited to connect!
+            </p>
             <p className="text-lg text-gray-700 dark:text-gray-300 mb-12">
-              I'm always interested in connecting with recruiters, mentors, and fellow engineering enthusiasts. Feel free to reach out through any of the channels below.
+              Let's discuss how I can contribute to your team's success. Reach out through any channel below—I respond quickly and am always eager to explore new opportunities.
             </p>
 
             <div className="grid md:grid-cols-2 gap-6 mb-12">
               <Card className="p-6 bg-white dark:bg-slate-900 border-0 dark:border dark:border-gray-700 hover:shadow-lg transition-smooth cursor-pointer">
                 <Phone className="w-6 h-6 text-accent-teal mb-4" />
                 <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Phone</h3>
-                <p className="text-gray-600 dark:text-gray-400">+27 (0) 68 123 4567</p>
+                <p className="text-gray-600 dark:text-gray-400">+27 68 123 4567</p>
               </Card>
               <Card className="p-6 bg-white dark:bg-slate-900 border-0 dark:border dark:border-gray-700 hover:shadow-lg transition-smooth cursor-pointer">
                 <Mail className="w-6 h-6 text-accent-teal mb-4" />
                 <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Email</h3>
-                <p className="text-gray-600 dark:text-gray-400">tshepiso.phoku@wits.ac.za</p>
+                <p className="text-gray-600 dark:text-gray-400">2837716@students.wits.ac.za</p>
               </Card>
               <a href="https://www.linkedin.com/in/tshepiso-kevin-phoku-6517533a4/" target="_blank" rel="noopener noreferrer">
                 <Card className="p-6 bg-white dark:bg-slate-900 border-0 dark:border dark:border-gray-700 hover:shadow-lg transition-smooth cursor-pointer h-full">
