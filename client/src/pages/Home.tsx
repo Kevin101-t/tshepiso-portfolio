@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Code2, Zap, Users, BookOpen, ArrowUpRight, Moon, Sun, Lightbulb, Cpu, Wrench } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Timeline from "@/components/Timeline";
 import Certificates from "@/components/Certificates";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -10,6 +10,7 @@ import { useTheme } from "@/contexts/ThemeContext";
  * Color Palette: Deep slate blue (#1e3a5f) + Vibrant teal (#0ea5e9)
  * Typography: Poppins (display) + Inter (body)
  * Dark Mode: Full support with proper contrast
+ * Animations: Smooth scroll-in from bottom-left with staggered timing
  */
 
 const heroBackgroundUrl = "https://d2xsxph8kpxj0f.cloudfront.net/310519663588749976/VqtRsrvp8AWWYW82Ld27rf/hero-engineering-background-gPuKqdoFABjZWmGzkQ2Z5t.webp";
@@ -85,6 +86,29 @@ const timelineEvents: TimelineEvent[] = [
   }
 ];
 
+// Scroll animation hook
+const useScrollAnimation = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return { ref, isVisible };
+};
+
 export default function Home() {
   const [activeTab, setActiveTab] = useState("skills");
   const { theme, toggleTheme } = useTheme();
@@ -147,7 +171,7 @@ export default function Home() {
       {/* About Section - FIXED DARK MODE */}
       <section id="about" className="py-20 bg-white dark:bg-slate-900">
         <div className="container">
-          <div className="max-w-3xl">
+          <div className="max-w-3xl scroll-fade-in">
             <h2 className="text-4xl font-bold text-slate-dark dark:text-white mb-8">About Me</h2>
             <div className="divider-accent mb-8"></div>
             
@@ -186,9 +210,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Dynamic Timeline Section */}
+      {/* Journey Timeline Section */}
       <section id="timeline" className="py-20 bg-gray-50 dark:bg-slate-800">
-        <div className="container">
+        <div className="container scroll-fade-in">
           <h2 className="text-4xl font-bold text-slate-dark dark:text-white mb-8">My Journey</h2>
           <div className="divider-accent mb-12"></div>
           
@@ -201,9 +225,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Skills Section - FIXED DARK MODE */}
+      {/* Skills Section */}
       <section id="skills" className="py-20 bg-white dark:bg-slate-900">
-        <div className="container">
+        <div className="container scroll-fade-in">
           <h2 className="text-4xl font-bold text-slate-dark dark:text-white mb-8">Skills & Competencies</h2>
           <div className="divider-accent mb-12"></div>
           
@@ -346,7 +370,7 @@ export default function Home() {
 
       {/* Projects Section */}
       <section id="projects" className="py-20 bg-white dark:bg-slate-900">
-        <div className="container">
+        <div className="container scroll-fade-in">
           <h2 className="text-4xl font-bold text-slate-dark dark:text-white mb-8">Featured Projects</h2>
           <div className="divider-accent mb-12"></div>
           
@@ -472,7 +496,7 @@ export default function Home() {
 
       {/* Contact Section - FIXED DARK MODE */}
       <section id="contact" className="py-20 bg-gray-50 dark:bg-slate-800">
-        <div className="container">
+        <div className="container scroll-fade-in">
           <h2 className="text-4xl font-bold text-slate-dark dark:text-white mb-8">Get in Touch</h2>
           <div className="divider-accent mb-12"></div>
           
