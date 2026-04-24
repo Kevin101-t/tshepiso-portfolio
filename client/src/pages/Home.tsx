@@ -471,7 +471,7 @@ export default function Home() {
 
       {/* Certificates Section */}
       <section id="certificates" className="py-20 bg-gray-50 dark:bg-slate-800">
-        <div className="container">
+        <div className="container" ref={useScrollAnimation().ref}>
           <h2 className="text-4xl font-bold text-slate-dark dark:text-white mb-8">Certificates & Achievements</h2>
           <div className="divider-accent mb-12"></div>
           <Certificates />
@@ -480,7 +480,7 @@ export default function Home() {
 
       {/* Interests Section - FIXED DARK MODE */}
       <section className="py-20 bg-white dark:bg-slate-900">
-        <div className="container">
+        <div className="container" ref={useScrollAnimation().ref}>
           <h2 className="text-4xl font-bold text-slate-dark dark:text-white mb-8">Interests & Passions</h2>
           <div className="divider-accent mb-12"></div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
