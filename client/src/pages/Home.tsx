@@ -96,6 +96,9 @@ const useScrollAnimation = () => {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
+          if (entry.target instanceof HTMLElement) {
+            entry.target.classList.add('scroll-fade-in');
+          }
           observer.unobserve(entry.target);
         }
       },
@@ -171,7 +174,7 @@ export default function Home() {
       {/* About Section - FIXED DARK MODE */}
       <section id="about" className="py-20 bg-white dark:bg-slate-900">
         <div className="container">
-          <div className="max-w-3xl scroll-fade-in">
+          <div className="max-w-3xl" ref={useScrollAnimation().ref}>
             <h2 className="text-4xl font-bold text-slate-dark dark:text-white mb-8">About Me</h2>
             <div className="divider-accent mb-8"></div>
             
@@ -212,7 +215,7 @@ export default function Home() {
 
       {/* Journey Timeline Section */}
       <section id="timeline" className="py-20 bg-gray-50 dark:bg-slate-800">
-        <div className="container scroll-fade-in">
+        <div className="container" ref={useScrollAnimation().ref}>
           <h2 className="text-4xl font-bold text-slate-dark dark:text-white mb-8">My Journey</h2>
           <div className="divider-accent mb-12"></div>
           
@@ -227,7 +230,7 @@ export default function Home() {
 
       {/* Skills Section */}
       <section id="skills" className="py-20 bg-white dark:bg-slate-900">
-        <div className="container scroll-fade-in">
+        <div className="container" ref={useScrollAnimation().ref}>
           <h2 className="text-4xl font-bold text-slate-dark dark:text-white mb-8">Skills & Competencies</h2>
           <div className="divider-accent mb-12"></div>
           
@@ -370,7 +373,7 @@ export default function Home() {
 
       {/* Projects Section */}
       <section id="projects" className="py-20 bg-white dark:bg-slate-900">
-        <div className="container scroll-fade-in">
+        <div className="container" ref={useScrollAnimation().ref}>
           <h2 className="text-4xl font-bold text-slate-dark dark:text-white mb-8">Featured Projects</h2>
           <div className="divider-accent mb-12"></div>
           
@@ -496,7 +499,7 @@ export default function Home() {
 
       {/* Contact Section - FIXED DARK MODE */}
       <section id="contact" className="py-20 bg-gray-50 dark:bg-slate-800">
-        <div className="container scroll-fade-in">
+        <div className="container" ref={useScrollAnimation().ref}>
           <h2 className="text-4xl font-bold text-slate-dark dark:text-white mb-8">Get in Touch</h2>
           <div className="divider-accent mb-12"></div>
           
