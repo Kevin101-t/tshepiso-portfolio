@@ -216,59 +216,29 @@ export default function Home() {
                   Programming Languages
                 </h3>
                 <div className="space-y-4">
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <span className="font-medium text-slate-900 dark:text-white">C++</span>
-                      <span className="text-sm text-gray-600 dark:text-white">81%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div className="progress-bar-green h-2 rounded-full" style={{ width: '81%' }}></div>
-                    </div>
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
+                    <span className="text-accent-teal">✓</span>
+                    <span className="text-slate-900 dark:text-white">C++</span>
                   </div>
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <span className="font-medium text-slate-900 dark:text-white">Python</span>
-                      <span className="text-sm text-gray-600 dark:text-white">76%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div className="progress-bar-green h-2 rounded-full" style={{ width: '76%' }}></div>
-                    </div>
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
+                    <span className="text-accent-teal">✓</span>
+                    <span className="text-slate-900 dark:text-white">Python</span>
                   </div>
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <span className="font-medium text-slate-900 dark:text-white">MATLAB</span>
-                      <span className="text-sm text-gray-600 dark:text-white">78%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div className="progress-bar-green h-2 rounded-full" style={{ width: '78%' }}></div>
-                    </div>
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
+                    <span className="text-accent-teal">✓</span>
+                    <span className="text-slate-900 dark:text-white">MATLAB</span>
                   </div>
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <span className="font-medium text-slate-900 dark:text-white">Machine Learning</span>
-                      <span className="text-sm text-gray-600 dark:text-white">55%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div className="progress-bar-green h-2 rounded-full" style={{ width: '55%' }}></div>
-                    </div>
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
+                    <span className="text-accent-teal">✓</span>
+                    <span className="text-slate-900 dark:text-white">Machine Learning</span>
                   </div>
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <span className="font-medium text-slate-900 dark:text-white">Assembly</span>
-                      <span className="text-sm text-gray-600 dark:text-white">61%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div className="progress-bar-green h-2 rounded-full" style={{ width: '61%' }}></div>
-                    </div>
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
+                    <span className="text-accent-teal">✓</span>
+                    <span className="text-slate-900 dark:text-white">Assembly</span>
                   </div>
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <span className="font-medium text-slate-900 dark:text-white">Claude Code</span>
-                      <span className="text-sm text-gray-600 dark:text-white">Coming Soon</span>
-                    </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div className="progress-bar-green h-2 rounded-full" style={{ width: '0%' }}></div>
-                    </div>
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
+                    <span className="text-accent-teal">✓</span>
+                    <span className="text-slate-900 dark:text-white">Claude Code (Coming Soon)</span>
                   </div>
                 </div>
               </div>
