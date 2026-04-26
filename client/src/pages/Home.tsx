@@ -104,15 +104,21 @@ const useScrollAnimation = () => {
       const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
 
       if (isInViewport) {
+        // Remove animation classes to reset animation
         ref.current.classList.remove('scroll-fade-in', 'scroll-fade-in-reverse');
+        
+        // Trigger reflow to restart animation
+        void ref.current.offsetWidth;
         
         if (isScrollingDown) {
           ref.current.classList.add('scroll-fade-in');
         } else {
           ref.current.classList.add('scroll-fade-in-reverse');
         }
-        
         setIsVisible(true);
+      } else if (!isInViewport && isVisible) {
+        ref.current.classList.remove('scroll-fade-in', 'scroll-fade-in-reverse');
+        setIsVisible(false);
       }
     };
 
