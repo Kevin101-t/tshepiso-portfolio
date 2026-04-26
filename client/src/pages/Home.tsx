@@ -103,16 +103,25 @@ const useScrollAnimation = () => {
       const rect = ref.current.getBoundingClientRect();
       const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
 
-      if (isInViewport && !isVisible) {
-        // Animate only once when first entering viewport
+      if (isInViewport) {
+        // Remove animation classes to reset
+        ref.current.classList.remove('scroll-fade-in', 'scroll-fade-in-reverse');
+        
+        // Force reflow to restart animation
+        void ref.current.offsetWidth;
+        
+        // Add animation based on scroll direction
         if (isScrollingDown) {
           ref.current.classList.add('scroll-fade-in');
         } else {
           ref.current.classList.add('scroll-fade-in-reverse');
         }
         setIsVisible(true);
+      } else if (!isInViewport && isVisible) {
+        // Remove classes when element leaves viewport
+        ref.current.classList.remove('scroll-fade-in', 'scroll-fade-in-reverse');
+        setIsVisible(false);
       }
-      // Once animated, keep the animation classes - do not remove them
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
