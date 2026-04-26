@@ -332,6 +332,39 @@
     opacity: 0;
   }
 
+  /* Page stretch animations */
+  @keyframes pageStretchTop {
+    0% {
+      transform: scaleY(0.95);
+      opacity: 0;
+    }
+    100% {
+      transform: scaleY(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes pageStretchBottom {
+    0% {
+      transform: scaleY(0.95);
+      opacity: 0;
+    }
+    100% {
+      transform: scaleY(1);
+      opacity: 1;
+    }
+  }
+
+  .page-stretch-top {
+    animation: pageStretchTop 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    transform-origin: top;
+  }
+
+  .page-stretch-bottom {
+    animation: pageStretchBottom 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    transform-origin: bottom;
+  }
+
   @media (min-width: 640px) {
     .container {
       padding-left: 1.5rem; /* 24px - tablet padding */

@@ -103,25 +103,16 @@ const useScrollAnimation = () => {
       const rect = ref.current.getBoundingClientRect();
       const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
 
-      if (isInViewport) {
-        // Remove animation classes to reset
-        ref.current.classList.remove('scroll-fade-in', 'scroll-fade-in-reverse');
-        
-        // Force reflow to restart animation
-        void ref.current.offsetWidth;
-        
-        // Add animation based on scroll direction
+      if (isInViewport && !isVisible) {
+        // Animate only once when first entering viewport
         if (isScrollingDown) {
           ref.current.classList.add('scroll-fade-in');
         } else {
           ref.current.classList.add('scroll-fade-in-reverse');
         }
         setIsVisible(true);
-      } else if (!isInViewport && isVisible) {
-        // Remove classes when element leaves viewport
-        ref.current.classList.remove('scroll-fade-in', 'scroll-fade-in-reverse');
-        setIsVisible(false);
       }
+      // Once animated, keep the animation classes - do not remove them
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -501,7 +492,7 @@ export default function Home() {
 
       {/* Interests Section - FIXED DARK MODE */}
       <section className="py-20 bg-white dark:bg-slate-900">
-        <div className="container">
+        <div className="container" ref={useScrollAnimation().ref}>
           <h2 className="text-4xl font-bold text-slate-dark dark:text-white mb-8">Interests & Passions</h2>
           <div className="divider-accent mb-12"></div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
