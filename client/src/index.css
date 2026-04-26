@@ -332,37 +332,35 @@
     opacity: 0;
   }
 
-  /* Page stretch animations */
+  /* Page stretch animations - subtle breathing effect */
   @keyframes pageStretchTop {
     0% {
-      transform: scaleY(0.95);
-      opacity: 0;
+      transform: translateY(-2px);
+      opacity: 0.95;
     }
     100% {
-      transform: scaleY(1);
+      transform: translateY(0);
       opacity: 1;
     }
   }
 
   @keyframes pageStretchBottom {
     0% {
-      transform: scaleY(0.95);
-      opacity: 0;
+      transform: translateY(2px);
+      opacity: 0.95;
     }
     100% {
-      transform: scaleY(1);
+      transform: translateY(0);
       opacity: 1;
     }
   }
 
   .page-stretch-top {
-    animation: pageStretchTop 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-    transform-origin: top;
+    animation: pageStretchTop 0.4s ease-out forwards;
   }
 
   .page-stretch-bottom {
-    animation: pageStretchBottom 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-    transform-origin: bottom;
+    animation: pageStretchBottom 0.4s ease-out forwards;
   }
 
   @media (min-width: 640px) {
