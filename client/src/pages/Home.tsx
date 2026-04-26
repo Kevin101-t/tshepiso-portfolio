@@ -125,9 +125,29 @@ const useScrollAnimation = () => {
 export default function Home() {
   const [activeTab, setActiveTab] = useState("skills");
   const { theme, toggleTheme } = useTheme();
+  const pageRef = useRef<HTMLDivElement>(null);
+  const [pageStretchClass, setPageStretchClass] = useState('');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+
+      if (scrollTop < 50) {
+        setPageStretchClass('page-stretch-top');
+      } else if (scrollTop > scrollHeight - 50) {
+        setPageStretchClass('page-stretch-bottom');
+      } else {
+        setPageStretchClass('');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-gray-100">
+    <div ref={pageRef} className={`min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-gray-100 ${pageStretchClass}`}>
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-white/95 dark:bg-slate-950/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
         <div className="container flex items-center justify-between py-4">
