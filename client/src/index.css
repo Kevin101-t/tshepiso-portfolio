@@ -254,20 +254,20 @@
   }
 
   .scroll-fade-in {
-    animation: slideInFromBottomLeft 1.088s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation: slideInFromBottomLeft 0.653s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   }
 
   .scroll-fade-in-reverse {
-    animation: slideInFromTopRight 1.088s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation: slideInFromTopRight 0.653s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   }
 
   /* Individual block animations */
   .block-animate {
-    animation: slideInFromBottomLeft 1.088s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation: slideInFromBottomLeft 0.653s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   }
 
   .block-animate-reverse {
-    animation: slideInFromTopRight 1.088s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation: slideInFromTopRight 0.653s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   }
 
   /* Hero background animations */
