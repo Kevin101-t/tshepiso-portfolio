@@ -129,17 +129,22 @@ export default function Home() {
   const [pageStretchClass, setPageStretchClass] = useState('');
 
   useEffect(() => {
+    let lastScrollY = 0;
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const isScrollingUp = scrollTop < lastScrollY;
+      const isScrollingDown = scrollTop > lastScrollY;
 
-      if (scrollTop < 50) {
+      if (scrollTop < 50 && isScrollingUp) {
         setPageStretchClass('page-stretch-top');
-      } else if (scrollTop > scrollHeight - 50) {
+        setTimeout(() => setPageStretchClass(''), 600);
+      } else if (scrollTop > scrollHeight - 50 && isScrollingDown) {
         setPageStretchClass('page-stretch-bottom');
-      } else {
-        setPageStretchClass('');
+        setTimeout(() => setPageStretchClass(''), 600);
       }
+      
+      lastScrollY = scrollTop;
     };
 
     window.addEventListener('scroll', handleScroll);
