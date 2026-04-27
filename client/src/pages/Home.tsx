@@ -1,4 +1,3 @@
-import { Card } from "@/components/ui/card";
 import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Code2, Zap, Users, BookOpen, ArrowUpRight, Moon, Sun, Lightbulb, Cpu, Wrench } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import Timeline from "@/components/Timeline";
@@ -126,62 +125,48 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState("skills");
   const { theme, toggleTheme } = useTheme();
   const pageRef = useRef<HTMLDivElement>(null);
-  const [pageStretchClass, setPageStretchClass] = useState('');
 
   useEffect(() => {
-    let lastScrollY = 0;
-    let stretchAmount = 0;
-    let animationFrameId: number | null = null;
+    let isAnimating = false;
 
-    const handleScroll = () => {
+    const handleWheel = (e: WheelEvent) => {
       const scrollTop = window.scrollY;
       const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const isScrollingUp = scrollTop < lastScrollY;
-      const isScrollingDown = scrollTop > lastScrollY;
+      const isAtTop = scrollTop <= 0;
+      const isAtBottom = scrollTop >= scrollHeight - 10;
+      const isScrollingDown = e.deltaY > 0;
+      const isScrollingUp = e.deltaY < 0;
 
-      // Top boundary stretch
-      if (scrollTop === 0 && isScrollingUp) {
-        stretchAmount = Math.min(stretchAmount + 5, 40);
-        if (pageRef.current) {
-          pageRef.current.style.transform = `scaleY(${1 + stretchAmount / 1000}) translateY(${stretchAmount}px)`;
-          pageRef.current.style.transformOrigin = 'top center';
-        }
-      }
-      // Bottom boundary stretch
-      else if (scrollTop >= scrollHeight && isScrollingDown) {
-        stretchAmount = Math.min(stretchAmount + 5, 40);
-        if (pageRef.current) {
-          pageRef.current.style.transform = `scaleY(${1 + stretchAmount / 1000}) translateY(-${stretchAmount}px)`;
-          pageRef.current.style.transformOrigin = 'bottom center';
-        }
-      }
-      // Release and bounce back
-      else if (stretchAmount > 0) {
-        stretchAmount = Math.max(stretchAmount - 3, 0);
-        if (pageRef.current) {
-          if (lastScrollY === 0) {
-            pageRef.current.style.transform = `scaleY(${1 + stretchAmount / 1000}) translateY(${stretchAmount}px)`;
-            pageRef.current.style.transformOrigin = 'top center';
-          } else {
-            pageRef.current.style.transform = `scaleY(${1 + stretchAmount / 1000}) translateY(-${stretchAmount}px)`;
-            pageRef.current.style.transformOrigin = 'bottom center';
+      // Top boundary - trying to scroll up when already at top
+      if (isAtTop && isScrollingUp && !isAnimating && pageRef.current) {
+        isAnimating = true;
+        pageRef.current.classList.add('page-stretch-top');
+        setTimeout(() => {
+          if (pageRef.current) {
+            pageRef.current.classList.remove('page-stretch-top');
+            isAnimating = false;
           }
-        }
-      } else {
-        if (pageRef.current) {
-          pageRef.current.style.transform = 'none';
-        }
+        }, 600);
       }
-      
-      lastScrollY = scrollTop;
+      // Bottom boundary - trying to scroll down when already at bottom
+      else if (isAtBottom && isScrollingDown && !isAnimating && pageRef.current) {
+        isAnimating = true;
+        pageRef.current.classList.add('page-stretch-bottom');
+        setTimeout(() => {
+          if (pageRef.current) {
+            pageRef.current.classList.remove('page-stretch-bottom');
+            isAnimating = false;
+          }
+        }, 600);
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('wheel', handleWheel, { passive: true });
+    return () => window.removeEventListener('wheel', handleWheel);
   }, []);
 
   return (
-    <div ref={pageRef} className={`min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-gray-100 ${pageStretchClass}`} style={{ transition: 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)' }}>
+    <div ref={pageRef} className={`min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-gray-100`}>
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-white/95 dark:bg-slate-950/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
         <div className="container flex items-center justify-between py-4">
@@ -248,200 +233,134 @@ export default function Home() {
         </div>
       </section>
 
-      {/* About Section - FIXED DARK MODE */}
-      <section id="about" className="py-20 bg-white dark:bg-slate-900">
+      {/* About Section */}
+      <section id="about" className="py-20 bg-white dark:bg-slate-950">
         <div className="container">
-          <div className="max-w-3xl" ref={useScrollAnimation().ref}>
-            <h2 className="text-4xl font-bold text-slate-dark dark:text-white mb-8">About Me</h2>
-            <div className="divider-accent mb-8"></div>
-            
-            <div className="space-y-6">
-              <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-4xl font-bold mb-6 text-slate-dark dark:text-white">About Me</h2>
+              <div className="w-16 h-1 bg-accent-teal mb-8"></div>
+              <p className="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
                 I am a second-year Electrical Engineering student at the University of the Witwatersrand, driven by a passion for circuit design, power systems, and embedded systems. My academic foundation spans circuit theory, electromagnetism, digital systems, and advanced programming—equipping me with both theoretical depth and practical problem-solving capabilities.
               </p>
-              
-              <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+              <p className="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
                 What sets me apart is my commitment to excellence beyond the classroom. I actively mentor fellow students, sharing complex concepts through clear explanations and real-world applications. My hands-on experience includes optimizing DC motor hoist systems for maximum efficiency and developing C++ solutions for embedded applications.
               </p>
-
               <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
                 I thrive in collaborative environments where innovation meets precision. Whether designing circuits, debugging code, or mentoring peers, I bring dedication, technical rigor, and a genuine passion for electrical engineering to every project.
               </p>
             </div>
-
-            <div className="grid md:grid-cols-3 gap-6 mt-12">
-              <Card className="p-6 shadow-elevated bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700">
-                <Lightbulb className="w-8 h-8 text-accent-teal mb-4" />
-                <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Innovation-Driven</h3>
-                <p className="text-gray-600 dark:text-gray-400">Designing efficient circuits, architecting AI-driven solutions, and optimizing systems for real-world impact and intelligent automation</p>
-              </Card>
-              <Card className="p-6 shadow-elevated bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700">
-                <Users className="w-8 h-8 text-accent-teal mb-4" />
-                <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Team Player</h3>
-                <p className="text-gray-600 dark:text-gray-400">Mentoring peers and fostering collaborative learning environments</p>
-              </Card>
-              <Card className="p-6 shadow-elevated bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700">
-                <Cpu className="w-8 h-8 text-accent-teal mb-4" />
-                <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Technical Depth</h3>
-                <p className="text-gray-600 dark:text-gray-400">Mastering embedded systems, C++ programming, and circuit optimization</p>
-              </Card>
+            <div className="grid grid-cols-1 gap-6">
+              <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 p-8 rounded-lg border border-blue-200 dark:border-blue-800">
+                <Lightbulb className="w-12 h-12 text-accent-teal mb-4" />
+                <h3 className="text-xl font-bold mb-3 text-slate-dark dark:text-white">Innovation-Driven</h3>
+                <p className="text-gray-700 dark:text-gray-300">Designing efficient circuits, architecting AI-driven solutions, and optimizing systems for real-world impact and intelligent automation</p>
+              </div>
+              <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 p-8 rounded-lg border border-blue-200 dark:border-blue-800">
+                <Users className="w-12 h-12 text-accent-teal mb-4" />
+                <h3 className="text-xl font-bold mb-3 text-slate-dark dark:text-white">Team Player</h3>
+                <p className="text-gray-700 dark:text-gray-300">Mentoring peers and fostering collaborative learning environments</p>
+              </div>
+              <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 p-8 rounded-lg border border-blue-200 dark:border-blue-800">
+                <Cpu className="w-12 h-12 text-accent-teal mb-4" />
+                <h3 className="text-xl font-bold mb-3 text-slate-dark dark:text-white">Technical Depth</h3>
+                <p className="text-gray-700 dark:text-gray-300">Mastering embedded systems, C++ programming, and circuit optimization</p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Journey Timeline Section */}
-      <section id="timeline" className="py-20 bg-gray-50 dark:bg-slate-800">
-        <div className="container" ref={useScrollAnimation().ref}>
-          <h2 className="text-4xl font-bold text-slate-dark dark:text-white mb-8">My Journey</h2>
-          <div className="divider-accent mb-12"></div>
-          
-          <div className="max-w-4xl mx-auto">
-            <p className="text-lg text-gray-700 dark:text-gray-300 mb-12 text-center">
-              Click on any milestone to explore the details of my educational and professional progression.
-            </p>
-            <Timeline events={timelineEvents} />
-          </div>
+      {/* Timeline Section */}
+      <section id="timeline" className="py-20 bg-gray-50 dark:bg-slate-900">
+        <div className="container">
+          <h2 className="text-4xl font-bold mb-4 text-slate-dark dark:text-white">My Journey</h2>
+          <p className="text-lg text-gray-600 dark:text-gray-400 mb-12">Click on any milestone to explore the details of my educational and professional progression.</p>
+          <Timeline events={timelineEvents} />
         </div>
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="py-20 bg-white dark:bg-slate-900">
-        <div className="container" ref={useScrollAnimation().ref}>
-          <h2 className="text-4xl font-bold text-slate-dark dark:text-white mb-8">Skills & Competencies</h2>
-          <div className="divider-accent mb-12"></div>
+      <section id="skills" className="py-20 bg-white dark:bg-slate-950">
+        <div className="container">
+          <h2 className="text-4xl font-bold mb-4 text-slate-dark dark:text-white">Skills & Competencies</h2>
+          <div className="w-16 h-1 bg-accent-teal mb-12"></div>
           
-          <div className="max-w-4xl">
-            <div className="grid md:grid-cols-2 gap-8">
-              {/* Technical Skills */}
-              <div>
-                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
-                  <Code2 className="w-5 h-5 text-accent-teal" />
-                  Programming Languages
-                </h3>
-                <div className="space-y-4">
-                  <div>
+          <div className="grid md:grid-cols-2 gap-12">
+            {/* Programming Languages */}
+            <div>
+              <h3 className="text-2xl font-bold mb-8 text-slate-dark dark:text-white flex items-center gap-3">
+                <Code2 className="w-6 h-6 text-accent-teal" />
+                Programming Languages
+              </h3>
+              <div className="space-y-6">
+                {[
+                  { name: 'C++', percentage: 81 },
+                  { name: 'Python', percentage: 76 },
+                  { name: 'MATLAB', percentage: 78 },
+                  { name: 'Machine Learning', percentage: 55 },
+                  { name: 'Assembly', percentage: 61 }
+                ].map((skill) => (
+                  <div key={skill.name}>
                     <div className="flex justify-between mb-2">
-                      <span className="font-medium text-slate-900 dark:text-white">C++</span>
-                      <span className="text-sm text-gray-600 dark:text-white">81%</span>
+                      <span className="font-semibold text-gray-800 dark:text-gray-200">{skill.name}</span>
+                      <span className="text-accent-teal font-bold">{skill.percentage}%</span>
                     </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div className="progress-bar-green h-2 rounded-full" style={{ width: '81%' }}></div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+                      <div 
+                        className="bg-gradient-to-r from-accent-teal to-blue-500 h-full rounded-full transition-all duration-500"
+                        style={{ width: `${skill.percentage}%` }}
+                      ></div>
                     </div>
                   </div>
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <span className="font-medium text-slate-900 dark:text-white">Python</span>
-                      <span className="text-sm text-gray-600 dark:text-white">76%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div className="progress-bar-green h-2 rounded-full" style={{ width: '76%' }}></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <span className="font-medium text-slate-900 dark:text-white">MATLAB</span>
-                      <span className="text-sm text-gray-600 dark:text-white">78%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div className="progress-bar-green h-2 rounded-full" style={{ width: '78%' }}></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <span className="font-medium text-slate-900 dark:text-white">Machine Learning</span>
-                      <span className="text-sm text-gray-600 dark:text-white">55%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div className="progress-bar-green h-2 rounded-full" style={{ width: '55%' }}></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <span className="font-medium text-slate-900 dark:text-white">Assembly</span>
-                      <span className="text-sm text-gray-600 dark:text-white">61%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div className="progress-bar-green h-2 rounded-full" style={{ width: '61%' }}></div>
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <span className="font-medium text-slate-900 dark:text-white">Claude Code</span>
-                      <span className="text-sm text-gray-600 dark:text-white">Coming Soon</span>
-                    </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div className="progress-bar-green h-2 rounded-full" style={{ width: '0%' }}></div>
-                    </div>
-                  </div>
+                ))}
+                <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                  <p className="text-gray-600 dark:text-gray-400 italic">
+                    <span className="font-semibold">Claude Code</span> - Coming Soon
+                  </p>
                 </div>
               </div>
+            </div>
 
-              {/* Engineering Tools */}
-              <div>
-                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
-                  <Zap className="w-5 h-5 text-accent-teal" />
-                  Engineering Tools
-                </h3>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
-                    <span className="text-accent-teal">✓</span>
-                    <span className="text-slate-900 dark:text-white">Multisim</span>
+            {/* Engineering Tools & Other Skills */}
+            <div>
+              <h3 className="text-2xl font-bold mb-8 text-slate-dark dark:text-white flex items-center gap-3">
+                <Wrench className="w-6 h-6 text-accent-teal" />
+                Engineering Tools
+              </h3>
+              <div className="grid grid-cols-2 gap-4 mb-8">
+                {['Multisim', 'LTspice', 'MATLAB/Simulink', 'Proteus Design Suite'].map((tool) => (
+                  <div key={tool} className="bg-blue-50 dark:bg-blue-950/30 p-4 rounded-lg border border-blue-200 dark:border-blue-800 flex items-center gap-2">
+                    <span className="text-accent-teal text-xl">✓</span>
+                    <span className="font-semibold text-gray-800 dark:text-gray-200">{tool}</span>
                   </div>
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
-                    <span className="text-accent-teal">✓</span>
-                    <span className="text-slate-900 dark:text-white">LTspice</span>
-                  </div>
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
-                    <span className="text-accent-teal">✓</span>
-                    <span className="text-slate-900 dark:text-white">MATLAB/Simulink</span>
-                  </div>
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
-                    <span className="text-accent-teal">✓</span>
-                    <span className="text-slate-900 dark:text-white">Proteus Design Suite</span>
-                  </div>
-                </div>
+                ))}
               </div>
 
-              {/* Office Tools */}
-              <div>
-                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-6">Office & Productivity</h3>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
-                    <span className="text-accent-teal">✓</span>
-                    <span className="text-slate-900 dark:text-white">Microsoft Word</span>
+              <h3 className="text-2xl font-bold mb-8 text-slate-dark dark:text-white flex items-center gap-3">
+                <BookOpen className="w-6 h-6 text-accent-teal" />
+                Office & Productivity
+              </h3>
+              <div className="grid grid-cols-2 gap-4 mb-8">
+                {['Microsoft Word', 'Microsoft Excel', 'Microsoft PowerPoint'].map((tool) => (
+                  <div key={tool} className="bg-blue-50 dark:bg-blue-950/30 p-4 rounded-lg border border-blue-200 dark:border-blue-800 flex items-center gap-2">
+                    <span className="text-accent-teal text-xl">✓</span>
+                    <span className="font-semibold text-gray-800 dark:text-gray-200">{tool}</span>
                   </div>
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
-                    <span className="text-accent-teal">✓</span>
-                    <span className="text-slate-900 dark:text-white">Microsoft Excel</span>
-                  </div>
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
-                    <span className="text-accent-teal">✓</span>
-                    <span className="text-slate-900 dark:text-white">Microsoft PowerPoint</span>
-                  </div>
-                </div>
+                ))}
               </div>
 
-              {/* Soft Skills */}
-              <div>
-                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
-                  <Wrench className="w-5 h-5 text-accent-teal" />
-                  Soft Skills
-                </h3>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
-                    <span className="text-accent-teal">✓</span>
-                    <span className="text-slate-900 dark:text-white">Problem-Solving</span>
+              <h3 className="text-2xl font-bold mb-8 text-slate-dark dark:text-white flex items-center gap-3">
+                <Zap className="w-6 h-6 text-accent-teal" />
+                Soft Skills
+              </h3>
+              <div className="grid grid-cols-2 gap-4">
+                {['Problem-Solving', 'Communication', 'Team Collaboration'].map((skill) => (
+                  <div key={skill} className="bg-blue-50 dark:bg-blue-950/30 p-4 rounded-lg border border-blue-200 dark:border-blue-800 flex items-center gap-2">
+                    <span className="text-accent-teal text-xl">✓</span>
+                    <span className="font-semibold text-gray-800 dark:text-gray-200">{skill}</span>
                   </div>
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
-                    <span className="text-accent-teal">✓</span>
-                    <span className="text-slate-900 dark:text-white">Communication</span>
-                  </div>
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded">
-                    <span className="text-accent-teal">✓</span>
-                    <span className="text-slate-900 dark:text-white">Team Collaboration</span>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
@@ -449,189 +368,208 @@ export default function Home() {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20 bg-white dark:bg-slate-900">
-        <div className="container" ref={useScrollAnimation().ref}>
-          <h2 className="text-4xl font-bold text-slate-dark dark:text-white mb-8">Featured Projects</h2>
-          <div className="divider-accent mb-12"></div>
+      <section className="py-20 bg-gray-50 dark:bg-slate-900">
+        <div className="container">
+          <h2 className="text-4xl font-bold mb-4 text-slate-dark dark:text-white">Featured Projects</h2>
+          <div className="w-16 h-1 bg-accent-teal mb-12"></div>
           
           <div className="grid md:grid-cols-2 gap-8">
-            {/* DC Motor Hoist Project */}
-            <Card className="overflow-hidden bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700 hover:shadow-lg transition-shadow block-animate" ref={useScrollAnimation().ref}>
-              <div className="bg-gradient-to-r from-slate-dark to-accent-teal p-6 text-white">
-                <h3 className="text-2xl font-bold mb-2">DC Motor Hoist System Optimization</h3>
-                <p className="text-sm opacity-90">Electrical Engineering Design Project</p>
+            {/* DC Motor Hoist */}
+            <div className="bg-white dark:bg-slate-950 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-shadow">
+              <div className="bg-gradient-to-br from-blue-500 to-cyan-500 h-32 flex items-center justify-center">
+                <Zap className="w-16 h-16 text-white opacity-30" />
               </div>
-              <div className="p-6">
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  Designed and optimized a DC motor hoist system to efficiently lift payloads with focus on torque optimization and system performance. This project demonstrates practical application of circuit theory, control systems, and mechanical engineering principles.
-                </p>
-                <div className="mb-4">
-                  <h4 className="font-semibold text-slate-900 dark:text-white mb-2">Key Achievements:</h4>
-                  <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                    <li className="flex items-start gap-2">
-                      <span className="text-accent-teal mt-1">•</span>
-                      <span>Optimized motor torque for maximum payload capacity</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-accent-teal mt-1">•</span>
-                      <span>Implemented circuit design using LTspice simulation</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-accent-teal mt-1">•</span>
-                      <span>Analyzed system performance and efficiency metrics</span>
-                    </li>
-                  </ul>
-                </div>
-                <div className="mb-4">
-                  <h4 className="font-semibold text-slate-900 dark:text-white mb-2">Technologies Used:</h4>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs font-medium">Circuit Design</span>
-                    <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs font-medium">LTspice</span>
-                    <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs font-medium">Control Systems</span>
-                    <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-xs font-medium">MATLAB</span>
-                  </div>
-                </div>
-              </div>
-            </Card>
+              <div className="p-8">
+                <h3 className="text-2xl font-bold mb-2 text-slate-dark dark:text-white">DC Motor Hoist System Optimization</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-4 font-semibold">Electrical Engineering Design Project</p>
+                <p className="text-gray-700 dark:text-gray-300 mb-6">Designed and optimized a DC motor hoist system to efficiently lift payloads with focus on torque optimization and system performance. This project demonstrates practical application of circuit theory, control systems, and mechanical engineering principles.</p>
+                
+                <h4 className="font-bold text-slate-dark dark:text-white mb-3">Key Achievements:</h4>
+                <ul className="space-y-2 mb-6 text-gray-700 dark:text-gray-300">
+                  <li className="flex items-start gap-2">
+                    <span className="text-accent-teal mt-1">•</span>
+                    <span>Optimized motor torque for maximum payload capacity</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-accent-teal mt-1">•</span>
+                    <span>Implemented circuit design using LTspice simulation</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-accent-teal mt-1">•</span>
+                    <span>Analyzed system performance and efficiency metrics</span>
+                  </li>
+                </ul>
 
-            {/* C++ Programming Project */}
-            <Card className="overflow-hidden bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700 hover:shadow-lg transition-shadow block-animate" ref={useScrollAnimation().ref}>
-              <div className="bg-gradient-to-r from-accent-teal to-slate-dark p-6 text-white">
-                <h3 className="text-2xl font-bold mb-2">C++ Embedded Systems Programming</h3>
-                <p className="text-sm opacity-90">Ongoing Learning & Development</p>
-              </div>
-              <div className="p-6">
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
-                  Actively developing proficiency in C++ programming with focus on embedded systems applications and circuit simulation. Building foundational knowledge for real-time systems and microcontroller programming.
-                </p>
-                <div className="mb-4">
-                  <h4 className="font-semibold text-slate-900 dark:text-white mb-2">Learning Focus:</h4>
-                  <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                    <li className="flex items-start gap-2">
-                      <span className="text-accent-teal mt-1">•</span>
-                      <span>Object-oriented programming principles and design patterns</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-accent-teal mt-1">•</span>
-                      <span>Embedded systems development and microcontroller programming</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-accent-teal mt-1">•</span>
-                      <span>Circuit simulation and real-time system applications</span>
-                    </li>
-                  </ul>
-                </div>
-                <div className="mb-4">
-                  <h4 className="font-semibold text-slate-900 dark:text-white mb-2">Skills Developed:</h4>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-teal-100 dark:bg-teal-900 text-teal-800 dark:text-teal-200 rounded-full text-xs font-medium">C++ (81%)</span>
-                    <span className="px-3 py-1 bg-teal-100 dark:bg-teal-900 text-teal-800 dark:text-teal-200 rounded-full text-xs font-medium">Embedded Systems</span>
-                    <span className="px-3 py-1 bg-teal-100 dark:bg-teal-900 text-teal-800 dark:text-teal-200 rounded-full text-xs font-medium">Problem Solving</span>
-                  </div>
+                <h4 className="font-bold text-slate-dark dark:text-white mb-3">Technologies Used:</h4>
+                <div className="flex flex-wrap gap-2">
+                  {['Circuit Design', 'LTspice', 'Control Systems', 'MATLAB'].map((tech) => (
+                    <span key={tech} className="bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm font-semibold">
+                      {tech}
+                    </span>
+                  ))}
                 </div>
               </div>
-            </Card>
+            </div>
+
+            {/* C++ Embedded Systems */}
+            <div className="bg-white dark:bg-slate-950 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-shadow">
+              <div className="bg-gradient-to-br from-cyan-500 to-blue-500 h-32 flex items-center justify-center">
+                <Code2 className="w-16 h-16 text-white opacity-30" />
+              </div>
+              <div className="p-8">
+                <h3 className="text-2xl font-bold mb-2 text-slate-dark dark:text-white">C++ Embedded Systems Programming</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-4 font-semibold">Ongoing Learning & Development</p>
+                <p className="text-gray-700 dark:text-gray-300 mb-6">Actively developing proficiency in C++ programming with focus on embedded systems applications and circuit simulation. Building foundational knowledge for real-time systems and microcontroller programming.</p>
+                
+                <h4 className="font-bold text-slate-dark dark:text-white mb-3">Learning Focus:</h4>
+                <ul className="space-y-2 mb-6 text-gray-700 dark:text-gray-300">
+                  <li className="flex items-start gap-2">
+                    <span className="text-accent-teal mt-1">•</span>
+                    <span>Object-oriented programming principles and design patterns</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-accent-teal mt-1">•</span>
+                    <span>Embedded systems development and microcontroller programming</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-accent-teal mt-1">•</span>
+                    <span>Circuit simulation and real-time system applications</span>
+                  </li>
+                </ul>
+
+                <h4 className="font-bold text-slate-dark dark:text-white mb-3">Skills Developed:</h4>
+                <div className="flex flex-wrap gap-2">
+                  {['C++ (81%)', 'Embedded Systems', 'Problem Solving'].map((skill) => (
+                    <span key={skill} className="bg-cyan-100 dark:bg-cyan-900/50 text-cyan-800 dark:text-cyan-200 px-3 py-1 rounded-full text-sm font-semibold">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Certificates Section */}
-      <section id="certificates" className="py-20 bg-gray-50 dark:bg-slate-800">
-        <div className="container" ref={useScrollAnimation().ref}>
-          <h2 className="text-4xl font-bold text-slate-dark dark:text-white mb-8">Certificates & Achievements</h2>
-          <div className="divider-accent mb-12"></div>
+      <section id="certificates" className="py-20 bg-white dark:bg-slate-950">
+        <div className="container">
+          <h2 className="text-4xl font-bold mb-4 text-slate-dark dark:text-white">Certifications & Achievements</h2>
+          <div className="w-16 h-1 bg-accent-teal mb-12"></div>
           <Certificates />
         </div>
       </section>
 
-      {/* Interests Section - FIXED DARK MODE */}
-      <section className="py-20 bg-white dark:bg-slate-900">
-        <div className="container" ref={useScrollAnimation().ref}>
-          <h2 className="text-4xl font-bold text-slate-dark dark:text-white mb-8">Interests & Passions</h2>
-          <div className="divider-accent mb-12"></div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="p-6 bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700 block-animate" ref={useScrollAnimation().ref}>
-              <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Circuit Design</h3>
-              <p className="text-gray-600 dark:text-gray-400">Passionate about designing efficient and innovative electrical circuits</p>
-            </Card>
-            <Card className="p-6 bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700 block-animate" ref={useScrollAnimation().ref}>
-              <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Embedded Systems</h3>
-              <p className="text-gray-600 dark:text-gray-400">Fascinated by programming microcontrollers and IoT applications with cutting-edge technologies</p>
-            </Card>
-            <Card className="p-6 bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700 block-animate" ref={useScrollAnimation().ref}>
-              <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Machine Learning & AI</h3>
-              <p className="text-gray-600 dark:text-gray-400">Architecting intelligent systems that combine electrical engineering with AI-driven automation</p>
-            </Card>
-            <Card className="p-6 bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700 block-animate" ref={useScrollAnimation().ref}>
-              <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Problem Solving</h3>
-              <p className="text-gray-600 dark:text-gray-400">Love tackling complex engineering challenges with creative, innovative solutions</p>
-            </Card>
-            <Card className="p-6 bg-white dark:bg-slate-800 border-0 dark:border dark:border-gray-700 block-animate" ref={useScrollAnimation().ref}>
-              <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Mentoring</h3>
-              <p className="text-gray-600 dark:text-gray-400">Dedicated to helping others understand engineering concepts and unlock their potential</p>
-            </Card>
+      {/* Interests Section */}
+      <section className="py-20 bg-gray-50 dark:bg-slate-900">
+        <div className="container">
+          <h2 className="text-4xl font-bold mb-4 text-slate-dark dark:text-white">Interests & Passions</h2>
+          <div className="w-16 h-1 bg-accent-teal mb-12"></div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              {
+                icon: Zap,
+                title: 'Circuit Design',
+                description: 'Passionate about designing efficient and innovative electrical circuits'
+              },
+              {
+                icon: Cpu,
+                title: 'Embedded Systems',
+                description: 'Fascinated by programming microcontrollers and IoT applications with cutting-edge technologies'
+              },
+              {
+                icon: Lightbulb,
+                title: 'Machine Learning & AI',
+                description: 'Architecting intelligent systems that combine electrical engineering with AI-driven automation'
+              },
+              {
+                icon: Code2,
+                title: 'Problem Solving',
+                description: 'Love tackling complex engineering challenges with creative, innovative solutions'
+              },
+              {
+                icon: Users,
+                title: 'Mentoring',
+                description: 'Dedicated to helping others understand engineering concepts and unlock their potential'
+              }
+            ].map((interest, index) => {
+              const Icon = interest.icon;
+              return (
+                <div key={index} className="bg-white dark:bg-slate-950 p-8 rounded-lg border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-shadow">
+                  <Icon className="w-12 h-12 text-accent-teal mb-4" />
+                  <h3 className="text-xl font-bold mb-3 text-slate-dark dark:text-white">{interest.title}</h3>
+                  <p className="text-gray-700 dark:text-gray-300">{interest.description}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Contact Section - FIXED DARK MODE */}
-      <section id="contact" className="py-20 bg-gray-50 dark:bg-slate-800">
-        <div className="container" ref={useScrollAnimation().ref}>
-          <h2 className="text-4xl font-bold text-slate-dark dark:text-white mb-8">Get in Touch</h2>
-          <div className="divider-accent mb-12"></div>
+      {/* Contact Section */}
+      <section id="contact" className="py-20 bg-white dark:bg-slate-950">
+        <div className="container">
+          <h2 className="text-4xl font-bold mb-4 text-slate-dark dark:text-white">Get in Touch</h2>
+          <div className="w-16 h-1 bg-accent-teal mb-12"></div>
           
-          <div className="max-w-2xl">
-            <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">
+          <div className="max-w-3xl mx-auto mb-12">
+            <p className="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
               Ready to collaborate on groundbreaking projects? Whether you're looking for a driven electrical engineer, an innovative problem-solver, or someone passionate about AI-driven systems, I'm excited to connect!
             </p>
-            <p className="text-lg text-gray-700 dark:text-gray-300 mb-12">
+            <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
               Let's discuss how I can contribute to your team's success. Reach out through any channel below—I respond quickly and am always eager to explore new opportunities.
             </p>
+          </div>
 
-            <div className="grid md:grid-cols-2 gap-6 mb-12">
-              <Card className="p-6 bg-white dark:bg-slate-900 border-0 dark:border dark:border-gray-700 hover:shadow-lg transition-smooth cursor-pointer">
-                <Phone className="w-6 h-6 text-accent-teal mb-4" />
-                <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Phone</h3>
-                <p className="text-gray-600 dark:text-gray-400">+27 65 6460 357</p>
-              </Card>
-              <Card className="p-6 bg-white dark:bg-slate-900 border-0 dark:border dark:border-gray-700 hover:shadow-lg transition-smooth cursor-pointer">
-                <Mail className="w-6 h-6 text-accent-teal mb-4" />
-                <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Email</h3>
-                <p className="text-gray-600 dark:text-gray-400">2837716@students.wits.ac.za</p>
-              </Card>
-              <a href="https://www.linkedin.com/in/tshepiso-kevin-phoku-6517533a4/" target="_blank" rel="noopener noreferrer">
-                <Card className="p-6 bg-white dark:bg-slate-900 border-0 dark:border dark:border-gray-700 hover:shadow-lg transition-smooth cursor-pointer h-full">
-                  <Linkedin className="w-6 h-6 text-accent-teal mb-4" />
-                  <h3 className="font-semibold text-slate-900 dark:text-white mb-2">LinkedIn</h3>
-                  <p className="text-gray-600 dark:text-gray-400 flex items-center gap-2">View Profile <ExternalLink size={16} /></p>
-                </Card>
-              </a>
-              <a href="https://github.com/Kevin101-t" target="_blank" rel="noopener noreferrer">
-                <Card className="p-6 bg-white dark:bg-slate-900 border-0 dark:border dark:border-gray-700 hover:shadow-lg transition-smooth cursor-pointer h-full">
-                  <Github className="w-6 h-6 text-accent-teal mb-4" />
-                  <h3 className="font-semibold text-slate-900 dark:text-white mb-2">GitHub</h3>
-                  <p className="text-gray-600 dark:text-gray-400 flex items-center gap-2">View Projects <ExternalLink size={16} /></p>
-                </Card>
-              </a>
+          <div className="grid md:grid-cols-2 gap-8 mb-12">
+            <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 p-8 rounded-lg border border-blue-200 dark:border-blue-800">
+              <Phone className="w-8 h-8 text-accent-teal mb-4" />
+              <h3 className="text-xl font-bold mb-2 text-slate-dark dark:text-white">Phone</h3>
+              <p className="text-gray-700 dark:text-gray-300 font-semibold">+27 65 6460 357</p>
             </div>
+            <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 p-8 rounded-lg border border-blue-200 dark:border-blue-800">
+              <Mail className="w-8 h-8 text-accent-teal mb-4" />
+              <h3 className="text-xl font-bold mb-2 text-slate-dark dark:text-white">Email</h3>
+              <p className="text-gray-700 dark:text-gray-300 font-semibold">2837716@students.wits.ac.za</p>
+            </div>
+          </div>
 
-            <div className="flex items-center gap-3 p-4 bg-accent-teal/10 dark:bg-accent-teal/5 rounded-lg border border-accent-teal/20">
-              <MapPin className="w-5 h-5 text-accent-teal flex-shrink-0" />
-              <p className="text-gray-700 dark:text-gray-300">Johannesburg, South Africa</p>
-            </div>
+          <div className="grid md:grid-cols-2 gap-8">
+            <a href="https://www.linkedin.com/in/tshepiso-phoku-7b8a3a2b9/" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 p-8 rounded-lg border border-blue-200 dark:border-blue-800 hover:shadow-lg transition-shadow flex items-start gap-4">
+              <Linkedin className="w-8 h-8 text-accent-teal flex-shrink-0 mt-1" />
+              <div>
+                <h3 className="text-xl font-bold text-slate-dark dark:text-white mb-2">LinkedIn</h3>
+                <p className="text-gray-700 dark:text-gray-300 mb-4">Connect with me on LinkedIn to see my professional profile and endorsements.</p>
+                <span className="text-accent-teal font-semibold flex items-center gap-2">
+                  View Profile <ExternalLink size={16} />
+                </span>
+              </div>
+            </a>
+            <a href="https://github.com/tshepiso-phoku" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 p-8 rounded-lg border border-blue-200 dark:border-blue-800 hover:shadow-lg transition-shadow flex items-start gap-4">
+              <Github className="w-8 h-8 text-accent-teal flex-shrink-0 mt-1" />
+              <div>
+                <h3 className="text-xl font-bold text-slate-dark dark:text-white mb-2">GitHub</h3>
+                <p className="text-gray-700 dark:text-gray-300 mb-4">Explore my code repositories and see my projects in action.</p>
+                <span className="text-accent-teal font-semibold flex items-center gap-2">
+                  View Projects <ExternalLink size={16} />
+                </span>
+              </div>
+            </a>
+          </div>
+
+          <div className="mt-12 pt-12 border-t border-gray-200 dark:border-gray-700 flex items-center justify-center gap-2 text-gray-600 dark:text-gray-400">
+            <MapPin size={18} />
+            <span>Johannesburg, South Africa</span>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-dark dark:bg-slate-950 text-white py-12">
-        <div className="container">
-          <div className="border-t border-white/10 pt-8">
-            <p className="text-center text-gray-300 mb-2">© 2026 Tshepiso Kevin Phoku. All rights reserved.</p>
-            <p className="text-center text-gray-400 text-sm">
-              This portfolio is my exclusive intellectual property. No third party, including Meta, Google, or any technology platform, has any claim to this website or its content.
-            </p>
-          </div>
+      <footer className="bg-slate-dark dark:bg-slate-950 text-white py-8">
+        <div className="container text-center">
+          <p className="mb-2">© 2026 Tshepiso Kevin Phoku. All rights reserved.</p>
+          <p className="text-sm text-gray-400">This portfolio is my exclusive intellectual property. No third party, including Meta, Google, or any technology platform, has any claim to this website or its content.</p>
         </div>
       </footer>
     </div>
