@@ -130,18 +130,47 @@ export default function Home() {
 
   useEffect(() => {
     let lastScrollY = 0;
+    let stretchAmount = 0;
+    let animationFrameId: number | null = null;
+
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
       const isScrollingUp = scrollTop < lastScrollY;
       const isScrollingDown = scrollTop > lastScrollY;
 
-      if (scrollTop < 50 && isScrollingUp) {
-        setPageStretchClass('page-stretch-top');
-        setTimeout(() => setPageStretchClass(''), 600);
-      } else if (scrollTop > scrollHeight - 50 && isScrollingDown) {
-        setPageStretchClass('page-stretch-bottom');
-        setTimeout(() => setPageStretchClass(''), 600);
+      // Top boundary stretch
+      if (scrollTop === 0 && isScrollingUp) {
+        stretchAmount = Math.min(stretchAmount + 5, 40);
+        if (pageRef.current) {
+          pageRef.current.style.transform = `scaleY(${1 + stretchAmount / 1000}) translateY(${stretchAmount}px)`;
+          pageRef.current.style.transformOrigin = 'top center';
+        }
+      }
+      // Bottom boundary stretch
+      else if (scrollTop >= scrollHeight && isScrollingDown) {
+        stretchAmount = Math.min(stretchAmount + 5, 40);
+        if (pageRef.current) {
+          pageRef.current.style.transform = `scaleY(${1 + stretchAmount / 1000}) translateY(-${stretchAmount}px)`;
+          pageRef.current.style.transformOrigin = 'bottom center';
+        }
+      }
+      // Release and bounce back
+      else if (stretchAmount > 0) {
+        stretchAmount = Math.max(stretchAmount - 3, 0);
+        if (pageRef.current) {
+          if (lastScrollY === 0) {
+            pageRef.current.style.transform = `scaleY(${1 + stretchAmount / 1000}) translateY(${stretchAmount}px)`;
+            pageRef.current.style.transformOrigin = 'top center';
+          } else {
+            pageRef.current.style.transform = `scaleY(${1 + stretchAmount / 1000}) translateY(-${stretchAmount}px)`;
+            pageRef.current.style.transformOrigin = 'bottom center';
+          }
+        }
+      } else {
+        if (pageRef.current) {
+          pageRef.current.style.transform = 'none';
+        }
       }
       
       lastScrollY = scrollTop;
@@ -152,7 +181,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div ref={pageRef} className={`min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-gray-100 ${pageStretchClass}`}>
+    <div ref={pageRef} className={`min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-gray-100 ${pageStretchClass}`} style={{ transition: 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)' }}>
       {/* Navigation */}
       <nav className="sticky top-0 z-50 bg-white/95 dark:bg-slate-950/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
         <div className="container flex items-center justify-between py-4">
