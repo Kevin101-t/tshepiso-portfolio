@@ -1,3 +1,4 @@
+import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Code2, Zap, Users, BookOpen, ArrowUpRight, Moon, Sun, Lightbulb, Cpu, Wrench } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import Timeline from "@/components/Timeline";
 import Certificates from "@/components/Certificates";
@@ -99,11 +100,18 @@ const useScrollAnimation = () => {
       lastScrollYRef.current = currentScrollY;
 
       const rect = ref.current.getBoundingClientRect();
-      const isInView = rect.top < window.innerHeight * 0.75 && rect.bottom > 0;
+      const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
 
-      if (isInView && isScrollingDown) {
+      if (isInViewport && !isVisible) {
+        // Animate only once when first entering viewport
+        if (isScrollingDown) {
+          ref.current.classList.add('scroll-fade-in');
+        } else {
+          ref.current.classList.add('scroll-fade-in-reverse');
+        }
         setIsVisible(true);
       }
+      // Once animated, keep the animation classes - do not remove them
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -114,279 +122,484 @@ const useScrollAnimation = () => {
 };
 
 export default function Home() {
+  const [activeTab, setActiveTab] = useState("skills");
+  const { theme, toggleTheme } = useTheme();
   const pageRef = useRef<HTMLDivElement>(null);
-  const { theme } = useTheme();
-  const lastBounceTimeRef = useRef(0);
-  const bounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    let lastWheelTime = 0;
-    const BOUNCE_COOLDOWN = 800; // ms between bounces
-    const ANIMATION_DURATION = 550; // ms for animation
+    let isAnimating = false;
+    let lastAnimationTime = 0;
+    const ANIMATION_COOLDOWN = 750;
+    const ANIMATION_DURATION = 550;
+    let timeoutId: NodeJS.Timeout | null = null;
 
     const handleWheel = (e: WheelEvent) => {
-      if (!pageRef.current) return;
-
       const now = Date.now();
-      const timeSinceLastBounce = now - lastBounceTimeRef.current;
-
-      // Only allow bounce if cooldown has passed
-      if (timeSinceLastBounce < BOUNCE_COOLDOWN) {
+      
+      if (now - lastAnimationTime < ANIMATION_COOLDOWN) {
         return;
       }
 
       const scrollTop = window.scrollY;
       const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const isAtTop = scrollTop <= 5;
-      const isAtBottom = scrollTop >= scrollHeight - 5;
+      const isAtTop = scrollTop <= 0;
+      const isAtBottom = scrollTop >= scrollHeight - 10;
       const isScrollingDown = e.deltaY > 0;
       const isScrollingUp = e.deltaY < 0;
 
-      // Check if we should bounce
-      let shouldBounce = false;
-      let bounceClass = '';
-
-      if (isAtTop && isScrollingUp) {
-        shouldBounce = true;
-        bounceClass = 'page-bounce-top';
-      } else if (isAtBottom && isScrollingDown) {
-        shouldBounce = true;
-        bounceClass = 'page-bounce-bottom';
-      }
-
-      if (shouldBounce) {
-        // Clear any existing timeout
-        if (bounceTimeoutRef.current) {
-          clearTimeout(bounceTimeoutRef.current);
-        }
-
-        // Update last bounce time BEFORE adding class
-        lastBounceTimeRef.current = now;
-
-        // Add animation class
-        pageRef.current.classList.add(bounceClass);
-
-        // Remove class after animation completes
-        bounceTimeoutRef.current = setTimeout(() => {
+      if (isAtTop && isScrollingUp && !isAnimating && pageRef.current) {
+        isAnimating = true;
+        lastAnimationTime = now;
+        pageRef.current.classList.add('page-stretch-top');
+        
+        if (timeoutId) clearTimeout(timeoutId);
+        
+        timeoutId = setTimeout(() => {
           if (pageRef.current) {
-            pageRef.current.classList.remove(bounceClass);
+            pageRef.current.classList.remove('page-stretch-top');
+            isAnimating = false;
           }
-          bounceTimeoutRef.current = null;
+          timeoutId = null;
+        }, ANIMATION_DURATION);
+      }
+      else if (isAtBottom && isScrollingDown && !isAnimating && pageRef.current) {
+        isAnimating = true;
+        lastAnimationTime = now;
+        pageRef.current.classList.add('page-stretch-bottom');
+        
+        if (timeoutId) clearTimeout(timeoutId);
+        
+        timeoutId = setTimeout(() => {
+          if (pageRef.current) {
+            pageRef.current.classList.remove('page-stretch-bottom');
+            isAnimating = false;
+          }
+          timeoutId = null;
         }, ANIMATION_DURATION);
       }
     };
 
     window.addEventListener('wheel', handleWheel, { passive: true });
-
     return () => {
       window.removeEventListener('wheel', handleWheel);
-      if (bounceTimeoutRef.current) {
-        clearTimeout(bounceTimeoutRef.current);
-      }
+      if (timeoutId) clearTimeout(timeoutId);
     };
   }, []);
 
   return (
     <div ref={pageRef} className={`min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-gray-100 relative overflow-hidden`}>
-      {/* iOS Glass Morphism Background */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
-        {/* Frosted glass blur base layer */}
-        <div className="absolute inset-0 backdrop-blur-3xl opacity-40 dark:opacity-20"></div>
-        
-        {/* Animated glass blobs with proper morphism */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-blue-500/30 to-cyan-500/20 rounded-full blur-3xl animate-blob-glass"></div>
-        <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-gradient-to-br from-cyan-500/30 to-blue-500/20 rounded-full blur-3xl animate-blob-glass" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-gradient-to-br from-blue-400/25 to-cyan-400/15 rounded-full blur-3xl animate-blob-glass" style={{ animationDelay: '4s' }}></div>
-        
-        {/* Light overlay for iOS glass effect */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/5 via-transparent to-white/5 dark:from-white/2 dark:via-transparent dark:to-white/2 pointer-events-none"></div>
+      {/* Liquid Glass Background Blobs */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-blue-400/5 to-cyan-400/3 rounded-full blur-3xl animate-blob"></div>
+        <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-gradient-to-br from-cyan-400/5 to-blue-400/3 rounded-full blur-3xl animate-blob" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-gradient-to-br from-blue-300/3 to-cyan-300/2 rounded-full blur-3xl animate-blob" style={{ animationDelay: '4s' }}></div>
       </div>
-
-      <div className="relative z-0">
-        {/* Navigation */}
-        <nav className="sticky top-0 z-50 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
-          <div className="container flex items-center justify-between py-4">
-            <div className="text-2xl font-bold text-slate-dark dark:text-white">Tshepiso Kevin Phoku</div>
-            <div className="flex items-center gap-8">
-              <div className="hidden md:flex gap-8">
-                <a href="#about" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-smooth">About</a>
-                <a href="#timeline" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-smooth">Journey</a>
-                <a href="#skills" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-smooth">Skills</a>
-                <a href="#certificates" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-smooth">Certificates</a>
-                <a href="#contact" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-smooth">Contact</a>
-              </div>
-              <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-smooth">
-                {/* Theme toggle placeholder */}
-                <span className="text-xl">🌙</span>
-              </button>
+      <div className="relative z-10">
+      {/* Navigation */}
+      <nav className="sticky top-0 z-50 bg-white/95 dark:bg-slate-950/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
+        <div className="container flex items-center justify-between py-4">
+          <div className="text-2xl font-bold text-slate-dark dark:text-white">Tshepiso Kevin Phoku</div>
+          <div className="flex items-center gap-8">
+            <div className="hidden md:flex gap-8">
+              <a href="#about" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-smooth">About</a>
+              <a href="#timeline" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-smooth">Journey</a>
+              <a href="#skills" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-smooth">Skills</a>
+              <a href="#certificates" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-smooth">Certificates</a>
+              <a href="#contact" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-smooth">Contact</a>
             </div>
+            <button 
+              onClick={toggleTheme} 
+              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-smooth text-xl"
+              aria-label="Toggle dark mode"
+            >
+              {theme === 'dark' ? <Sun size={24} /> : <Moon size={24} />}
+            </button>
           </div>
-        </nav>
+        </div>
+      </nav>
 
-        {/* Hero Section */}
-        <section className="relative py-20 md:py-32 overflow-hidden">
-          <div className="container grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <h1 className="text-5xl md:text-6xl font-bold leading-tight">
-                Electrical<br />Engineering<br />Excellence
+      {/* Hero Section */}
+      <section className="relative py-24 overflow-hidden bg-gradient-to-br from-slate-dark via-blue-900 to-slate-dark dark:from-slate-950 dark:via-blue-950 dark:to-slate-950">
+        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: `url(${heroBackgroundUrl})`, backgroundSize: 'cover' }}></div>
+        
+        {/* Corner glow effects */}
+        <div className="absolute top-0 left-0 w-64 h-64 bg-blue-500 rounded-full blur-3xl opacity-0 corner-glow-top-left"></div>
+        <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-400 rounded-full blur-3xl opacity-0 corner-glow-top-right"></div>
+        
+        {/* Animated circuit lines */}
+        <svg className="absolute inset-0 w-full h-full opacity-30" style={{ pointerEvents: 'none' }}>
+          <line x1="10%" y1="20%" x2="40%" y2="50%" stroke="rgba(14, 165, 233, 0.4)" strokeWidth="2" className="hero-glow-animation" />
+          <line x1="60%" y1="30%" x2="90%" y2="60%" stroke="rgba(14, 165, 233, 0.4)" strokeWidth="2" className="hero-glow-animation" style={{ animationDelay: '0.5s' }} />
+          <line x1="20%" y1="70%" x2="50%" y2="90%" stroke="rgba(14, 165, 233, 0.4)" strokeWidth="2" className="hero-glow-animation" style={{ animationDelay: '1s' }} />
+          <line x1="70%" y1="40%" x2="95%" y2="80%" stroke="rgba(14, 165, 233, 0.4)" strokeWidth="2" className="hero-glow-animation" style={{ animationDelay: '1.5s' }} />
+        </svg>
+        
+        <div className="relative container">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="text-white">
+              <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                Electrical Engineering Excellence
               </h1>
-              <p className="text-lg text-gray-600 dark:text-gray-400">
+              <p className="text-xl text-blue-100 mb-8 leading-relaxed">
                 Passionate about designing innovative circuit solutions, optimizing embedded systems, and architecting intelligent AI-driven applications. Ready to transform complex engineering challenges into elegant, efficient solutions that push the boundaries of what's possible.
               </p>
-              <div className="flex gap-4 pt-4">
-                <a href="#contact" className="px-6 py-3 bg-accent-teal text-white rounded-lg hover:bg-accent-teal/90 transition-smooth">Get in Touch →</a>
-                <a href="#timeline" className="px-6 py-3 border border-accent-teal text-accent-teal rounded-lg hover:bg-accent-teal/10 transition-smooth">View Journey</a>
+              <div className="flex gap-4">
+                <a href="#contact" className="bg-accent-teal hover:bg-blue-400 text-white px-8 py-3 rounded-lg font-semibold transition-smooth flex items-center gap-2">
+                  Get in Touch <ArrowUpRight size={20} />
+                </a>
+                <a href="#timeline" className="border-2 border-white text-white hover:bg-white/10 px-8 py-3 rounded-lg font-semibold transition-smooth">
+                  View Journey
+                </a>
               </div>
             </div>
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-cyan-400/10 rounded-2xl blur-2xl"></div>
-              <div className="relative bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-2xl p-8 shadow-2xl">
-                <svg className="w-full h-64" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="200" cy="150" r="80" fill="none" stroke="#0ea5e9" strokeWidth="2" opacity="0.3" />
-                  <circle cx="200" cy="150" r="60" fill="none" stroke="#0ea5e9" strokeWidth="1.5" opacity="0.5" />
-                  <circle cx="200" cy="150" r="40" fill="none" stroke="#0ea5e9" strokeWidth="1" opacity="0.7" />
-                  {[...Array(12)].map((_, i) => {
-                    const angle = (i / 12) * Math.PI * 2;
-                    const x = 200 + 70 * Math.cos(angle);
-                    const y = 150 + 70 * Math.sin(angle);
-                    return <circle key={i} cx={x} cy={y} r="3" fill="#0ea5e9" opacity="0.6" />;
-                  })}
-                </svg>
+            <div className="hidden md:block">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 border border-white/20">
+                <img src={accentPatternUrl} alt="Technical pattern" className="w-full h-auto rounded" />
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* About Section */}
-        <section id="about" className="py-20 md:py-32 bg-gray-50 dark:bg-slate-900/50">
-          <div className="container space-y-12">
+      {/* About Section */}
+      <section id="about" className="py-20 bg-white dark:bg-slate-950">
+        <div className="container">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-4xl font-bold mb-4">About Me</h2>
-              <div className="w-16 h-1 bg-accent-teal rounded-full"></div>
+              <h2 className="text-4xl font-bold mb-6 text-slate-dark dark:text-white">About Me</h2>
+              <div className="w-16 h-1 bg-accent-teal mb-8"></div>
+              <p className="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
+                I am a second-year Electrical Engineering student at the University of the Witwatersrand, driven by a passion for circuit design, power systems, and embedded systems. My academic foundation spans circuit theory, electromagnetism, digital systems, and advanced programming—equipping me with both theoretical depth and practical problem-solving capabilities.
+              </p>
+              <p className="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
+                What sets me apart is my commitment to excellence beyond the classroom. I actively mentor fellow students, sharing complex concepts through clear explanations and real-world applications. My hands-on experience includes optimizing DC motor hoist systems for maximum efficiency and developing C++ solutions for embedded applications.
+              </p>
+              <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                I thrive in collaborative environments where innovation meets precision. Whether designing circuits, debugging code, or mentoring peers, I bring dedication, technical rigor, and a genuine passion for electrical engineering to every project.
+              </p>
             </div>
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="space-y-3">
-                <div className="text-4xl">💡</div>
-                <h3 className="text-xl font-semibold">Innovation-Driven</h3>
-                <p className="text-gray-600 dark:text-gray-400">Designing efficient circuits, architecting AI-driven solutions, and optimizing systems for real-world impact and intelligent automation</p>
+            <div className="grid grid-cols-1 gap-6">
+              <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 p-8 rounded-lg border border-blue-200 dark:border-blue-800">
+                <Lightbulb className="w-12 h-12 text-accent-teal mb-4" />
+                <h3 className="text-xl font-bold mb-3 text-slate-dark dark:text-white">Innovation-Driven</h3>
+                <p className="text-gray-700 dark:text-gray-300">Designing efficient circuits, architecting AI-driven solutions, and optimizing systems for real-world impact and intelligent automation</p>
               </div>
-              <div className="space-y-3">
-                <div className="text-4xl">🤝</div>
-                <h3 className="text-xl font-semibold">Team Player</h3>
-                <p className="text-gray-600 dark:text-gray-400">Mentoring peers and fostering collaborative learning environments</p>
+              <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 p-8 rounded-lg border border-blue-200 dark:border-blue-800">
+                <Users className="w-12 h-12 text-accent-teal mb-4" />
+                <h3 className="text-xl font-bold mb-3 text-slate-dark dark:text-white">Team Player</h3>
+                <p className="text-gray-700 dark:text-gray-300">Mentoring peers and fostering collaborative learning environments</p>
               </div>
-              <div className="space-y-3">
-                <div className="text-4xl">⚙️</div>
-                <h3 className="text-xl font-semibold">Technical Depth</h3>
-                <p className="text-gray-600 dark:text-gray-400">Mastering embedded systems, C++ programming, and circuit optimization</p>
+              <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 p-8 rounded-lg border border-blue-200 dark:border-blue-800">
+                <Cpu className="w-12 h-12 text-accent-teal mb-4" />
+                <h3 className="text-xl font-bold mb-3 text-slate-dark dark:text-white">Technical Depth</h3>
+                <p className="text-gray-700 dark:text-gray-300">Mastering embedded systems, C++ programming, and circuit optimization</p>
               </div>
             </div>
-            <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed max-w-3xl">
-              I am a second-year Electrical Engineering student at the University of the Witwatersrand, driven by a passion for circuit design, power systems, and embedded systems. My academic foundation spans circuit theory, electromagnetism, digital systems, and advanced programming—equipping me with both theoretical depth and practical problem-solving capabilities.
-            </p>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Timeline Section */}
-        <section id="timeline" className="py-20 md:py-32">
-          <div className="container space-y-12">
-            <div>
-              <h2 className="text-4xl font-bold mb-4">My Journey</h2>
-              <div className="w-16 h-1 bg-accent-teal rounded-full"></div>
-            </div>
-            <Timeline events={timelineEvents} />
-          </div>
-        </section>
+      {/* Timeline Section */}
+      <section id="timeline" className="py-20 bg-gray-50 dark:bg-slate-900">
+        <div className="container">
+          <h2 className="text-4xl font-bold mb-4 text-slate-dark dark:text-white">My Journey</h2>
+          <p className="text-lg text-gray-600 dark:text-gray-400 mb-12">Click on any milestone to explore the details of my educational and professional progression.</p>
+          <Timeline events={timelineEvents} />
+        </div>
+      </section>
 
-        {/* Skills Section */}
-        <section id="skills" className="py-20 md:py-32 bg-gray-50 dark:bg-slate-900/50">
-          <div className="container space-y-12">
+      {/* Skills Section */}
+      <section id="skills" className="py-20 bg-white dark:bg-slate-950">
+        <div className="container">
+          <h2 className="text-4xl font-bold mb-4 text-slate-dark dark:text-white">Skills & Competencies</h2>
+          <div className="w-16 h-1 bg-accent-teal mb-12"></div>
+          
+          <div className="grid md:grid-cols-2 gap-12">
+            {/* Programming Languages */}
             <div>
-              <h2 className="text-4xl font-bold mb-4">Skills & Competencies</h2>
-              <div className="w-16 h-1 bg-accent-teal rounded-full"></div>
-            </div>
-            <div className="grid md:grid-cols-2 gap-12">
+              <h3 className="text-2xl font-bold mb-8 text-slate-dark dark:text-white flex items-center gap-3">
+                <Code2 className="w-6 h-6 text-accent-teal" />
+                Programming Languages
+              </h3>
               <div className="space-y-6">
-                <h3 className="text-2xl font-semibold">Programming Languages</h3>
                 {[
-                  { name: 'C++', level: 81 },
-                  { name: 'Python', level: 76 },
-                  { name: 'MATLAB', level: 78 },
-                  { name: 'Assembly', level: 61 },
-                  { name: 'Machine Learning', level: 55 }
+                  { name: 'C++', percentage: 81 },
+                  { name: 'Python', percentage: 76 },
+                  { name: 'MATLAB', percentage: 78 },
+                  { name: 'Machine Learning', percentage: 55 },
+                  { name: 'Assembly', percentage: 61 }
                 ].map((skill) => (
                   <div key={skill.name}>
                     <div className="flex justify-between mb-2">
-                      <span className="font-medium">{skill.name}</span>
-                      <span className="text-accent-teal">{skill.level}%</span>
+                      <span className="font-semibold text-gray-800 dark:text-gray-200">{skill.name}</span>
+                      <span className="text-accent-teal font-bold">{skill.percentage}%</span>
                     </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div className="bg-accent-teal h-2 rounded-full" style={{ width: `${skill.level}%` }}></div>
+                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+                      <div 
+                        className="bg-gradient-to-r from-accent-teal to-blue-500 h-full rounded-full transition-all duration-500"
+                        style={{ width: `${skill.percentage}%` }}
+                      ></div>
                     </div>
                   </div>
                 ))}
+                <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                  <p className="text-gray-600 dark:text-gray-400 italic">
+                    <span className="font-semibold">Claude Code</span> - Coming Soon
+                  </p>
+                </div>
               </div>
-              <div className="space-y-6">
-                <h3 className="text-2xl font-semibold">Engineering Tools</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  {['Multisim', 'LTspice', 'MATLAB/Simulink', 'Proteus Design Suite', 'Microsoft Office', 'Git'].map((tool) => (
-                    <div key={tool} className="p-4 bg-gray-100 dark:bg-slate-800 rounded-lg text-center">
-                      <span className="font-medium">✓ {tool}</span>
-                    </div>
+            </div>
+
+            {/* Engineering Tools & Other Skills */}
+            <div>
+              <h3 className="text-2xl font-bold mb-8 text-slate-dark dark:text-white flex items-center gap-3">
+                <Wrench className="w-6 h-6 text-accent-teal" />
+                Engineering Tools
+              </h3>
+              <div className="grid grid-cols-2 gap-4 mb-8">
+                {['Multisim', 'LTspice', 'MATLAB/Simulink', 'Proteus Design Suite'].map((tool) => (
+                  <div key={tool} className="bg-blue-50 dark:bg-blue-950/30 p-4 rounded-lg border border-blue-200 dark:border-blue-800 flex items-center gap-2">
+                    <span className="text-accent-teal text-xl">✓</span>
+                    <span className="font-semibold text-gray-800 dark:text-gray-200">{tool}</span>
+                  </div>
+                ))}
+              </div>
+
+              <h3 className="text-2xl font-bold mb-8 text-slate-dark dark:text-white flex items-center gap-3">
+                <BookOpen className="w-6 h-6 text-accent-teal" />
+                Office & Productivity
+              </h3>
+              <div className="grid grid-cols-2 gap-4 mb-8">
+                {['Microsoft Word', 'Microsoft Excel', 'Microsoft PowerPoint'].map((tool) => (
+                  <div key={tool} className="bg-blue-50 dark:bg-blue-950/30 p-4 rounded-lg border border-blue-200 dark:border-blue-800 flex items-center gap-2">
+                    <span className="text-accent-teal text-xl">✓</span>
+                    <span className="font-semibold text-gray-800 dark:text-gray-200">{tool}</span>
+                  </div>
+                ))}
+              </div>
+
+              <h3 className="text-2xl font-bold mb-8 text-slate-dark dark:text-white flex items-center gap-3">
+                <Zap className="w-6 h-6 text-accent-teal" />
+                Soft Skills
+              </h3>
+              <div className="grid grid-cols-2 gap-4">
+                {['Problem-Solving', 'Communication', 'Team Collaboration'].map((skill) => (
+                  <div key={skill} className="bg-blue-50 dark:bg-blue-950/30 p-4 rounded-lg border border-blue-200 dark:border-blue-800 flex items-center gap-2">
+                    <span className="text-accent-teal text-xl">✓</span>
+                    <span className="font-semibold text-gray-800 dark:text-gray-200">{skill}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section className="py-20 bg-gray-50 dark:bg-slate-900">
+        <div className="container">
+          <h2 className="text-4xl font-bold mb-4 text-slate-dark dark:text-white">Featured Projects</h2>
+          <div className="w-16 h-1 bg-accent-teal mb-12"></div>
+          
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* DC Motor Hoist */}
+            <div className="bg-white dark:bg-slate-950 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-shadow">
+              <div className="bg-gradient-to-br from-blue-500 to-cyan-500 h-32 flex items-center justify-center">
+                <Zap className="w-16 h-16 text-white opacity-30" />
+              </div>
+              <div className="p-8">
+                <h3 className="text-2xl font-bold mb-2 text-slate-dark dark:text-white">DC Motor Hoist System Optimization</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-4 font-semibold">Electrical Engineering Design Project</p>
+                <p className="text-gray-700 dark:text-gray-300 mb-6">Designed and optimized a DC motor hoist system to efficiently lift payloads with focus on torque optimization and system performance. This project demonstrates practical application of circuit theory, control systems, and mechanical engineering principles.</p>
+                
+                <h4 className="font-bold text-slate-dark dark:text-white mb-3">Key Achievements:</h4>
+                <ul className="space-y-2 mb-6 text-gray-700 dark:text-gray-300">
+                  <li className="flex items-start gap-2">
+                    <span className="text-accent-teal mt-1">•</span>
+                    <span>Optimized motor torque for maximum payload capacity</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-accent-teal mt-1">•</span>
+                    <span>Implemented circuit design using LTspice simulation</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-accent-teal mt-1">•</span>
+                    <span>Analyzed system performance and efficiency metrics</span>
+                  </li>
+                </ul>
+
+                <h4 className="font-bold text-slate-dark dark:text-white mb-3">Technologies Used:</h4>
+                <div className="flex flex-wrap gap-2">
+                  {['Circuit Design', 'LTspice', 'Control Systems', 'MATLAB'].map((tech) => (
+                    <span key={tech} className="bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm font-semibold">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* C++ Embedded Systems */}
+            <div className="bg-white dark:bg-slate-950 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-shadow">
+              <div className="bg-gradient-to-br from-cyan-500 to-blue-500 h-32 flex items-center justify-center">
+                <Code2 className="w-16 h-16 text-white opacity-30" />
+              </div>
+              <div className="p-8">
+                <h3 className="text-2xl font-bold mb-2 text-slate-dark dark:text-white">C++ Embedded Systems Programming</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-4 font-semibold">Ongoing Learning & Development</p>
+                <p className="text-gray-700 dark:text-gray-300 mb-6">Actively developing proficiency in C++ programming with focus on embedded systems applications and circuit simulation. Building foundational knowledge for real-time systems and microcontroller programming.</p>
+                
+                <h4 className="font-bold text-slate-dark dark:text-white mb-3">Learning Focus:</h4>
+                <ul className="space-y-2 mb-6 text-gray-700 dark:text-gray-300">
+                  <li className="flex items-start gap-2">
+                    <span className="text-accent-teal mt-1">•</span>
+                    <span>Object-oriented programming principles and design patterns</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-accent-teal mt-1">•</span>
+                    <span>Embedded systems development and microcontroller programming</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-accent-teal mt-1">•</span>
+                    <span>Circuit simulation and real-time system applications</span>
+                  </li>
+                </ul>
+
+                <h4 className="font-bold text-slate-dark dark:text-white mb-3">Skills Developed:</h4>
+                <div className="flex flex-wrap gap-2">
+                  {['C++ (81%)', 'Embedded Systems', 'Problem Solving'].map((skill) => (
+                    <span key={skill} className="bg-cyan-100 dark:bg-cyan-900/50 text-cyan-800 dark:text-cyan-200 px-3 py-1 rounded-full text-sm font-semibold">
+                      {skill}
+                    </span>
                   ))}
                 </div>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Certificates Section */}
-        <section id="certificates" className="py-20 md:py-32">
-          <div className="container space-y-12">
-            <div>
-              <h2 className="text-4xl font-bold mb-4">Certificates & Achievements</h2>
-              <div className="w-16 h-1 bg-accent-teal rounded-full"></div>
-            </div>
-            <Certificates />
-          </div>
-        </section>
+      {/* Certificates Section */}
+      <section id="certificates" className="py-20 bg-white dark:bg-slate-950">
+        <div className="container">
+          <h2 className="text-4xl font-bold mb-4 text-slate-dark dark:text-white">Certifications & Achievements</h2>
+          <div className="w-16 h-1 bg-accent-teal mb-12"></div>
+          <Certificates />
+        </div>
+      </section>
 
-        {/* Contact Section */}
-        <section id="contact" className="py-20 md:py-32 bg-gradient-to-r from-blue-600 to-cyan-600 text-white">
-          <div className="container text-center space-y-8">
-            <div>
-              <h2 className="text-4xl font-bold mb-4">Get in Touch</h2>
-              <p className="text-lg opacity-90 max-w-2xl mx-auto">
-                Ready to collaborate on groundbreaking projects? Whether you're looking for a driven electrical engineer, an innovative problem-solver, or someone passionate about AI-driven systems, I'm excited to connect!
-              </p>
-            </div>
-            <div className="grid md:grid-cols-3 gap-8 py-8">
-              <div>
-                <p className="text-sm opacity-75 mb-2">Phone</p>
-                <a href="tel:+27656460357" className="text-xl font-semibold hover:opacity-80 transition-smooth">+27 65 6460 357</a>
-              </div>
-              <div>
-                <p className="text-sm opacity-75 mb-2">Email</p>
-                <a href="mailto:2837716@students.wits.ac.za" className="text-xl font-semibold hover:opacity-80 transition-smooth">2837716@students.wits.ac.za</a>
-              </div>
-              <div>
-                <p className="text-sm opacity-75 mb-2">Location</p>
-                <p className="text-xl font-semibold">Johannesburg, South Africa</p>
-              </div>
-            </div>
-            <div className="flex gap-4 justify-center pt-8">
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-white text-blue-600 rounded-lg hover:bg-opacity-90 transition-smooth font-semibold">LinkedIn</a>
-              <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-white text-blue-600 rounded-lg hover:bg-opacity-90 transition-smooth font-semibold">GitHub</a>
-            </div>
+      {/* Interests Section */}
+      <section className="py-20 bg-gray-50 dark:bg-slate-900">
+        <div className="container">
+          <h2 className="text-4xl font-bold mb-4 text-slate-dark dark:text-white">Interests & Passions</h2>
+          <div className="w-16 h-1 bg-accent-teal mb-12"></div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              {
+                icon: Zap,
+                title: 'Circuit Design',
+                description: 'Passionate about designing efficient and innovative electrical circuits'
+              },
+              {
+                icon: Cpu,
+                title: 'Embedded Systems',
+                description: 'Fascinated by programming microcontrollers and IoT applications with cutting-edge technologies'
+              },
+              {
+                icon: Lightbulb,
+                title: 'Machine Learning & AI',
+                description: 'Architecting intelligent systems that combine electrical engineering with AI-driven automation'
+              },
+              {
+                icon: Code2,
+                title: 'Problem Solving',
+                description: 'Love tackling complex engineering challenges with creative, innovative solutions'
+              },
+              {
+                icon: Users,
+                title: 'Mentoring',
+                description: 'Dedicated to helping others understand engineering concepts and unlock their potential'
+              }
+            ].map((interest, index) => {
+              const Icon = interest.icon;
+              return (
+                <div key={index} className="bg-white dark:bg-slate-950 p-8 rounded-lg border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-shadow">
+                  <Icon className="w-12 h-12 text-accent-teal mb-4" />
+                  <h3 className="text-xl font-bold mb-3 text-slate-dark dark:text-white">{interest.title}</h3>
+                  <p className="text-gray-700 dark:text-gray-300">{interest.description}</p>
+                </div>
+              );
+            })}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Footer */}
-        <footer className="py-8 border-t border-gray-200 dark:border-gray-800">
-          <div className="container text-center text-gray-600 dark:text-gray-400">
-            <p>Made with <span className="text-accent-teal">❤️</span> by Tshepiso Phoku</p>
+      {/* Contact Section */}
+      <section id="contact" className="py-20 bg-white dark:bg-slate-950">
+        <div className="container">
+          <h2 className="text-4xl font-bold mb-4 text-slate-dark dark:text-white">Get in Touch</h2>
+          <div className="w-16 h-1 bg-accent-teal mb-12"></div>
+          
+          <div className="max-w-3xl mx-auto mb-12">
+            <p className="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
+              Ready to collaborate on groundbreaking projects? Whether you're looking for a driven electrical engineer, an innovative problem-solver, or someone passionate about AI-driven systems, I'm excited to connect!
+            </p>
+            <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+              Let's discuss how I can contribute to your team's success. Reach out through any channel below—I respond quickly and am always eager to explore new opportunities.
+            </p>
           </div>
-        </footer>
+
+          <div className="grid md:grid-cols-2 gap-8 mb-12">
+            <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 p-8 rounded-lg border border-blue-200 dark:border-blue-800">
+              <Phone className="w-8 h-8 text-accent-teal mb-4" />
+              <h3 className="text-xl font-bold mb-2 text-slate-dark dark:text-white">Phone</h3>
+              <p className="text-gray-700 dark:text-gray-300 font-semibold">+27 65 6460 357</p>
+            </div>
+            <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 p-8 rounded-lg border border-blue-200 dark:border-blue-800">
+              <Mail className="w-8 h-8 text-accent-teal mb-4" />
+              <h3 className="text-xl font-bold mb-2 text-slate-dark dark:text-white">Email</h3>
+              <p className="text-gray-700 dark:text-gray-300 font-semibold">2837716@students.wits.ac.za</p>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <a href="https://www.linkedin.com/in/tshepiso-phoku-7b8a3a2b9/" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 p-8 rounded-lg border border-blue-200 dark:border-blue-800 hover:shadow-lg transition-shadow flex items-start gap-4">
+              <Linkedin className="w-8 h-8 text-accent-teal flex-shrink-0 mt-1" />
+              <div>
+                <h3 className="text-xl font-bold text-slate-dark dark:text-white mb-2">LinkedIn</h3>
+                <p className="text-gray-700 dark:text-gray-300 mb-4">Connect with me on LinkedIn to see my professional profile and endorsements.</p>
+                <span className="text-accent-teal font-semibold flex items-center gap-2">
+                  View Profile <ExternalLink size={16} />
+                </span>
+              </div>
+            </a>
+            <a href="https://github.com/tshepiso-phoku" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 p-8 rounded-lg border border-blue-200 dark:border-blue-800 hover:shadow-lg transition-shadow flex items-start gap-4">
+              <Github className="w-8 h-8 text-accent-teal flex-shrink-0 mt-1" />
+              <div>
+                <h3 className="text-xl font-bold text-slate-dark dark:text-white mb-2">GitHub</h3>
+                <p className="text-gray-700 dark:text-gray-300 mb-4">Explore my code repositories and see my projects in action.</p>
+                <span className="text-accent-teal font-semibold flex items-center gap-2">
+                  View Projects <ExternalLink size={16} />
+                </span>
+              </div>
+            </a>
+          </div>
+
+          <div className="mt-12 pt-12 border-t border-gray-200 dark:border-gray-700 flex items-center justify-center gap-2 text-gray-600 dark:text-gray-400">
+            <MapPin size={18} />
+            <span>Johannesburg, South Africa</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-slate-dark dark:bg-slate-950 text-white py-8">
+        <div className="container text-center">
+          <p className="mb-2">© 2026 Tshepiso Kevin Phoku. All rights reserved.</p>
+          <p className="text-sm text-gray-400">This portfolio is my exclusive intellectual property. No third party, including Meta, Google, or any technology platform, has any claim to this website or its content.</p>
+        </div>
+      </footer>
       </div>
     </div>
   );

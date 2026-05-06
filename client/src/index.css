@@ -332,69 +332,68 @@
     opacity: 0;
   }
 
-  /* iOS-style single bounce animations */
-  @keyframes pageBounceTop {
+  /* Page stretch animations - elastic bounce effect */
+  @keyframes pageStretchTop {
     0% {
-      transform: translateY(0) scaleY(1) translateZ(0);
+      transform: scaleY(1) translateZ(0);
     }
-    35% {
-      transform: translateY(24px) scaleY(0.98) translateZ(0);
+    40% {
+      transform: scaleY(1.15) translateZ(0);
     }
     100% {
-      transform: translateY(0) scaleY(1) translateZ(0);
+      transform: scaleY(1) translateZ(0);
     }
   }
 
-  @keyframes pageBounceBottom {
+  @keyframes pageStretchBottom {
     0% {
-      transform: translateY(0) scaleY(1) translateZ(0);
+      transform: scaleY(1) translateZ(0);
     }
-    35% {
-      transform: translateY(-24px) scaleY(0.98) translateZ(0);
+    40% {
+      transform: scaleY(1.15) translateZ(0);
     }
     100% {
-      transform: translateY(0) scaleY(1) translateZ(0);
+      transform: scaleY(1) translateZ(0);
     }
   }
 
-  .page-bounce-top {
-    animation: pageBounceTop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  .page-stretch-top {
+    animation: pageStretchTop 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
     transform-origin: top center;
     will-change: transform;
     backface-visibility: hidden;
     perspective: 1000px;
   }
 
-  .page-bounce-bottom {
-    animation: pageBounceBottom 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  .page-stretch-bottom {
+    animation: pageStretchBottom 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
     transform-origin: bottom center;
     will-change: transform;
     backface-visibility: hidden;
     perspective: 1000px;
   }
 
-  /* iOS Glass Morphism Blob Animation */
-  @keyframes blobGlass {
+  /* Liquid Glass Blob Animation */
+  @keyframes blob {
     0%, 100% {
       transform: translate(0, 0) scale(1) translateZ(0);
-      opacity: 0.35;
+      opacity: 0.4;
     }
     33% {
-      transform: translate(40px, -60px) scale(1.15) translateZ(0);
-      opacity: 0.45;
+      transform: translate(30px, -50px) scale(1.1) translateZ(0);
+      opacity: 0.5;
     }
     66% {
-      transform: translate(-30px, 30px) scale(0.85) translateZ(0);
-      opacity: 0.3;
+      transform: translate(-20px, 20px) scale(0.9) translateZ(0);
+      opacity: 0.35;
     }
   }
 
-  .animate-blob-glass {
-    animation: blobGlass 8s infinite ease-in-out;
+  .animate-blob {
+    animation: blob 7s infinite;
     will-change: transform, opacity;
     backface-visibility: hidden;
     transform: translateZ(0);
-    filter: blur(40px);
   }
 
   @media (min-width: 640px) {
