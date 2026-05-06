@@ -127,52 +127,51 @@ export default function Home() {
   const pageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    let isAnimating = false;
-    let lastAnimationTime = 0;
-    const ANIMATION_COOLDOWN = 750;
+    let lastBounceTime = 0;
+    const BOUNCE_COOLDOWN = 800;
     const ANIMATION_DURATION = 550;
     let timeoutId: NodeJS.Timeout | null = null;
 
     const handleWheel = (e: WheelEvent) => {
       const now = Date.now();
       
-      if (now - lastAnimationTime < ANIMATION_COOLDOWN) {
+      // Strict cooldown - no bounce if within cooldown window
+      if (now - lastBounceTime < BOUNCE_COOLDOWN) {
         return;
       }
 
       const scrollTop = window.scrollY;
       const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const isAtTop = scrollTop <= 0;
-      const isAtBottom = scrollTop >= scrollHeight - 10;
+      const isAtTop = scrollTop <= 5;
+      const isAtBottom = scrollTop >= scrollHeight - 5;
       const isScrollingDown = e.deltaY > 0;
       const isScrollingUp = e.deltaY < 0;
 
-      if (isAtTop && isScrollingUp && !isAnimating && pageRef.current) {
-        isAnimating = true;
-        lastAnimationTime = now;
-        pageRef.current.classList.add('page-stretch-top');
-        
-        if (timeoutId) clearTimeout(timeoutId);
-        
-        timeoutId = setTimeout(() => {
-          if (pageRef.current) {
-            pageRef.current.classList.remove('page-stretch-top');
-            isAnimating = false;
-          }
-          timeoutId = null;
-        }, ANIMATION_DURATION);
+      let shouldBounce = false;
+      let bounceClass = '';
+
+      if (isAtTop && isScrollingUp && pageRef.current) {
+        shouldBounce = true;
+        bounceClass = 'page-stretch-top';
+      } else if (isAtBottom && isScrollingDown && pageRef.current) {
+        shouldBounce = true;
+        bounceClass = 'page-stretch-bottom';
       }
-      else if (isAtBottom && isScrollingDown && !isAnimating && pageRef.current) {
-        isAnimating = true;
-        lastAnimationTime = now;
-        pageRef.current.classList.add('page-stretch-bottom');
+
+      if (shouldBounce && pageRef.current) {
+        // Update cooldown BEFORE animation starts
+        lastBounceTime = now;
         
+        // Clear any pending timeout
         if (timeoutId) clearTimeout(timeoutId);
         
+        // Add animation class
+        pageRef.current.classList.add(bounceClass);
+        
+        // Remove class after animation completes
         timeoutId = setTimeout(() => {
           if (pageRef.current) {
-            pageRef.current.classList.remove('page-stretch-bottom');
-            isAnimating = false;
+            pageRef.current.classList.remove(bounceClass);
           }
           timeoutId = null;
         }, ANIMATION_DURATION);
@@ -188,11 +187,18 @@ export default function Home() {
 
   return (
     <div ref={pageRef} className={`min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-gray-100 relative overflow-hidden`}>
-      {/* Liquid Glass Background Blobs */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-blue-400/5 to-cyan-400/3 rounded-full blur-3xl animate-blob"></div>
-        <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-gradient-to-br from-cyan-400/5 to-blue-400/3 rounded-full blur-3xl animate-blob" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-gradient-to-br from-blue-300/3 to-cyan-300/2 rounded-full blur-3xl animate-blob" style={{ animationDelay: '4s' }}></div>
+      {/* iOS Glass Morphism Background */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+        {/* Frosted glass base layer */}
+        <div className="absolute inset-0 backdrop-blur-3xl opacity-40 dark:opacity-20"></div>
+        
+        {/* Animated glass blobs */}
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-blue-500/35 to-cyan-500/25 rounded-full blur-3xl animate-blob"></div>
+        <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-gradient-to-br from-cyan-500/35 to-blue-500/25 rounded-full blur-3xl animate-blob" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-gradient-to-br from-blue-400/30 to-cyan-400/20 rounded-full blur-3xl animate-blob" style={{ animationDelay: '4s' }}></div>
+        
+        {/* Light overlay for iOS effect */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/5 via-transparent to-white/5 dark:from-white/2 dark:via-transparent dark:to-white/2 pointer-events-none"></div>
       </div>
       <div className="relative z-10">
       {/* Navigation */}
