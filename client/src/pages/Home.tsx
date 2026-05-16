@@ -126,6 +126,20 @@ export default function Home() {
   const { theme, toggleTheme } = useTheme();
   const pageRef = useRef<HTMLDivElement>(null);
 
+  // Parallax effect for glass blobs
+  useEffect(() => {
+    const handleParallaxScroll = () => {
+      const scrollY = window.scrollY;
+      const parallaxOffset = scrollY * 0.15; // 15% of scroll speed
+      
+      // Update CSS custom property for parallax
+      document.documentElement.style.setProperty('--parallax-transform', `translateY(${parallaxOffset}px)`);
+    };
+
+    window.addEventListener('scroll', handleParallaxScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleParallaxScroll);
+  }, []);
+
   useEffect(() => {
     let lastBounceTime = 0;
     const BOUNCE_COOLDOWN = 800;
@@ -192,10 +206,12 @@ export default function Home() {
         {/* Frosted glass base layer */}
         <div className="absolute inset-0 backdrop-blur-3xl opacity-40 dark:opacity-20"></div>
         
-        {/* Animated glass blobs */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-blue-500/35 to-cyan-500/25 rounded-full blur-3xl animate-blob"></div>
-        <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-gradient-to-br from-cyan-500/35 to-blue-500/25 rounded-full blur-3xl animate-blob" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-gradient-to-br from-blue-400/30 to-cyan-400/20 rounded-full blur-3xl animate-blob" style={{ animationDelay: '4s' }}></div>
+        {/* Animated glass blobs with parallax */}
+        <div className="absolute inset-0 parallax-blobs" style={{ transform: 'var(--parallax-transform, translateY(0))', willChange: 'transform', backfaceVisibility: 'hidden' }}>
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-blue-500/35 to-cyan-500/25 rounded-full blur-3xl animate-blob"></div>
+          <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-gradient-to-br from-cyan-500/35 to-blue-500/25 rounded-full blur-3xl animate-blob" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-gradient-to-br from-blue-400/30 to-cyan-400/20 rounded-full blur-3xl animate-blob" style={{ animationDelay: '4s' }}></div>
+        </div>
         
         {/* Light overlay for iOS effect */}
         <div className="absolute inset-0 bg-gradient-to-b from-white/5 via-transparent to-white/5 dark:from-white/2 dark:via-transparent dark:to-white/2 pointer-events-none"></div>
