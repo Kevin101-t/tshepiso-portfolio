@@ -268,7 +268,7 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 bg-white dark:bg-slate-950 section-fade-in" ref={useScrollAnimation().ref}>
+      <section id="about" className="py-20 bg-white dark:bg-slate-950">
         <div className="container">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -306,7 +306,7 @@ export default function Home() {
       </section>
 
       {/* Timeline Section */}
-      <section id="timeline" className="py-20 bg-gray-50 dark:bg-slate-900 section-fade-in" ref={useScrollAnimation().ref}>
+      <section id="timeline" className="py-20 bg-gray-50 dark:bg-slate-900">
         <div className="container">
           <h2 className="text-4xl font-bold mb-4 text-slate-dark dark:text-white">My Journey</h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 mb-12">Click on any milestone to explore the details of my educational and professional progression.</p>
@@ -315,7 +315,7 @@ export default function Home() {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="py-20 bg-white dark:bg-slate-950 section-fade-in" ref={useScrollAnimation().ref}>
+      <section id="skills" className="py-20 bg-white dark:bg-slate-950">
         <div className="container">
           <h2 className="text-4xl font-bold mb-4 text-slate-dark dark:text-white">Skills & Competencies</h2>
           <div className="w-16 h-1 bg-accent-teal mb-12"></div>
@@ -402,7 +402,7 @@ export default function Home() {
       </section>
 
       {/* Projects Section */}
-      <section className="py-20 bg-gray-50 dark:bg-slate-900 section-fade-in" ref={useScrollAnimation().ref}>
+      <section className="py-20 bg-gray-50 dark:bg-slate-900">
         <div className="container">
           <h2 className="text-4xl font-bold mb-4 text-slate-dark dark:text-white">Featured Projects</h2>
           <div className="w-16 h-1 bg-accent-teal mb-12"></div>
@@ -486,7 +486,7 @@ export default function Home() {
       </section>
 
       {/* Certificates Section */}
-      <section id="certificates" className="py-20 bg-white dark:bg-slate-950 section-fade-in" ref={useScrollAnimation().ref}>
+      <section id="certificates" className="py-20 bg-white dark:bg-slate-950">
         <div className="container">
           <h2 className="text-4xl font-bold mb-4 text-slate-dark dark:text-white">Certifications & Achievements</h2>
           <div className="w-16 h-1 bg-accent-teal mb-12"></div>
@@ -495,7 +495,7 @@ export default function Home() {
       </section>
 
       {/* Interests Section */}
-      <section className="py-20 bg-gray-50 dark:bg-slate-900 section-fade-in" ref={useScrollAnimation().ref}>
+      <section className="py-20 bg-gray-50 dark:bg-slate-900">
         <div className="container">
           <h2 className="text-4xl font-bold mb-4 text-slate-dark dark:text-white">Interests & Passions</h2>
           <div className="w-16 h-1 bg-accent-teal mb-12"></div>
@@ -542,7 +542,7 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 bg-white dark:bg-slate-950 section-fade-in" ref={useScrollAnimation().ref}>
+      <section id="contact" className="py-20 bg-white dark:bg-slate-950">
         <div className="container">
           <h2 className="text-4xl font-bold mb-4 text-slate-dark dark:text-white">Get in Touch</h2>
           <div className="w-16 h-1 bg-accent-teal mb-12"></div>

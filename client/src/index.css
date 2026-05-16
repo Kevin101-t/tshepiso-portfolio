@@ -254,50 +254,11 @@
   }
 
   .scroll-fade-in {
-    animation: slideInFromBottomLeft 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    opacity: 0;
+    animation: slideInFromBottomLeft 0.49s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   }
 
   .scroll-fade-in-reverse {
-    animation: slideInFromTopRight 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    opacity: 0;
-  }
-
-  /* Section fade-in with glass effect */
-  @keyframes sectionFadeInUp {
-    0% {
-      opacity: 0;
-      transform: translateY(40px) translateZ(0);
-      filter: blur(10px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0) translateZ(0);
-      filter: blur(0px);
-    }
-  }
-
-  @keyframes sectionFadeInDown {
-    0% {
-      opacity: 0;
-      transform: translateY(-40px) translateZ(0);
-      filter: blur(10px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0) translateZ(0);
-      filter: blur(0px);
-    }
-  }
-
-  .section-fade-in {
-    animation: sectionFadeInUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    opacity: 0;
-  }
-
-  .section-fade-in-reverse {
-    animation: sectionFadeInDown 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    opacity: 0;
+    animation: slideInFromTopRight 0.49s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   }
 
   /* Individual block animations */
@@ -412,54 +373,27 @@
     perspective: 1000px;
   }
 
-  /* iOS 26 Liquid Glass Blob Animation - Enhanced */
-  @keyframes blobGlass {
-    0% {
+  /* Liquid Glass Blob Animation */
+  @keyframes blob {
+    0%, 100% {
       transform: translate(0, 0) scale(1) translateZ(0);
-      opacity: 0.45;
-      filter: blur(50px);
-    }
-    25% {
-      transform: translate(60px, -80px) scale(1.2) translateZ(0);
-      opacity: 0.55;
-      filter: blur(45px);
-    }
-    50% {
-      transform: translate(-40px, 60px) scale(0.9) translateZ(0);
       opacity: 0.4;
-      filter: blur(55px);
     }
-    75% {
-      transform: translate(80px, 40px) scale(1.15) translateZ(0);
+    33% {
+      transform: translate(30px, -50px) scale(1.1) translateZ(0);
       opacity: 0.5;
-      filter: blur(48px);
     }
-    100% {
-      transform: translate(0, 0) scale(1) translateZ(0);
-      opacity: 0.45;
-      filter: blur(50px);
+    66% {
+      transform: translate(-20px, 20px) scale(0.9) translateZ(0);
+      opacity: 0.35;
     }
   }
 
   .animate-blob {
-    animation: blobGlass 9s ease-in-out infinite;
-    will-change: transform, opacity, filter;
+    animation: blob 7s infinite;
+    will-change: transform, opacity;
     backface-visibility: hidden;
     transform: translateZ(0);
-  }
-
-  /* Glass morphism overlay animations */
-  @keyframes glassShimmer {
-    0%, 100% {
-      opacity: 0.3;
-    }
-    50% {
-      opacity: 0.6;
-    }
-  }
-
-  .glass-shimmer {
-    animation: glassShimmer 4s ease-in-out infinite;
   }
 
   @media (min-width: 640px) {
