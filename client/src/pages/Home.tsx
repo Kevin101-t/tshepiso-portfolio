@@ -461,37 +461,39 @@ export default function Home() {
               </div>
             </div>
 
-            {/* C++ Embedded Systems */}
+            {/* Proximity-Based Servo Control */}
             <div className="bg-white dark:bg-slate-950 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800 hover:shadow-lg transition-shadow">
-              <div className="bg-gradient-to-br from-cyan-500 to-blue-500 h-32 flex items-center justify-center">
-                <Code2 className="w-16 h-16 text-white opacity-30" />
-              </div>
+              <img src="/manus-storage/WhatsAppImage2026-05-16at15.36.15_818281e1.webp" alt="Proximity-Based Servo Control System" className="w-full h-48 object-cover" />
               <div className="p-8">
-                <h3 className="text-2xl font-bold mb-2 text-slate-dark dark:text-white">C++ Embedded Systems Programming</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4 font-semibold">Ongoing Learning & Development</p>
-                <p className="text-gray-700 dark:text-gray-300 mb-6">Actively developing proficiency in C++ programming with focus on embedded systems applications and circuit simulation. Building foundational knowledge for real-time systems and microcontroller programming.</p>
+                <h3 className="text-2xl font-bold mb-2 text-slate-dark dark:text-white">Proximity-Based Servo Control System</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-4 font-semibold">AVR Microcontroller Project | Embedded Systems</p>
+                <p className="text-gray-700 dark:text-gray-300 mb-6">Designed and implemented a fully automated proximity detection system using AVR Assembly on ATmega328P microcontroller. The system integrates ultrasonic sensing, servo motor control, and real-time LED feedback to detect nearby objects and respond with precise servo positioning.</p>
                 
-                <h4 className="font-bold text-slate-dark dark:text-white mb-3">Learning Focus:</h4>
+                <h4 className="font-bold text-slate-dark dark:text-white mb-3">Key Achievements:</h4>
                 <ul className="space-y-2 mb-6 text-gray-700 dark:text-gray-300">
                   <li className="flex items-start gap-2">
                     <span className="text-accent-teal mt-1">•</span>
-                    <span>Object-oriented programming principles and design patterns</span>
+                    <span>Programmed entire system in AVR Assembly for low-level hardware control</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-accent-teal mt-1">•</span>
-                    <span>Embedded systems development and microcontroller programming</span>
+                    <span>Implemented real-time interrupt handling and PWM servo control</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-accent-teal mt-1">•</span>
-                    <span>Circuit simulation and real-time system applications</span>
+                    <span>Achieved accurate distance measurement with HC-SR04 ultrasonic sensor</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-accent-teal mt-1">•</span>
+                    <span>Designed responsive LED feedback system for status indication</span>
                   </li>
                 </ul>
 
-                <h4 className="font-bold text-slate-dark dark:text-white mb-3">Skills Developed:</h4>
+                <h4 className="font-bold text-slate-dark dark:text-white mb-3">Technologies Used:</h4>
                 <div className="flex flex-wrap gap-2">
-                  {['C++ (81%)', 'Embedded Systems', 'Problem Solving'].map((skill) => (
-                    <span key={skill} className="bg-cyan-100 dark:bg-cyan-900/50 text-cyan-800 dark:text-cyan-200 px-3 py-1 rounded-full text-sm font-semibold">
-                      {skill}
+                  {['AVR Assembly', 'ATmega328P', 'PWM Control', 'Embedded C', 'Real-Time Systems'].map((tech) => (
+                    <span key={tech} className="bg-cyan-100 dark:bg-cyan-900/50 text-cyan-800 dark:text-cyan-200 px-3 py-1 rounded-full text-sm font-semibold">
+                      {tech}
                     </span>
                   ))}
                 </div>
