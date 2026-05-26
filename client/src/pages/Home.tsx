@@ -141,12 +141,16 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    let isAnimating = false;
     let lastBounceTime = 0;
-    const BOUNCE_COOLDOWN = 800;
+    const BOUNCE_COOLDOWN = 1200; // Increased cooldown
     const ANIMATION_DURATION = 550;
     let timeoutId: NodeJS.Timeout | null = null;
 
     const handleWheel = (e: WheelEvent) => {
+      // Prevent multiple bounces - if already animating, ignore
+      if (isAnimating) return;
+      
       const now = Date.now();
       
       // Strict cooldown - no bounce if within cooldown window
@@ -156,10 +160,14 @@ export default function Home() {
 
       const scrollTop = window.scrollY;
       const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const isAtTop = scrollTop <= 5;
-      const isAtBottom = scrollTop >= scrollHeight - 5;
+      const isAtTop = scrollTop <= 2;
+      const isAtBottom = scrollTop >= scrollHeight - 2;
+      const deltaY = Math.abs(e.deltaY);
       const isScrollingDown = e.deltaY > 0;
       const isScrollingUp = e.deltaY < 0;
+
+      // Only trigger on significant scroll events
+      if (deltaY < 10) return;
 
       let shouldBounce = false;
       let bounceClass = '';
@@ -173,7 +181,8 @@ export default function Home() {
       }
 
       if (shouldBounce && pageRef.current) {
-        // Update cooldown BEFORE animation starts
+        // Set animation flag IMMEDIATELY
+        isAnimating = true;
         lastBounceTime = now;
         
         // Clear any pending timeout
@@ -187,8 +196,9 @@ export default function Home() {
           if (pageRef.current) {
             pageRef.current.classList.remove(bounceClass);
           }
+          isAnimating = false;
           timeoutId = null;
-        }, ANIMATION_DURATION);
+        }, ANIMATION_DURATION + 50); // Add buffer
       }
     };
 
