@@ -238,6 +238,7 @@ export default function Home() {
               <a href="#skills" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-smooth">Skills</a>
               <a href="#certificates" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-smooth">Certificates</a>
               <a href="#contact" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-smooth">Contact</a>
+              <a href="https://d2xsxph8kpxj0f.cloudfront.net/310519663588749976/VqtRsrvp8AWWYW82Ld27rf/Tshepiso_Kevin_Phoku_Professional_CV.pdf" download className="bg-accent-teal hover:bg-blue-400 text-white px-4 py-2 rounded-lg font-semibold transition-smooth text-sm">Download CV</a>
             </div>
             <button 
               onClick={toggleTheme} 
@@ -527,6 +528,49 @@ export default function Home() {
           <h2 className="text-4xl font-bold mb-4 text-slate-dark dark:text-white">Certifications & Achievements</h2>
           <div className="w-16 h-1 bg-accent-teal mb-12"></div>
           <Certificates />
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 bg-white dark:bg-slate-950">
+        <div className="container">
+          <h2 className="text-4xl font-bold mb-4 text-slate-dark dark:text-white">What Others Say</h2>
+          <div className="w-16 h-1 bg-accent-teal mb-12"></div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 p-8 rounded-lg border border-blue-200 dark:border-blue-800">
+              <div className="flex gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <span key={i} className="text-yellow-400">★</span>
+                ))}
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 mb-6 italic">"Tshepiso is an exceptional tutor who has a remarkable ability to break down complex concepts into digestible, understandable pieces. His patience and dedication have significantly improved my understanding of electrical engineering fundamentals."</p>
+              <div className="font-semibold text-slate-dark dark:text-white">Naledi Mthembu</div>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Electrical Engineering Student, Wits University</p>
+            </div>
+            
+            <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 p-8 rounded-lg border border-blue-200 dark:border-blue-800">
+              <div className="flex gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <span key={i} className="text-yellow-400">★</span>
+                ))}
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 mb-6 italic">"As a peer mentor, Tshepiso demonstrates exceptional technical depth combined with genuine care for student success. His guidance on embedded systems has been invaluable to my academic journey."</p>
+              <div className="font-semibold text-slate-dark dark:text-white">Thabo Khumalo</div>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Electrical Engineering Student, Wits University</p>
+            </div>
+            
+            <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 p-8 rounded-lg border border-blue-200 dark:border-blue-800">
+              <div className="flex gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <span key={i} className="text-yellow-400">★</span>
+                ))}
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 mb-6 italic">"Tshepiso's problem-solving approach to circuit design and embedded systems is innovative and practical. He brings both theoretical knowledge and hands-on expertise to every project."</p>
+              <div className="font-semibold text-slate-dark dark:text-white">Lerato Dlamini</div>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Electrical Engineering Student, Wits University</p>
+            </div>
+          </div>
         </div>
       </section>
 
