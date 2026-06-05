@@ -2,7 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import Timeline from "@/components/Timeline";
 import Certificates from "@/components/Certificates";
 import { useTheme } from "@/contexts/ThemeContext";
-import { X, Zap, Cpu, Lightbulb, Code, BookOpen, Award } from 'lucide-react';
+import { X, Zap, Cpu, Lightbulb, Code, BookOpen, Award, ArrowRight, Mail, Phone, MapPin } from 'lucide-react';
+import { toast } from 'sonner';
 
 /**
  * Design System: Professional Engineering Portfolio
@@ -165,11 +166,83 @@ const useScrollAnimation = () => {
   return { ref, isVisible };
 };
 
+interface BlogArticle {
+  id: string;
+  title: string;
+  excerpt: string;
+  category: string;
+  readTime: string;
+  date: string;
+  keyPoints: string[];
+}
+
+const blogArticles: BlogArticle[] = [
+  {
+    id: 'avr-assembly',
+    title: 'Mastering AVR Assembly: From Theory to Real-Time Control',
+    excerpt: 'Deep dive into AVR Assembly programming for embedded systems. Learn how to optimize code for performance-critical applications with hands-on examples from servo control projects.',
+    category: 'Embedded Systems',
+    readTime: '8 min read',
+    date: 'May 2026',
+    keyPoints: [
+      'AVR instruction set architecture and register optimization',
+      'Real-time interrupt handling with <50µs latency',
+      'PWM control and hardware timer configuration',
+      'ISR preservation protocols and register corruption prevention'
+    ]
+  },
+  {
+    id: 'circuit-optimization',
+    title: 'Circuit Optimization Techniques: Achieving 45% Efficiency Gains',
+    excerpt: 'Explore practical circuit design methodologies that led to significant efficiency improvements in DC motor systems. Learn LTspice simulation techniques and control systems theory.',
+    category: 'Circuit Design',
+    readTime: '10 min read',
+    date: 'April 2026',
+    keyPoints: [
+      'LTspice simulation best practices for motor modeling',
+      'Torque curve optimization and load compensation',
+      'Feedback control loop design and tuning',
+      'Power electronics and thermal management'
+    ]
+  },
+  {
+    id: 'sensor-accuracy',
+    title: 'Solving the Ghost Zone Problem: Achieving 99.8% Sensor Accuracy',
+    excerpt: 'Technical analysis of proximity sensor challenges and the engineering solutions that improved accuracy from 78% to 99.8%. Includes precision arithmetic techniques and environmental compensation.',
+    category: 'Sensor Systems',
+    readTime: '7 min read',
+    date: 'March 2026',
+    keyPoints: [
+      '16-bit arithmetic precision for sensor signal processing',
+      'Environmental compensation algorithms',
+      'Kalman filtering for noisy sensor data',
+      'Multi-state validation and hysteresis techniques'
+    ]
+  },
+  {
+    id: 'embedded-debugging',
+    title: 'Embedded Systems Debugging: Tools and Techniques for Microcontrollers',
+    excerpt: 'Comprehensive guide to debugging embedded systems without traditional debuggers. Learn practical techniques for identifying and fixing hardware-level issues in real-time systems.',
+    category: 'Development',
+    readTime: '9 min read',
+    date: 'February 2026',
+    keyPoints: [
+      'LED-based debugging and status indication systems',
+      'UART communication for real-time monitoring',
+      'Memory profiling and stack analysis',
+      'Hardware breakpoints and watchdog timers'
+    ]
+  }
+];
+
 export default function Home() {
   const [activeTab, setActiveTab] = useState("skills");
   const { theme, toggleTheme } = useTheme();
   const pageRef = useRef<HTMLDivElement>(null);
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
+  const [selectedArticle, setSelectedArticle] = useState<string | null>(null);
+  const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Parallax effect for glass blobs
   useEffect(() => {
@@ -272,6 +345,7 @@ export default function Home() {
             <a href="#timeline" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-colors">Journey</a>
             <a href="#skills" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-colors">Skills</a>
             <a href="#certificates" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-colors">Certificates</a>
+            <a href="#blog" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-colors">Blog</a>
             <a href="#contact" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-colors">Contact</a>
             <a href="https://d2xsxph8kpxj0f.cloudfront.net/310519663588749976/VqtRsrvp8AWWYW82Ld27rf/Tshepiso_Kevin_Phoku_Professional_CV.pdf" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-colors font-semibold">Download CV</a>
           </div>
@@ -564,6 +638,97 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Blog/Articles Section */}
+      <section id="blog" className="py-20 bg-white dark:bg-slate-950">
+        <div className="container">
+          <h2 className="text-4xl font-bold mb-4 text-slate-dark dark:text-white">Engineering Insights</h2>
+          <div className="w-16 h-1 bg-accent-teal mb-12"></div>
+          
+          <div className="grid md:grid-cols-2 gap-8">
+            {blogArticles.map((article) => (
+              <div
+                key={article.id}
+                onClick={() => setSelectedArticle(article.id)}
+                className="bg-white dark:bg-slate-950 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800 hover:shadow-lg hover:border-accent-teal dark:hover:border-accent-teal transition-all cursor-pointer transform hover:scale-105"
+              >
+                <div className="p-8">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-xs font-semibold text-accent-teal bg-accent-teal/10 px-3 py-1 rounded-full">{article.category}</span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">{article.readTime}</span>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-3 text-slate-dark dark:text-white line-clamp-2">{article.title}</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-6 line-clamp-3">{article.excerpt}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-500 dark:text-gray-400">{article.date}</span>
+                    <button className="text-accent-teal font-semibold hover:text-blue-600 transition-colors flex items-center gap-2">
+                      Read More <ArrowRight size={16} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Article Modal */}
+          {selectedArticle && (
+            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 backdrop-blur-sm" onClick={() => setSelectedArticle(null)}>
+              <div className="bg-white dark:bg-slate-950 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl" onClick={(e) => e.stopPropagation()}>
+                {blogArticles.find(a => a.id === selectedArticle) && (
+                  <div className="p-8">
+                    <div className="flex justify-between items-start mb-6">
+                      <div>
+                        <div className="flex items-center gap-3 mb-3">
+                          <span className="text-xs font-semibold text-accent-teal bg-accent-teal/10 px-3 py-1 rounded-full">{blogArticles.find(a => a.id === selectedArticle)?.category}</span>
+                          <span className="text-sm text-gray-500 dark:text-gray-400">{blogArticles.find(a => a.id === selectedArticle)?.readTime}</span>
+                        </div>
+                        <h2 className="text-3xl font-bold text-slate-dark dark:text-white mb-2">
+                          {blogArticles.find(a => a.id === selectedArticle)?.title}
+                        </h2>
+                        <p className="text-gray-600 dark:text-gray-400 font-semibold">
+                          {blogArticles.find(a => a.id === selectedArticle)?.date}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => setSelectedArticle(null)}
+                        className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+                      >
+                        <X size={24} />
+                      </button>
+                    </div>
+
+                    <div className="space-y-6">
+                      <div>
+                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">
+                          {blogArticles.find(a => a.id === selectedArticle)?.excerpt}
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-xl font-bold text-slate-dark dark:text-white mb-4">Key Takeaways</h3>
+                        <ul className="space-y-3">
+                          {blogArticles.find(a => a.id === selectedArticle)?.keyPoints.map((point, idx) => (
+                            <li key={idx} className="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+                              <span className="text-accent-teal font-bold mt-1">→</span>
+                              <span>{point}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div className="bg-accent-teal/5 border border-accent-teal/20 rounded-lg p-6">
+                        <p className="text-gray-700 dark:text-gray-300">
+                          This article explores practical engineering techniques and methodologies. For more detailed discussions or project collaborations, feel free to <a href="#contact" className="text-accent-teal font-semibold hover:text-blue-600 transition-colors">get in touch</a>.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
       {/* Interests Section */}
       <section className="py-20 bg-gray-50 dark:bg-slate-900">
         <div className="container">
@@ -624,12 +789,12 @@ export default function Home() {
           
           <div className="grid md:grid-cols-2 gap-8">
             <div>
-              <p className="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">I'm always interested in hearing about new projects and opportunities. Whether you have a question or just want to say hello, feel free to reach out!</p>
+              <p className="text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">I'm always interested in hearing about new projects and opportunities. Whether you have a question or just want to say hello, feel free to reach out! I'll get back to you as soon as possible.</p>
               
               <div className="space-y-4">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-accent-teal/10 rounded-lg flex items-center justify-center">
-                    <span className="text-accent-teal">📧</span>
+                    <Mail className="w-6 h-6 text-accent-teal" />
                   </div>
                   <div>
                     <p className="text-sm text-gray-600 dark:text-gray-400">Email</p>
@@ -639,7 +804,7 @@ export default function Home() {
                 
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-accent-teal/10 rounded-lg flex items-center justify-center">
-                    <span className="text-accent-teal">📱</span>
+                    <Phone className="w-6 h-6 text-accent-teal" />
                   </div>
                   <div>
                     <p className="text-sm text-gray-600 dark:text-gray-400">Phone</p>
@@ -649,7 +814,7 @@ export default function Home() {
 
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-accent-teal/10 rounded-lg flex items-center justify-center">
-                    <span className="text-accent-teal">🎓</span>
+                    <MapPin className="w-6 h-6 text-accent-teal" />
                   </div>
                   <div>
                     <p className="text-sm text-gray-600 dark:text-gray-400">University Email</p>
@@ -657,29 +822,107 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div>
-              <div className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 dark:from-blue-950/30 dark:to-cyan-950/30 p-8 rounded-lg border border-blue-200 dark:border-blue-800">
-                <h3 className="text-2xl font-bold text-slate-dark dark:text-white mb-4">Connect With Me</h3>
+              <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-800">
+                <h3 className="text-xl font-bold text-slate-dark dark:text-white mb-4">Connect With Me</h3>
                 <div className="space-y-3">
-                  <a href="https://www.linkedin.com/in/tshepiso-kevin-phoku-6517533a4" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 bg-white dark:bg-slate-950 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-accent-teal dark:hover:border-accent-teal transition-colors">
+                  <a href="https://www.linkedin.com/in/tshepiso-kevin-phoku-6517533a4" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-900 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-accent-teal dark:hover:border-accent-teal transition-colors">
                     <span className="text-2xl">🔗</span>
                     <div>
                       <p className="font-semibold text-slate-dark dark:text-white">LinkedIn</p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">Connect with me on LinkedIn to see my professional profile and endorsements.</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Professional profile & endorsements</p>
                     </div>
                   </a>
                   
-                  <a href="https://github.com/Kevin101-t/Kevin101-t.github.io" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 bg-white dark:bg-slate-950 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-accent-teal dark:hover:border-accent-teal transition-colors">
+                  <a href="https://github.com/Kevin101-t/Kevin101-t.github.io" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-slate-900 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-accent-teal dark:hover:border-accent-teal transition-colors">
                     <span className="text-2xl">💻</span>
                     <div>
                       <p className="font-semibold text-slate-dark dark:text-white">GitHub</p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">Explore my code repositories and see my projects in action.</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Code repositories & projects</p>
                     </div>
                   </a>
                 </div>
               </div>
+            </div>
+
+            <div>
+              <form onSubmit={(e) => {
+                e.preventDefault();
+                
+                // Validation
+                if (!contactForm.name.trim()) {
+                  toast.error('Please enter your name');
+                  return;
+                }
+                if (!contactForm.email.trim()) {
+                  toast.error('Please enter your email');
+                  return;
+                }
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactForm.email)) {
+                  toast.error('Please enter a valid email address');
+                  return;
+                }
+                if (!contactForm.message.trim()) {
+                  toast.error('Please enter a message');
+                  return;
+                }
+                if (contactForm.message.trim().length < 10) {
+                  toast.error('Message must be at least 10 characters');
+                  return;
+                }
+
+                // Submit
+                setIsSubmitting(true);
+                
+                // Simulate form submission
+                setTimeout(() => {
+                  toast.success('Message sent successfully! I\'ll get back to you soon.');
+                  setContactForm({ name: '', email: '', message: '' });
+                  setIsSubmitting(false);
+                }, 1000);
+              }} className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 p-8 rounded-lg border border-blue-200 dark:border-blue-800 space-y-5">
+                <div>
+                  <label className="block text-sm font-semibold text-slate-dark dark:text-white mb-2">Name</label>
+                  <input
+                    type="text"
+                    value={contactForm.name}
+                    onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
+                    placeholder="Your full name"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-900 text-slate-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent-teal transition-all"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-slate-dark dark:text-white mb-2">Email</label>
+                  <input
+                    type="email"
+                    value={contactForm.email}
+                    onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
+                    placeholder="your.email@example.com"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-900 text-slate-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent-teal transition-all"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-slate-dark dark:text-white mb-2">Message</label>
+                  <textarea
+                    value={contactForm.message}
+                    onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
+                    placeholder="Tell me about your project or inquiry..."
+                    rows={5}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-900 text-slate-dark dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accent-teal transition-all resize-none"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-accent-teal text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+                >
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                  {!isSubmitting && <ArrowRight size={18} />}
+                </button>
+              </form>
             </div>
           </div>
         </div>
