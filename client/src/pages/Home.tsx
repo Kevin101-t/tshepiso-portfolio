@@ -663,7 +663,7 @@ export default function Home() {
               <div className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 dark:from-blue-950/30 dark:to-cyan-950/30 p-8 rounded-lg border border-blue-200 dark:border-blue-800">
                 <h3 className="text-2xl font-bold text-slate-dark dark:text-white mb-4">Connect With Me</h3>
                 <div className="space-y-3">
-                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 bg-white dark:bg-slate-950 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-accent-teal dark:hover:border-accent-teal transition-colors">
+                  <a href="https://www.linkedin.com/in/tshepiso-kevin-phoku-6517533a4" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 bg-white dark:bg-slate-950 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-accent-teal dark:hover:border-accent-teal transition-colors">
                     <span className="text-2xl">🔗</span>
                     <div>
                       <p className="font-semibold text-slate-dark dark:text-white">LinkedIn</p>
@@ -671,7 +671,7 @@ export default function Home() {
                     </div>
                   </a>
                   
-                  <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 bg-white dark:bg-slate-950 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-accent-teal dark:hover:border-accent-teal transition-colors">
+                  <a href="https://github.com/Kevin101-t/Kevin101-t.github.io" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 bg-white dark:bg-slate-950 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-accent-teal dark:hover:border-accent-teal transition-colors">
                     <span className="text-2xl">💻</span>
                     <div>
                       <p className="font-semibold text-slate-dark dark:text-white">GitHub</p>
