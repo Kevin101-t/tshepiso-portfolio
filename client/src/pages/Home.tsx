@@ -273,6 +273,15 @@ export default function Home() {
   const [selectedArticle, setSelectedArticle] = useState<string | null>(null);
   const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  // Get unique categories from blog articles
+  const categories = Array.from(new Set(blogArticles.map(article => article.category)));
+  
+  // Filter articles based on selected category
+  const filteredArticles = selectedCategory 
+    ? blogArticles.filter(article => article.category === selectedCategory)
+    : blogArticles;
 
   // Parallax effect for glass blobs
   useEffect(() => {
@@ -677,8 +686,36 @@ export default function Home() {
           <h2 className="text-4xl font-bold mb-4 text-slate-dark dark:text-white">Engineering Insights</h2>
           <div className="w-16 h-1 bg-accent-teal mb-12"></div>
           
+          {/* Category Filter */}
+          <div className="mb-12 flex flex-wrap gap-3 items-center">
+            <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Filter by Topic:</span>
+            <button
+              onClick={() => setSelectedCategory(null)}
+              className={`px-4 py-2 rounded-full font-semibold transition-all ${
+                selectedCategory === null
+                  ? 'bg-accent-teal text-white shadow-lg'
+                  : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+              }`}
+            >
+              All Topics
+            </button>
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-4 py-2 rounded-full font-semibold transition-all ${
+                  selectedCategory === category
+                    ? 'bg-accent-teal text-white shadow-lg'
+                    : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+          
           <div className="grid md:grid-cols-2 gap-8">
-            {blogArticles.map((article) => (
+            {filteredArticles.map((article) => (
               <div
                 key={article.id}
                 onClick={() => setSelectedArticle(article.id)}
