@@ -274,14 +274,25 @@ export default function Home() {
   const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Get unique categories from blog articles
   const categories = Array.from(new Set(blogArticles.map(article => article.category)));
   
-  // Filter articles based on selected category
-  const filteredArticles = selectedCategory 
-    ? blogArticles.filter(article => article.category === selectedCategory)
-    : blogArticles;
+  // Filter articles based on selected category and search query
+  const filteredArticles = blogArticles.filter(article => {
+    const matchesCategory = !selectedCategory || article.category === selectedCategory;
+    const matchesSearch = !searchQuery || 
+      article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      article.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      article.category.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+  
+  // Handle category change
+  const handleCategoryChange = (category: string | null) => {
+    setSelectedCategory(category);
+  };
 
   // Parallax effect for glass blobs
   useEffect(() => {
@@ -686,6 +697,25 @@ export default function Home() {
           <h2 className="text-4xl font-bold mb-4 text-slate-dark dark:text-white">Engineering Insights</h2>
           <div className="w-16 h-1 bg-accent-teal mb-12"></div>
           
+          {/* Search Bar */}
+          <div className="mb-8 flex items-center gap-2">
+            <input
+              type="text"
+              placeholder="Search articles by title, topic, or keywords..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="flex-1 px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-900 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:border-accent-teal transition-colors"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="px-4 py-3 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors font-semibold"
+              >
+                Clear
+              </button>
+            )}
+          </div>
+          
           {/* Category Filter */}
           <div className="mb-12 flex flex-wrap gap-3 items-center">
             <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Filter by Topic:</span>
@@ -738,6 +768,22 @@ export default function Home() {
               </div>
             ))}
           </div>
+          
+          {/* No Results Message */}
+          {filteredArticles.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-lg text-gray-600 dark:text-gray-400 mb-4">No articles found matching your search.</p>
+              <button
+                onClick={() => {
+                  setSearchQuery('');
+                  setSelectedCategory(null);
+                }}
+                className="px-6 py-2 bg-accent-teal text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors"
+              >
+                Clear Filters
+              </button>
+            </div>
+          )}
 
           {/* Article Modal */}
           {selectedArticle && (
