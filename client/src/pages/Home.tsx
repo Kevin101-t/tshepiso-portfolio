@@ -426,42 +426,110 @@ export default function Home() {
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-20 bg-gray-50 dark:bg-slate-900">
+      {/* About Section - Elevated World-Class Design */}
+      <section id="about" className="py-20 bg-gradient-to-b from-white via-blue-50/30 to-white dark:from-slate-950 dark:via-slate-900/50 dark:to-slate-950 relative overflow-hidden">
+        {/* Background elements */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-accent-teal/10 to-blue-500/10 rounded-full blur-3xl -z-10"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-cyan-500/10 to-accent-teal/10 rounded-full blur-3xl -z-10"></div>
+        
         <div className="container">
-          <h2 className="text-4xl font-bold mb-4 text-slate-dark dark:text-white">About Me</h2>
-          <div className="w-16 h-1 bg-accent-teal mb-12"></div>
+          <div className="mb-16">
+            <h2 className="text-5xl md:text-6xl font-bold mb-4 text-slate-dark dark:text-white leading-tight">About Me</h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-accent-teal to-blue-500"></div>
+          </div>
           
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            <div className="bg-white dark:bg-slate-950 p-8 rounded-lg border border-gray-200 dark:border-gray-800">
-              <div className="flex items-center gap-3 mb-4">
-                <Zap className="w-6 h-6 text-accent-teal" />
-                <h3 className="text-xl font-bold text-slate-dark dark:text-white">Innovation-Driven</h3>
+          {/* Main narrative section */}
+          <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-2xl font-bold text-slate-dark dark:text-white mb-3">Transforming Engineering Challenges into Innovation</h3>
+                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">I'm Tshepiso Kevin Phoku, a second-year Electrical Engineering student at the University of the Witwatersrand with an unwavering passion for circuit design, embedded systems, and intelligent automation. My journey is defined by a commitment to excellence that extends far beyond the classroom.</p>
               </div>
-              <p className="text-gray-700 dark:text-gray-300">Designing efficient circuits, architecting AI-driven solutions, and optimizing systems for real-world impact and intelligent automation</p>
+              
+              <div className="space-y-4">
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0">
+                    <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-accent-teal/20 text-accent-teal">
+                      <Zap className="w-6 h-6" />
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-slate-dark dark:text-white mb-1">Innovation-Driven Mindset</h4>
+                    <p className="text-gray-700 dark:text-gray-300">I design efficient circuits and architect AI-driven solutions that solve real-world problems with elegance and precision.</p>
+                  </div>
+                </div>
+                
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0">
+                    <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-accent-teal/20 text-accent-teal">
+                      <Code className="w-6 h-6" />
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-slate-dark dark:text-white mb-1">Collaborative Excellence</h4>
+                    <p className="text-gray-700 dark:text-gray-300">As a peer mentor, I translate complex concepts into intuitive understanding, fostering collaborative learning environments.</p>
+                  </div>
+                </div>
+                
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0">
+                    <div className="flex items-center justify-center h-10 w-10 rounded-lg bg-accent-teal/20 text-accent-teal">
+                      <Cpu className="w-6 h-6" />
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-slate-dark dark:text-white mb-1">Technical Mastery</h4>
+                    <p className="text-gray-700 dark:text-gray-300">Deep expertise in embedded systems, C++ programming, and circuit optimization with proven track record of results.</p>
+                  </div>
+                </div>
+              </div>
             </div>
             
-            <div className="bg-white dark:bg-slate-950 p-8 rounded-lg border border-gray-200 dark:border-gray-800">
-              <div className="flex items-center gap-3 mb-4">
-                <Code className="w-6 h-6 text-accent-teal" />
-                <h3 className="text-xl font-bold text-slate-dark dark:text-white">Team Player</h3>
+            {/* Visual stats/highlights */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-white dark:bg-slate-950 p-6 rounded-lg border border-gray-200 dark:border-gray-800 hover:shadow-lg hover:border-accent-teal transition-all transform hover:scale-105">
+                <div className="text-3xl font-bold text-accent-teal mb-2">2+</div>
+                <p className="text-gray-700 dark:text-gray-300 font-semibold">Years of Engineering Study</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Wits University</p>
               </div>
-              <p className="text-gray-700 dark:text-gray-300">Mentoring peers and fostering collaborative learning environments</p>
-            </div>
-            
-            <div className="bg-white dark:bg-slate-950 p-8 rounded-lg border border-gray-200 dark:border-gray-800">
-              <div className="flex items-center gap-3 mb-4">
-                <Cpu className="w-6 h-6 text-accent-teal" />
-                <h3 className="text-xl font-bold text-slate-dark dark:text-white">Technical Depth</h3>
+              
+              <div className="bg-white dark:bg-slate-950 p-6 rounded-lg border border-gray-200 dark:border-gray-800 hover:shadow-lg hover:border-accent-teal transition-all transform hover:scale-105">
+                <div className="text-3xl font-bold text-accent-teal mb-2">3+</div>
+                <p className="text-gray-700 dark:text-gray-300 font-semibold">Featured Projects</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Circuit & Embedded Systems</p>
               </div>
-              <p className="text-gray-700 dark:text-gray-300">Mastering embedded systems, C++ programming, and circuit optimization</p>
+              
+              <div className="bg-white dark:bg-slate-950 p-6 rounded-lg border border-gray-200 dark:border-gray-800 hover:shadow-lg hover:border-accent-teal transition-all transform hover:scale-105">
+                <div className="text-3xl font-bold text-accent-teal mb-2">50+</div>
+                <p className="text-gray-700 dark:text-gray-300 font-semibold">Students Mentored</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Peer Tutor & Mentor</p>
+              </div>
+              
+              <div className="bg-white dark:bg-slate-950 p-6 rounded-lg border border-gray-200 dark:border-gray-800 hover:shadow-lg hover:border-accent-teal transition-all transform hover:scale-105">
+                <div className="text-3xl font-bold text-accent-teal mb-2">5</div>
+                <p className="text-gray-700 dark:text-gray-300 font-semibold">Technical Articles</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Engineering Insights</p>
+              </div>
             </div>
           </div>
           
-          <div className="bg-white dark:bg-slate-950 p-8 rounded-lg border border-gray-200 dark:border-gray-800">
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">I am a second-year Electrical Engineering student at the University of the Witwatersrand, driven by a passion for circuit design, power systems, and embedded systems. My academic foundation spans circuit theory, electromagnetism, digital systems, and advanced programming—equipping me with both theoretical depth and practical problem-solving capabilities.</p>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">What sets me apart is my commitment to excellence beyond the classroom. I actively mentor fellow students, sharing complex concepts through clear explanations and real-world applications. My hands-on experience includes optimizing DC motor hoist systems for maximum efficiency and developing C++ solutions for embedded applications.</p>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">I thrive in collaborative environments where innovation meets precision. Whether designing circuits, debugging code, or mentoring peers, I bring dedication, technical rigor, and a genuine passion for electrical engineering to every project.</p>
+          {/* Core values section */}
+          <div className="bg-gradient-to-r from-accent-teal/10 to-blue-500/10 dark:from-accent-teal/20 dark:to-blue-500/20 p-8 rounded-lg border border-accent-teal/30 dark:border-accent-teal/40">
+            <h3 className="text-2xl font-bold text-slate-dark dark:text-white mb-6">My Philosophy</h3>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div>
+                <h4 className="font-bold text-accent-teal mb-2 text-lg">Excellence Through Precision</h4>
+                <p className="text-gray-700 dark:text-gray-300">Every circuit optimized, every line of code refined, every concept clearly explained. Mediocrity is never an option.</p>
+              </div>
+              <div>
+                <h4 className="font-bold text-accent-teal mb-2 text-lg">Knowledge Shared is Knowledge Multiplied</h4>
+                <p className="text-gray-700 dark:text-gray-300">I believe in lifting others as I climb. Mentoring isn't a side activity—it's core to who I am as an engineer.</p>
+              </div>
+              <div>
+                <h4 className="font-bold text-accent-teal mb-2 text-lg">Innovation Grounded in Reality</h4>
+                <p className="text-gray-700 dark:text-gray-300">Brilliant ideas mean nothing without practical execution. I bridge theory and application seamlessly.</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
