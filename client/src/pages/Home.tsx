@@ -57,6 +57,22 @@ const projectDetails: ProjectDetail[] = [
       'Multi-state LED feedback system with 3 distinct operational states'
     ],
     technologies: ['AVR Assembly', 'ATmega328P', 'PWM Control', 'Embedded C', 'Real-Time Systems', 'Hardware Interrupts']
+  },
+  {
+    id: 'morabaraba',
+    title: 'Morabaraba AI Game Engine',
+    subtitle: 'Software Development Project | Algorithm Design & AI',
+    problem: 'Implement a complete Morabaraba (ancient African strategy board game) engine with two competing AI algorithms. The challenge required designing efficient game state management, implementing complex game rules across three phases (placement, moving, flying), and developing heuristic-based AI that could optimize gameplay while competing against a random strategy algorithm.',
+    solution: 'Developed a C++ game engine implementing the complete Morabaraba ruleset with 3x3 board structure (24 intersections). Created two distinct algorithms: Algorithm 1 using random move selection for baseline comparison, and Algorithm 2 implementing heuristic-based AI that evaluates board positions and chooses optimal moves to minimize difficulty values. Implemented efficient board state representation, move validation, and game phase transitions.',
+    results: [
+      'Successfully implemented all three game phases (placement, moving, flying)',
+      'Algorithm 2 consistently outperforms random strategy through heuristic optimization',
+      'Efficient move generation and validation across 24-position board',
+      'Comprehensive game logging and result tracking system',
+      'Robust handling of edge cases and game termination conditions',
+      'Time-optimized implementation ensuring competitive gameplay'
+    ],
+    technologies: ['C++', 'Algorithm Design', 'Heuristic AI', 'Game Theory', 'Data Structures', 'Software Engineering']
   }
 ];
 
@@ -503,6 +519,9 @@ export default function Home() {
                   <div className="bg-gradient-to-br from-blue-500 to-cyan-500 h-32 flex items-center justify-center">
                     <Zap className="w-16 h-16 text-white opacity-30" />
                   </div>
+                )}
+                {project.id === 'morabaraba' && (
+                  <img src="/manus-storage/morabaraba_board_6af27c6c.png" alt={project.title} className="w-full h-48 object-cover bg-white" />
                 )}
                 <div className="p-8">
                   <h3 className="text-2xl font-bold mb-2 text-slate-dark dark:text-white">{project.title}</h3>
