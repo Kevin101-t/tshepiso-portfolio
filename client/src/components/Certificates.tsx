@@ -25,6 +25,13 @@ export const Certificates: React.FC = () => {
       issuer: 'Coursera',
       date: 'Expected: June 2026',
       isEditable: false
+    },
+    {
+      id: '2',
+      name: 'Claude AI Mastery & Advanced Prompt Engineering',
+      issuer: 'Anthropic',
+      date: 'Expected: June - December 2026',
+      isEditable: false
     }
   ]);
 

@@ -248,6 +248,20 @@ const blogArticles: BlogArticle[] = [
       'Memory profiling and stack analysis',
       'Hardware breakpoints and watchdog timers'
     ]
+  },
+  {
+    id: 'morabaraba-game-engine',
+    title: 'Building a Morabaraba AI Game Engine: Algorithm Design & Heuristic Optimization',
+    excerpt: 'Deep dive into implementing a complete Morabaraba game engine with competing AI algorithms. Learn about game state management, heuristic-based AI optimization, and algorithm design patterns for strategic game playing.',
+    category: 'Algorithm Design',
+    readTime: '11 min read',
+    date: 'January 2026',
+    keyPoints: [
+      'Game state representation and efficient board management',
+      'Heuristic-based AI vs random strategy comparison',
+      'Game phase transitions and rule validation',
+      'Algorithm optimization for competitive gameplay'
+    ]
   }
 ];
 
