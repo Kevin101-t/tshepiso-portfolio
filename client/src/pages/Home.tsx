@@ -415,7 +415,7 @@ export default function Home() {
               </div>
               <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">Passionate about designing innovative circuit solutions, optimizing embedded systems, and architecting intelligent AI-driven applications. Ready to transform complex engineering challenges into elegant, efficient solutions that push the boundaries of what's possible.</p>
               <div className="flex gap-4 pt-4">
-                <a href="#contact" className="bg-accent-teal text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors flex items-center gap-2">Get in Touch <span>↗</span></a>
+                <a href="#contact" className="bg-accent-teal text-white px-6 py-3 rounded-lg font-semibold hover:bg-cyan-600 dark:hover:bg-blue-600 transition-colors flex items-center gap-2 shadow-lg">Get in Touch <span>↗</span></a>
                 <a href="#timeline" className="border-2 border-accent-teal text-accent-teal px-6 py-3 rounded-lg font-semibold hover:bg-accent-teal hover:text-white transition-colors">View Journey</a>
               </div>
             </div>
@@ -1116,7 +1116,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="py-8 bg-gray-50 dark:bg-slate-900 border-t border-gray-200 dark:border-gray-800">
         <div className="container text-center text-gray-600 dark:text-gray-400">
-          <p>Made with <span className="text-accent-teal">♥</span> by Tshepiso Kevin Phoku</p>
+          <p>&copy; 2026 Tshepiso Kevin Phoku. All rights reserved.</p>
         </div>
       </footer>
       </div>
