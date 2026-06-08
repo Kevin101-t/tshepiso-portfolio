@@ -436,6 +436,7 @@ export default function Home() {
           <div className="mb-16">
             <h2 className="text-5xl md:text-6xl font-bold mb-4 text-slate-dark dark:text-white leading-tight">About Me</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-accent-teal to-blue-500"></div>
+            <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed mt-6 italic border-l-4 border-accent-teal pl-6">Electrical Engineering innovator passionate about designing intelligent, efficient systems that push technological boundaries. With expertise spanning circuit optimization (45% efficiency gains achieved), embedded systems architecture, and AI-driven algorithm design, I transform complex engineering challenges into elegant solutions. Beyond technical excellence, I'm committed to elevating the entire engineering community through mentorship—having guided 50+ students in mastering complex concepts. Seeking roles where precision engineering meets collaborative innovation and measurable impact.</p>
           </div>
           
           {/* Main narrative section */}
