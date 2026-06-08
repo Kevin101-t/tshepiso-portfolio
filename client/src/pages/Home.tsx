@@ -397,7 +397,7 @@ export default function Home() {
             <a href="#certificates" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-colors">Certificates</a>
             <a href="#blog" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-colors">Blog</a>
             <a href="#contact" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-colors">Contact</a>
-            <a href="https://d2xsxph8kpxj0f.cloudfront.net/310519663588749976/VqtRsrvp8AWWYW82Ld27rf/Tshepiso_Kevin_Phoku_Professional_CV.pdf" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-colors font-semibold">Download CV</a>
+            <a href="/manus-storage/pasted_file_oMGiz7_TshepisoPhoku2026CV_a75a3d98.pdf" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-colors font-semibold">Download CV</a>
           </div>
           <button onClick={toggleTheme} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
             {theme === 'dark' ? '☀️' : '🌙'}
