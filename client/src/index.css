@@ -181,6 +181,10 @@
   }
 
   /* Design System Utilities */
+  .bg-accent-teal {
+    @apply bg-[#0ea5e9];
+  }
+
   .text-accent-teal {
     @apply text-[#0ea5e9];
   }
