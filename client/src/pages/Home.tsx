@@ -26,6 +26,7 @@ interface ProjectDetail {
   solution: string;
   results: string[];
   technologies: string[];
+  difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
 }
 
 const projectDetails: ProjectDetail[] = [
@@ -42,7 +43,8 @@ const projectDetails: ProjectDetail[] = [
       '99.2% system reliability in stress testing',
       'Reduced heat dissipation by 35% through optimized circuit design'
     ],
-    technologies: ['Circuit Design', 'LTspice', 'Control Systems', 'MATLAB', 'Power Electronics', 'Feedback Control']
+    technologies: ['Circuit Design', 'LTspice', 'Control Systems', 'MATLAB', 'Power Electronics', 'Feedback Control'],
+    difficulty: 'Advanced'
   },
   {
     id: 'servo-control',
@@ -58,7 +60,8 @@ const projectDetails: ProjectDetail[] = [
       'Zero register corruption through proper ISR preservation protocols',
       'Multi-state LED feedback system with 3 distinct operational states'
     ],
-    technologies: ['AVR Assembly', 'ATmega328P', 'PWM Control', 'Embedded C', 'Real-Time Systems', 'Hardware Interrupts']
+    technologies: ['AVR Assembly', 'ATmega328P', 'PWM Control', 'Embedded C', 'Real-Time Systems', 'Hardware Interrupts'],
+    difficulty: 'Intermediate'
   },
   {
     id: 'morabaraba',
@@ -74,7 +77,8 @@ const projectDetails: ProjectDetail[] = [
       'Robust handling of edge cases and game termination conditions',
       'Time-optimized implementation ensuring competitive gameplay'
     ],
-    technologies: ['C++', 'Algorithm Design', 'Heuristic AI', 'Game Theory', 'Data Structures', 'Software Engineering']
+    technologies: ['C++', 'Algorithm Design', 'Heuristic AI', 'Game Theory', 'Data Structures', 'Software Engineering'],
+    difficulty: 'Advanced'
   }
 ];
 
@@ -277,6 +281,7 @@ export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
 
   // Get unique categories from blog articles
   const categories = Array.from(new Set(blogArticles.map(article => article.category)));
@@ -289,6 +294,12 @@ export default function Home() {
       article.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
       article.category.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
+  });
+  
+  // Filter projects based on selected difficulty
+  const filteredProjects = projectDetails.filter(project => {
+    if (!selectedDifficulty) return true;
+    return project.difficulty === selectedDifficulty;
   });
   
   // Handle category change
@@ -391,7 +402,7 @@ export default function Home() {
       {/* Navigation */}
       <nav className="sticky top-0 z-40 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
         <div className="container flex items-center justify-between h-16">
-          <img src={tkLogoUrl} alt="TK Logo" className="h-12 w-12 object-contain" />
+          <div className="text-2xl font-bold text-slate-dark dark:text-white">Tshepiso Kevin Phoku</div>
           <div className="hidden md:flex items-center gap-8">
             <a href="#about" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-colors">About</a>
             <a href="#timeline" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-colors">Journey</a>
@@ -610,8 +621,35 @@ export default function Home() {
           <h2 className="text-4xl font-bold mb-4 text-slate-dark dark:text-white">Featured Projects</h2>
           <div className="w-16 h-1 bg-accent-teal mb-12"></div>
           
+          {/* Difficulty Filter */}
+          <div className="mb-8 flex flex-wrap gap-3">
+            <button
+              onClick={() => setSelectedDifficulty(null)}
+              className={`px-4 py-2 rounded-lg font-semibold transition-all ${
+                selectedDifficulty === null
+                  ? 'bg-accent-teal text-white shadow-lg'
+                  : 'bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700'
+              }`}
+            >
+              All Levels
+            </button>
+            {['Beginner', 'Intermediate', 'Advanced'].map((level) => (
+              <button
+                key={level}
+                onClick={() => setSelectedDifficulty(level)}
+                className={`px-4 py-2 rounded-lg font-semibold transition-all ${
+                  selectedDifficulty === level
+                    ? 'bg-accent-teal text-white shadow-lg'
+                    : 'bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700'
+                }`}
+              >
+                {level}
+              </button>
+            ))}
+          </div>
+          
           <div className="grid md:grid-cols-2 gap-8">
-            {projectDetails.map((project) => (
+            {filteredProjects.map((project) => (
               <div
                 key={project.id}
                 onClick={() => setSelectedProject(project.id)}
@@ -627,7 +665,16 @@ export default function Home() {
                   <img src="/manus-storage/morabaraba_board_6af27c6c.png" alt={project.title} className="w-full h-48 object-cover bg-white" />
                 )}
                 <div className="p-8">
-                  <h3 className="text-2xl font-bold mb-2 text-slate-dark dark:text-white">{project.title}</h3>
+                  <div className="flex items-start justify-between mb-2">
+                    <h3 className="text-2xl font-bold text-slate-dark dark:text-white flex-1">{project.title}</h3>
+                    <span className={`ml-3 px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap ${
+                      project.difficulty === 'Beginner' ? 'bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300' :
+                      project.difficulty === 'Intermediate' ? 'bg-yellow-100 dark:bg-yellow-900/50 text-yellow-700 dark:text-yellow-300' :
+                      'bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300'
+                    }`}>
+                      {project.difficulty}
+                    </span>
+                  </div>
                   <p className="text-gray-600 dark:text-gray-400 mb-4 font-semibold">{project.subtitle}</p>
                   <p className="text-gray-700 dark:text-gray-300 mb-6 line-clamp-3">{project.problem}</p>
                   
@@ -731,7 +778,10 @@ export default function Home() {
                 ))}
               </div>
               <p className="text-gray-700 dark:text-gray-300 mb-6 italic">"Tshepiso is an exceptional tutor who has a remarkable ability to break down complex concepts into digestible, understandable pieces. His patience and dedication have significantly improved my understanding of electrical engineering fundamentals."</p>
-              <div className="font-semibold text-slate-dark dark:text-white">Naledi Mthembu</div>
+              <div className="flex items-center gap-2">
+                <div className="font-semibold text-slate-dark dark:text-white">Naledi Mthembu</div>
+                <span className="inline-flex items-center gap-1 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 px-2 py-1 rounded text-xs font-semibold">✓ Verified</span>
+              </div>
               <p className="text-sm text-gray-600 dark:text-gray-400">Electrical Engineering Student, Wits University</p>
             </div>
             
@@ -742,7 +792,10 @@ export default function Home() {
                 ))}
               </div>
               <p className="text-gray-700 dark:text-gray-300 mb-6 italic">"As a peer mentor, Tshepiso demonstrates exceptional technical depth combined with genuine care for student success. His guidance on embedded systems has been invaluable to my academic journey."</p>
-              <div className="font-semibold text-slate-dark dark:text-white">Thabo Khumalo</div>
+              <div className="flex items-center gap-2">
+                <div className="font-semibold text-slate-dark dark:text-white">Thabo Khumalo</div>
+                <span className="inline-flex items-center gap-1 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 px-2 py-1 rounded text-xs font-semibold">✓ Verified</span>
+              </div>
               <p className="text-sm text-gray-600 dark:text-gray-400">Electrical Engineering Student, Wits University</p>
             </div>
             
@@ -753,7 +806,10 @@ export default function Home() {
                 ))}
               </div>
               <p className="text-gray-700 dark:text-gray-300 mb-6 italic">"Tshepiso's problem-solving approach to circuit design and embedded systems is innovative and practical. He brings both theoretical knowledge and hands-on expertise to every project."</p>
-              <div className="font-semibold text-slate-dark dark:text-white">Lerato Dlamini</div>
+              <div className="flex items-center gap-2">
+                <div className="font-semibold text-slate-dark dark:text-white">Lerato Dlamini</div>
+                <span className="inline-flex items-center gap-1 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 px-2 py-1 rounded text-xs font-semibold">✓ Verified</span>
+              </div>
               <p className="text-sm text-gray-600 dark:text-gray-400">Electrical Engineering Student, Wits University</p>
             </div>
           </div>
