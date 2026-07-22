@@ -282,6 +282,7 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
   // Get unique categories from blog articles
   const categories = Array.from(new Set(blogArticles.map(article => article.category)));
@@ -305,6 +306,23 @@ export default function Home() {
   // Handle category change
   const handleCategoryChange = (category: string | null) => {
     setSelectedCategory(category);
+  };
+
+  // Back to Top button visibility
+  useEffect(() => {
+    const handleBackToTopScroll = () => {
+      setShowBackToTop(window.scrollY > 500);
+    };
+
+    window.addEventListener('scroll', handleBackToTopScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleBackToTopScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   };
 
   // Parallax effect for glass blobs
@@ -1175,6 +1193,20 @@ export default function Home() {
           <p>&copy; 2026 Tshepiso Kevin Phoku. All rights reserved.</p>
         </div>
       </footer>
+
+      {/* Back to Top Button */}
+      {showBackToTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 bg-accent-teal text-white p-3 rounded-full shadow-lg hover:bg-blue-600 dark:hover:bg-blue-600 transition-all duration-300 transform hover:scale-110 z-50 flex items-center justify-center"
+          aria-label="Back to top"
+          title="Back to top"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+          </svg>
+        </button>
+      )}
       </div>
     </div>
   );
