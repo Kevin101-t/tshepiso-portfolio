@@ -15,6 +15,8 @@ import { toast } from 'sonner';
 
 const heroBackgroundUrl = "https://d2xsxph8kpxj0f.cloudfront.net/310519663588749976/VqtRsrvp8AWWYW82Ld27rf/hero-engineering-background-gPuKqdoFABjZWmGzkQ2Z5t.webp";
 const accentPatternUrl = "https://d2xsxph8kpxj0f.cloudfront.net/310519663588749976/VqtRsrvp8AWWYW82Ld27rf/accent-tech-pattern-AFvPnPkBFdGZXfE9CmLEpP.webp";
+const tkLogoUrl = "https://d2xsxph8kpxj0f.cloudfront.net/310519663588749976/VqtRsrvp8AWWYW82Ld27rf/tk-logo-hHkyCF7fAR2KJrNa5kE5vm.webp";
+const dcMotorHoistCoverUrl = "https://d2xsxph8kpxj0f.cloudfront.net/310519663588749976/VqtRsrvp8AWWYW82Ld27rf/dc-motor-hoist-cover-kVe8RLaLJW4TQ7xPjbhBYt.webp";
 
 interface ProjectDetail {
   id: string;
@@ -389,7 +391,7 @@ export default function Home() {
       {/* Navigation */}
       <nav className="sticky top-0 z-40 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
         <div className="container flex items-center justify-between h-16">
-          <div className="text-2xl font-bold text-slate-dark dark:text-white">Tshepiso Kevin Phoku</div>
+          <img src={tkLogoUrl} alt="TK Logo" className="h-12 w-12 object-contain" />
           <div className="hidden md:flex items-center gap-8">
             <a href="#about" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-colors">About</a>
             <a href="#timeline" className="text-gray-600 dark:text-gray-400 hover:text-accent-teal transition-colors">Journey</a>
@@ -619,9 +621,7 @@ export default function Home() {
                   <img src="/manus-storage/WhatsAppImage2026-05-16at15.36.15_818281e1.webp" alt={project.title} className="w-full h-48 object-cover" />
                 )}
                 {project.id === 'dc-motor' && (
-                  <div className="bg-gradient-to-br from-blue-500 to-cyan-500 h-32 flex items-center justify-center">
-                    <Zap className="w-16 h-16 text-white opacity-30" />
-                  </div>
+                  <img src={dcMotorHoistCoverUrl} alt={project.title} className="w-full h-48 object-cover" />
                 )}
                 {project.id === 'morabaraba' && (
                   <img src="/manus-storage/morabaraba_board_6af27c6c.png" alt={project.title} className="w-full h-48 object-cover bg-white" />
