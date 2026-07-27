@@ -4,7 +4,7 @@ import react from "@vitejs/plugin-react";
 import fs from "node:fs";
 import path from "node:path";
 import { defineConfig, type Plugin, type ViteDevServer } from "vite";
-import { vitePluginManusRuntime } from "vite-plugin-manus-runtime";
+// import { vitePluginManusRuntime } from "vite-plugin-manus-runtime"; // Removed for Vercel compatibility
 
 // =============================================================================
 // Manus Debug Collector - Vite Plugin
@@ -152,8 +152,8 @@ function vitePluginManusDebugCollector(): Plugin {
 
 function vitePluginStorageProxy(): Plugin {
   return {
-    name: "manus-storage-proxy",
-    configureServer(server: ViteDevServer) {
+    name: "vite-plugin-storage-proxy",
+    apply: "serve",r(server: ViteDevServer) {
       server.middlewares.use("/manus-storage", async (req, res) => {
         const key = req.url?.replace(/^\//, "");
         if (!key) {
@@ -203,7 +203,11 @@ function vitePluginStorageProxy(): Plugin {
   };
 }
 
-const plugins = [react(), tailwindcss(), vitePluginManusRuntime(), vitePluginManusDebugCollector(), vitePluginStorageProxy()];
+const plugins = [react(), tailwindcss()];
+// Manus-specific plugins removed for Vercel compatibility:
+// - vitePluginManusRuntime()
+// - vitePluginManusDebugCollector()
+// - vitePluginStorageProxy()
 
 export default defineConfig({
   plugins,
